@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Revente Radar V80</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f5f5f7;
+    color: #111;
+}
+
+.app {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.version {
+    color: #777;
+    font-size: 13px;
+    margin-left: 6px;
+}
+
+.status {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 8px 13px;
+    font-size: 13px;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #6e6e73;
+    margin-bottom: 25px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    border-radius: 22px;
+    padding: 22px;
+    border: 1px solid #e5e5ea;
+    box-shadow: 0 5px 20px rgba(0,0,0,.04);
+}
+
+h2 {
+    font-size: 19px;
+    margin-top: 0;
+}
+
+.field {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    border: 0;
+    border-radius: 14px;
+    padding: 15px;
+    background: #007aff;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.max {
+    text-align: center;
+    background: #f2f2f7;
+    border-radius: 18px;
+    padding: 25px 10px;
+    margin-bottom: 18px;
+}
+
+.max-label {
+    color: #6e6e73;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.max-value {
+    font-size: 42px;
+    font-weight: 750;
+    margin-top: 5px;
+}
+
+.results {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.result {
+    background: #f8f8fa;
+    border-radius: 14px;
+    padding: 15px;
+}
+
+.result-label {
+    color: #6e6e73;
+    font-size: 12px;
+}
+
+.result-value {
+    font-size: 20px;
+    font-weight: 650;
+    margin-top: 5px;
+}
+
+.decision {
+    margin-top: 18px;
+    border-radius: 16px;
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.go {
+    background: #e9f9ee;
+    color: #188038;
+}
+
+.watch {
+    background: #fff4df;
+    color: #b76e00;
+}
+
+.stop {
+    background: #ffe9e7;
+    color: #c5221f;
+}
+
+.lock {
+    margin-top: 15px;
+    padding: 12px;
+    background: #f8f8fa;
+    border-radius: 12px;
+    color: #6e6e73;
+    font-size: 13px;
+}
+
+@media (max-width: 750px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .max-value {
+        font-size: 38px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+    <div class="logo">
+        Revente Radar <span class="version">V80</span>
+    </div>
+
+    <div class="status">
+        ● V80 CORE
+    </div>
+</header>
+
+<h1>Analyser une affaire</h1>
+
+<div class="subtitle">
+    Calcule ton prix maximum à enchérir avant d'acheter.
+</div>
+
+<div class="grid">
+
+<section class="card">
+
+<h2>📦 Données de l'affaire</h2>
+
+<div class="field">
+<label>Revente réaliste (€)</label>
+<input id="resale" type="number" value="1500">
+</div>
+
+<div class="field">
+<label>Commission d'achat (%)</label>
+<input id="commission" type="number" value="14">
+</div>
+
+<div class="field">
+<label>Frais fixes (€)</label>
+<input id="fixed" type="number" value="0">
+</div>
+
+<div class="field">
+<label>Transport (€)</label>
+<input id="transport" type="number" value="0">
+</div>
+
+<div class="field">
+<label>Contrôle / expertise (€)</label>
+<input id="inspection" type="number" value="0">
+</div>
+
+<div class="field">
+<label>Réparations (€)</label>
+<input id="repairs" type="number" value="0">
+</div>
+
+<div class="field">
+<label>Autres frais (€)</label>
+<input id="other" type="number" value="0">
+</div>
+
+<h2>⚙️ Mes règles V80</h2>
+
+<div class="field">
+<label>Marge minimum (%)</label>
+<input id="margin" type="number" value="50">
+</div>
+
+<div class="field">
+<label>ROI minimum (%)</label>
+<input id="roi" type="number" value="50">
+</div>
+
+<div class="field">
+<label>Budget maximum (€)</label>
+<input id="budget" type="number" value="300">
+</div>
+
+<button onclick="calculateV80()">
+🧮 CALCULER V80
+</button>
+
+</section>
+
+<section class="card">
+
+<h2>🎯 Résultat V80</h2>
+
+<div class="max">
+
+<div class="max-label">
+PRIX MAX À ENCHÉRIR
+</div>
+
+<div class="max-value" id="maxBid">
+0 €
+</div>
+
+</div>
+
+<div class="results">
+
+<div class="result">
+<div class="result-label">COÛT TOTAL RÉEL</div>
+<div class="result-value" id="total">0 €</div>
+</div>
+
+<div class="result">
+<div class="result-label">REVENTE RÉALISTE</div>
+<div class="result-value" id="resaleResult">0 €</div>
+</div>
+
+<div class="result">
+<div class="result-label">MARGE ESTIMÉE</div>
+<div class="result-value" id="profit">0 €</div>
+</div>
+
+<div class="result">
+<div class="result-label">ROI</div>
+<div class="result-value" id="roiResult">0 %</div>
+</div>
+
+</div>
+
+<div id="decision" class="decision stop">
+🔴 STOP
+</div>
+
+<div class="lock">
+🔒 Le plafond V80 pourra être verrouillé avant toute automatisation.
+</div>
+
+</section>
+
+</div>
+
+</div>
+
+<script>
+
+function calculateV80() {
+
+    const resale = Number(document.getElementById("resale").value) || 0;
+    const commission = Number(document.getElementById("commission").value) || 0;
+    const fixed = Number(document.getElementById("fixed").value) || 0;
+    const transport = Number(document.getElementById("transport").value) || 0;
+    const inspection = Number(document.getElementById("inspection").value) || 0;
+    const repairs = Number(document.getElementById("repairs").value) || 0;
+    const other = Number(document.getElementById("other").value) || 0;
+
+    const margin = (Number(document.getElementById("margin").value) || 0) / 100;
+    const roi = (Number(document.getElementById("roi").value) || 0) / 100;
+    const budget = Number(document.getElementById("budget").value) || 0;
+
+    const extraCosts =
+        fixed +
+        transport +
+        inspection +
+        repairs +
+        other;
+
+    const maxByMargin =
+        resale * (1 - margin);
+
+    const maxByROI =
+        roi > 0
+        ? resale / (1 + roi)
+        : Infinity;
+
+    const maxByBudget =
+        budget > 0
+        ? budget
+        : Infinity;
+
+    const maxRealCost =
+        Math.max(
+            0,
+            Math.min(
+                maxByMargin,
+                maxByROI,
+                maxByBudget
+            )
+        );
+
+    let maxBid =
+        commission < 100
+        ? (maxRealCost - extraCosts)
+          / (1 + commission / 100)
+        : 0;
+
+    maxBid = Math.max(0, maxBid);
+
+    const auctionFee =
+        maxBid * commission / 100;
+
+    const totalCost =
+        maxBid +
+        auctionFee +
+        extraCosts;
+
+    const profit =
+        resale -
+        totalCost;
+
+    const roiReal =
+        totalCost > 0
+        ? profit / totalCost
+        : 0;
+
+    let decision = "🔴 STOP";
+    let className = "stop";
+
+    if (
+        maxBid > 0 &&
+        profit >= 0 &&
+        roiReal >= roi
+    ) {
+        decision = "🟢 GO";
+        className = "go";
+    }
+    else if (
+        maxBid > 0 &&
+        profit > 0
+    ) {
+        decision = "🟠 SURVEILLANCE";
+        className = "watch";
+    }
+
+    document.getElementById("maxBid").textContent =
+        euro(maxBid);
+
+    document.getElementById("total").textContent =
+        euro(totalCost);
+
+    document.getElementById("resaleResult").textContent =
+        euro(resale);
+
+    document.getElementById("profit").textContent =
+        euro(profit);
+
+    document.getElementById("roiResult").textContent =
+        (roiReal * 100).toFixed(1) + " %";
+
+    const decisionBox =
+        document.getElementById("decision");
+
+    decisionBox.textContent = decision;
+    decisionBox.className =
+        "decision " + className;
+}
+
+function euro(value) {
+
+    return new Intl.NumberFormat(
+        "fr-FR",
+        {
+            style: "currency",
+            currency: "EUR"
+        }
+    ).format(value);
+}
+
+calculateV80();
+
+</script>
+
+</body>
+</html>

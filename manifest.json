@@ -1,0 +1,22 @@
+{
+  "name": "Revente Radar V80",
+  "short_name": "Radar V80",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f5f7",
+  "theme_color": "#111827",
+  "orientation": "portrait",
+  "description": "Radar professionnel d'achat-revente V80",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

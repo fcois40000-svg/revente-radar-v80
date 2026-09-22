@@ -3,331 +3,566 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <meta name="theme-color" content="#111827">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Radar V80">
+
 <link rel="manifest" href="./manifest.json">
 
 <title>Revente Radar V80</title>
 
 <style>
-:root {
-    --bg: #f5f5f7;
-    --card: #ffffff;
-    --text: #111827;
-    --muted: #6b7280;
-    --border: #e5e7eb;
-    --blue: #007aff;
-    --green: #16a34a;
-    --orange: #ea580c;
-    --red: #dc2626;
-    --dark: #111827;
+:root{
+    --bg:#f5f5f7;
+    --card:#ffffff;
+    --text:#111827;
+    --muted:#6b7280;
+    --border:#e5e7eb;
+    --blue:#007aff;
+    --green:#16a34a;
+    --orange:#ea580c;
+    --red:#dc2626;
+    --dark:#111827;
+    --purple:#7c3aed;
 }
 
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-                 "SF Pro Text", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
+body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
+    "SF Pro Text",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
 }
 
-.container {
-    width: min(760px, calc(100% - 28px));
-    margin: 0 auto;
-    padding: 24px 0 50px;
+.app{
+    min-height:100vh;
+    padding-bottom:90px;
 }
 
-.header {
-    margin-bottom: 22px;
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(245,245,247,.92);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(0,0,0,.06);
 }
 
-.header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
+.topbar-inner{
+    width:min(1100px,calc(100% - 28px));
+    margin:auto;
+    padding:15px 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
 }
 
-h1 {
-    margin: 0;
-    font-size: 30px;
-    letter-spacing: -0.8px;
+.logo-title{
+    font-size:21px;
+    font-weight:800;
+    letter-spacing:-.5px;
 }
 
-.subtitle {
-    margin-top: 6px;
-    color: var(--muted);
-    font-size: 14px;
+.logo-sub{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:2px;
 }
 
-.badge {
-    background: #e8f0ff;
-    color: #155eef;
-    padding: 7px 11px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-    white-space: nowrap;
+.status{
+    background:#e8f0ff;
+    color:#155eef;
+    border-radius:999px;
+    padding:7px 10px;
+    font-size:11px;
+    font-weight:800;
 }
 
-.card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 22px;
-    padding: 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+main{
+    width:min(1100px,calc(100% - 28px));
+    margin:auto;
+    padding:22px 0;
 }
 
-.section-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 16px;
+.page{
+    display:none;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 13px;
+.page.active{
+    display:block;
 }
 
-.field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+.hero{
+    margin-bottom:20px;
 }
 
-.field.full {
-    grid-column: 1 / -1;
+.hero h1{
+    font-size:31px;
+    margin:0;
+    letter-spacing:-1px;
 }
 
-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: #374151;
+.hero p{
+    color:var(--muted);
+    margin:7px 0 0;
+    line-height:1.45;
 }
 
-input {
-    width: 100%;
-    padding: 13px 14px;
-    border: 1px solid #d1d5db;
-    border-radius: 13px;
-    background: #fff;
-    font-size: 16px;
-    outline: none;
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:20px;
+    margin-bottom:15px;
+    box-shadow:0 5px 22px rgba(0,0,0,.04);
 }
 
-input:focus {
-    border-color: var(--blue);
-    box-shadow: 0 0 0 3px rgba(0,122,255,.12);
+.card-title{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:15px;
 }
 
-button {
-    width: 100%;
-    border: 0;
-    border-radius: 15px;
-    padding: 15px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:13px;
 }
 
-.calculate {
-    background: var(--dark);
-    color: white;
-    margin-top: 8px;
+.full{
+    grid-column:1/-1;
 }
 
-.calculate:active {
-    transform: scale(.99);
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
 }
 
-.lock-box {
-    margin-top: 15px;
-    padding: 16px;
-    border-radius: 17px;
-    border: 1px solid var(--border);
-    background: #fafafa;
+label{
+    font-size:13px;
+    font-weight:700;
+    color:#374151;
 }
 
-.lock-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+input,
+textarea,
+select{
+    width:100%;
+    border:1px solid #d1d5db;
+    border-radius:13px;
+    padding:13px;
+    background:white;
+    color:var(--text);
+    font-size:16px;
+    outline:none;
 }
 
-.lock-row input {
-    width: 20px;
-    height: 20px;
-    margin: 0;
+textarea{
+    min-height:100px;
+    resize:vertical;
 }
 
-.lock-row label {
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--blue);
+    box-shadow:0 0 0 3px rgba(0,122,255,.12);
 }
 
-.locked-panel {
-    display: none;
-    margin-top: 13px;
-    padding: 15px;
-    border-radius: 14px;
-    background: #ecfdf3;
-    border: 1px solid #bbf7d0;
+button{
+    border:0;
+    border-radius:14px;
+    padding:13px 16px;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
 }
 
-.locked-panel.active {
-    display: block;
+.primary{
+    background:var(--dark);
+    color:white;
 }
 
-.locked-title {
-    font-size: 12px;
-    color: #166534;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .4px;
+.secondary{
+    background:#eef2f7;
+    color:var(--text);
 }
 
-.locked-value {
-    font-size: 28px;
-    font-weight: 800;
-    color: #166534;
-    margin-top: 3px;
+.blue{
+    background:var(--blue);
+    color:white;
 }
 
-.unlock-button {
-    margin-top: 10px;
-    background: white;
-    color: #166534;
-    border: 1px solid #86efac;
-    padding: 10px;
-    font-size: 14px;
+.danger{
+    background:#fee2e2;
+    color:#991b1b;
 }
 
-.result-main {
-    background: var(--dark);
-    color: white;
-    border-radius: 22px;
-    padding: 23px;
-    margin-bottom: 15px;
+.button-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:15px;
 }
 
-.result-label {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: .7px;
-    opacity: .7;
-    font-weight: 700;
+.button-row button{
+    flex:1;
+    min-width:150px;
 }
 
-.max-bid {
-    font-size: 43px;
-    font-weight: 800;
-    letter-spacing: -1.5px;
-    margin-top: 5px;
+.max-card{
+    background:var(--dark);
+    color:white;
+    border-radius:24px;
+    padding:24px;
+    margin-bottom:15px;
 }
 
-.lock-status {
-    margin-top: 10px;
-    font-size: 13px;
-    opacity: .85;
+.kicker{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+    opacity:.65;
+    font-weight:800;
 }
 
-.results-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+.max-value{
+    font-size:45px;
+    line-height:1.05;
+    font-weight:900;
+    letter-spacing:-2px;
+    margin-top:6px;
 }
 
-.result-box {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 16px;
+.locked{
+    margin-top:10px;
+    font-size:13px;
+    opacity:.85;
 }
 
-.result-box .label {
-    color: var(--muted);
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
+.metrics{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:12px;
 }
 
-.result-box .value {
-    margin-top: 6px;
-    font-size: 23px;
-    font-weight: 800;
+.metric{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:16px;
 }
 
-.decision {
-    margin-top: 15px;
-    text-align: center;
-    padding: 16px;
-    border-radius: 17px;
-    font-size: 22px;
-    font-weight: 800;
+.metric-label{
+    color:var(--muted);
+    font-size:11px;
+    font-weight:800;
+    text-transform:uppercase;
 }
 
-.go {
-    background: #ecfdf3;
-    color: var(--green);
+.metric-value{
+    font-size:22px;
+    font-weight:900;
+    margin-top:6px;
 }
 
-.watch {
-    background: #fff7ed;
-    color: var(--orange);
+.decision{
+    margin-top:14px;
+    padding:15px;
+    text-align:center;
+    border-radius:17px;
+    font-size:21px;
+    font-weight:900;
 }
 
-.stop {
-    background: #fef2f2;
-    color: var(--red);
+.go{
+    background:#ecfdf3;
+    color:var(--green);
 }
 
-.explanation {
-    margin-top: 15px;
-    padding: 15px;
-    background: #f9fafb;
-    border-radius: 15px;
-    color: #4b5563;
-    font-size: 14px;
-    line-height: 1.5;
+.watch{
+    background:#fff7ed;
+    color:var(--orange);
 }
 
-.small-note {
-    margin-top: 12px;
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.45;
+.stop{
+    background:#fef2f2;
+    color:var(--red);
 }
 
-@media (max-width: 560px) {
-    .container {
-        width: min(100% - 20px, 760px);
-        padding-top: 18px;
+.explain{
+    margin-top:14px;
+    padding:15px;
+    background:#f9fafb;
+    border-radius:15px;
+    color:#4b5563;
+    line-height:1.5;
+    font-size:14px;
+}
+
+.lock-box{
+    margin-top:15px;
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:15px;
+    background:#fafafa;
+}
+
+.lock-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.lock-row input{
+    width:20px;
+    height:20px;
+    margin:0;
+}
+
+.locked-panel{
+    display:none;
+    margin-top:13px;
+    background:#ecfdf3;
+    border:1px solid #bbf7d0;
+    border-radius:14px;
+    padding:14px;
+}
+
+.locked-panel.active{
+    display:block;
+}
+
+.locked-panel strong{
+    display:block;
+    color:#166534;
+    font-size:12px;
+    text-transform:uppercase;
+}
+
+.locked-number{
+    font-size:27px;
+    font-weight:900;
+    color:#166534;
+    margin-top:3px;
+}
+
+.source-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.source{
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:15px;
+    background:white;
+}
+
+.source-name{
+    font-weight:800;
+}
+
+.source-type{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:4px;
+}
+
+.source a{
+    display:block;
+    margin-top:10px;
+    color:var(--blue);
+    font-size:13px;
+    font-weight:700;
+    text-decoration:none;
+}
+
+.opportunity{
+    border:1px solid var(--border);
+    border-radius:19px;
+    padding:17px;
+    margin-bottom:12px;
+    background:white;
+}
+
+.opportunity-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.opportunity-title{
+    font-weight:900;
+}
+
+.pill{
+    padding:5px 9px;
+    border-radius:999px;
+    font-size:10px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+.pill-go{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.pill-watch{
+    background:#ffedd5;
+    color:#9a3412;
+}
+
+.pill-stop{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.opportunity-price{
+    font-size:26px;
+    font-weight:900;
+    margin-top:10px;
+}
+
+.opportunity-meta{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin-top:12px;
+}
+
+.mini{
+    background:#f9fafb;
+    border-radius:12px;
+    padding:10px;
+}
+
+.mini span{
+    display:block;
+    color:var(--muted);
+    font-size:10px;
+    font-weight:700;
+}
+
+.mini strong{
+    display:block;
+    margin-top:3px;
+}
+
+.empty{
+    text-align:center;
+    padding:30px 10px;
+    color:var(--muted);
+}
+
+.bottom-nav{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:30;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(18px);
+    border-top:1px solid rgba(0,0,0,.08);
+}
+
+.nav-inner{
+    width:min(700px,100%);
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+}
+
+.nav-btn{
+    background:transparent;
+    border-radius:0;
+    padding:10px 3px 9px;
+    color:#6b7280;
+    font-size:10px;
+}
+
+.nav-btn.active{
+    color:var(--blue);
+}
+
+.nav-icon{
+    display:block;
+    font-size:20px;
+    margin-bottom:2px;
+}
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:90px;
+    transform:translateX(-50%) translateY(20px);
+    background:#111827;
+    color:white;
+    padding:12px 16px;
+    border-radius:13px;
+    font-size:13px;
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+    z-index:50;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+@media(max-width:700px){
+    .grid{
+        grid-template-columns:1fr;
     }
 
-    .grid,
-    .results-grid {
-        grid-template-columns: 1fr;
+    .full{
+        grid-column:auto;
     }
 
-    .field.full {
-        grid-column: auto;
+    .metrics{
+        grid-template-columns:1fr 1fr;
     }
 
-    h1 {
-        font-size: 27px;
+    .source-grid{
+        grid-template-columns:1fr 1fr;
     }
 
-    .max-bid {
-        font-size: 38px;
+    .max-value{
+        font-size:38px;
+    }
+}
+
+@media(max-width:480px){
+    main{
+        width:min(100% - 20px,1100px);
+    }
+
+    .topbar-inner{
+        width:min(100% - 20px,1100px);
+    }
+
+    .hero h1{
+        font-size:28px;
+    }
+
+    .source-grid{
+        grid-template-columns:1fr;
+    }
+
+    .opportunity-meta{
+        grid-template-columns:1fr;
     }
 }
 </style>
@@ -335,604 +570,1181 @@ button {
 
 <body>
 
-<div class="container">
+<div class="app">
 
-    <header class="header">
-        <div class="header-top">
-            <div>
-                <h1>Revente Radar V80</h1>
-                <div class="subtitle">
-                    Calculateur professionnel d'achat-revente
-                </div>
+<header class="topbar">
+    <div class="topbar-inner">
+        <div>
+            <div class="logo-title">Revente Radar V80</div>
+            <div class="logo-sub">MACHINE DE GUERRE · V80 CORE</div>
+        </div>
+        <div class="status">● ACTIF</div>
+    </div>
+</header>
+
+
+<main>
+
+<!-- ================= ACCUEIL ================= -->
+
+<section id="page-home" class="page active">
+
+    <div class="hero">
+        <h1>Ton radar d'achat-revente.</h1>
+        <p>
+            Analyse, calcul et suivi des opportunités
+            avec un plafond V80 déterministe.
+        </p>
+    </div>
+
+    <div class="max-card">
+
+        <div class="kicker">Prix maximum à enchérir</div>
+
+        <div id="homeMaxBid" class="max-value">
+            0,00 €
+        </div>
+
+        <div id="homeLockStatus" class="locked">
+            Aucun plafond verrouillé
+        </div>
+
+    </div>
+
+    <div class="metrics">
+
+        <div class="metric">
+            <div class="metric-label">Coût réel</div>
+            <div id="homeTotal" class="metric-value">0 €</div>
+        </div>
+
+        <div class="metric">
+            <div class="metric-label">Revente</div>
+            <div id="homeResale" class="metric-value">0 €</div>
+        </div>
+
+        <div class="metric">
+            <div class="metric-label">Marge</div>
+            <div id="homeProfit" class="metric-value">0 €</div>
+        </div>
+
+        <div class="metric">
+            <div class="metric-label">ROI</div>
+            <div id="homeROI" class="metric-value">0 %</div>
+        </div>
+
+    </div>
+
+    <div id="homeDecision" class="decision stop">
+        🔴 STOP
+    </div>
+
+    <div class="card" style="margin-top:15px">
+
+        <div class="card-title">⚡ Actions rapides</div>
+
+        <div class="button-row">
+
+            <button class="primary" onclick="showPage('add')">
+                ➕ Ajouter une affaire
+            </button>
+
+            <button class="secondary" onclick="showPage('radar')">
+                📡 Ouvrir le radar
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= RADAR ================= -->
+
+<section id="page-radar" class="page">
+
+    <div class="hero">
+        <h1>📡 Radar</h1>
+        <p>
+            Les sources seront progressivement connectées
+            au moteur V80.
+        </p>
+    </div>
+
+    <div class="card">
+
+        <div class="card-title">Sources</div>
+
+        <div class="source-grid">
+
+            <div class="source">
+                <div class="source-name">Interencheres</div>
+                <div class="source-type">Enchères</div>
+                <a href="https://www.interencheres.com/" target="_blank">
+                    Ouvrir →
+                </a>
             </div>
 
-            <div class="badge">● V80 CORE</div>
+            <div class="source">
+                <div class="source-name">Leboncoin</div>
+                <div class="source-type">Petites annonces</div>
+                <a href="https://www.leboncoin.fr/" target="_blank">
+                    Ouvrir →
+                </a>
+            </div>
+
+            <div class="source">
+                <div class="source-name">eBay</div>
+                <div class="source-type">Marketplace</div>
+                <a href="https://www.ebay.fr/" target="_blank">
+                    Ouvrir →
+                </a>
+            </div>
+
+            <div class="source">
+                <div class="source-name">Dons</div>
+                <div class="source-type">Gratuit / local</div>
+                <button class="secondary" onclick="toast('Module dons prévu dans le radar V80')">
+                    Préparer
+                </button>
+            </div>
+
+            <div class="source">
+                <div class="source-name">Liquidations</div>
+                <div class="source-type">Professionnel</div>
+                <button class="secondary" onclick="toast('Collecte automatique à venir')">
+                    Préparer
+                </button>
+            </div>
+
+            <div class="source">
+                <div class="source-name">Déstockage</div>
+                <div class="source-type">Stock / invendus</div>
+                <button class="secondary" onclick="toast('Collecte automatique à venir')">
+                    Préparer
+                </button>
+            </div>
+
         </div>
-    </header>
 
+    </div>
 
-    <section class="card">
+    <div class="card">
 
-        <div class="section-title">
-            🧮 Analyser une affaire
+        <div class="card-title">🎯 Ton périmètre</div>
+
+        <div class="metrics">
+
+            <div class="metric">
+                <div class="metric-label">Budget</div>
+                <div id="radarBudget" class="metric-value">300 €</div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">Rayon</div>
+                <div id="radarRadius" class="metric-value">80 km</div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">Marge</div>
+                <div id="radarMargin" class="metric-value">50 %</div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">ROI</div>
+                <div id="radarRoi" class="metric-value">50 %</div>
+            </div>
+
         </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= AJOUTER ================= -->
+
+<section id="page-add" class="page">
+
+    <div class="hero">
+        <h1>➕ Ajouter une affaire</h1>
+        <p>
+            Colle un lien ou renseigne les informations
+            disponibles. Le moteur V80 calcule le plafond.
+        </p>
+    </div>
+
+    <div class="card">
+
+        <div class="card-title">Annonce</div>
 
         <div class="grid">
 
             <div class="field full">
-                <label for="resale">Revente réaliste (€)</label>
-                <input id="resale" type="number" value="1500" min="0" step="0.01">
+                <label>Titre de l'affaire</label>
+                <input id="dealTitle" placeholder="Ex : Machine à café professionnelle">
+            </div>
+
+            <div class="field full">
+                <label>Lien de l'annonce</label>
+                <input id="dealUrl" type="url" placeholder="https://...">
             </div>
 
             <div class="field">
-                <label for="commission">Commission achat (%)</label>
-                <input id="commission" type="number" value="14" min="0" step="0.01">
+                <label>Prix actuel / mise à prix (€)</label>
+                <input id="currentPrice" type="number" value="0" min="0">
             </div>
 
             <div class="field">
-                <label for="fixedFees">Frais fixes (€)</label>
-                <input id="fixedFees" type="number" value="0" min="0" step="0.01">
+                <label>Revente réaliste (€)</label>
+                <input id="dealResale" type="number" value="1500" min="0">
             </div>
 
-            <div class="field">
-                <label for="transport">Transport (€)</label>
-                <input id="transport" type="number" value="0" min="0" step="0.01">
-            </div>
-
-            <div class="field">
-                <label for="inspection">Contrôle / expertise (€)</label>
-                <input id="inspection" type="number" value="0" min="0" step="0.01">
-            </div>
-
-            <div class="field">
-                <label for="repairs">Réparations (€)</label>
-                <input id="repairs" type="number" value="0" min="0" step="0.01">
-            </div>
-
-            <div class="field">
-                <label for="otherFees">Autres frais (€)</label>
-                <input id="otherFees" type="number" value="0" min="0" step="0.01">
-            </div>
-
-            <div class="field">
-                <label for="margin">Marge minimum (%)</label>
-                <input id="margin" type="number" value="50" min="0" step="0.01">
-            </div>
-
-            <div class="field">
-                <label for="roi">ROI minimum (%)</label>
-                <input id="roi" type="number" value="50" min="0" step="0.01">
-            </div>
-
-            <div class="field">
-                <label for="budget">Budget maximum (€)</label>
-                <input id="budget" type="number" value="300" min="0" step="0.01">
+            <div class="field full">
+                <label>Description / observations</label>
+                <textarea id="dealDescription"
+                    placeholder="État, marque, modèle, accessoires, défauts, localisation..."></textarea>
             </div>
 
         </div>
 
-        <button class="calculate" onclick="calculateV80()">
-            🧮 CALCULER V80
-        </button>
+    </div>
 
 
-        <!-- VERROUILLAGE -->
+    <div class="card">
 
-        <div class="lock-box">
+        <div class="card-title">💰 Frais V80</div>
 
-            <div class="lock-row">
-                <input
-                    type="checkbox"
-                    id="lockMaxBid"
-                    onchange="handleLockChange()"
-                >
+        <div class="grid">
 
-                <label for="lockMaxBid">
-                    🔒 VERROUILLER LE PLAFOND MAX À ENCHÉRIR
-                </label>
+            <div class="field">
+                <label>Commission achat (%)</label>
+                <input id="dealCommission" type="number" value="14" min="0">
             </div>
 
-
-            <div id="lockedPanel" class="locked-panel">
-
-                <div class="locked-title">
-                    🔒 Plafond V80 verrouillé
-                </div>
-
-                <div id="lockedValue" class="locked-value">
-                    0,00 €
-                </div>
-
-                <button
-                    type="button"
-                    class="unlock-button"
-                    onclick="unlockMaxBid()"
-                >
-                    🔓 Déverrouiller le plafond
-                </button>
-
+            <div class="field">
+                <label>Frais fixes (€)</label>
+                <input id="dealFixed" type="number" value="0" min="0">
             </div>
 
-            <div class="small-note">
-                Une fois verrouillé, le plafond ne peut pas être augmenté
-                automatiquement par un nouveau calcul, une automatisation
-                ou une future IA.
+            <div class="field">
+                <label>Transport (€)</label>
+                <input id="dealTransport" type="number" value="0" min="0">
+            </div>
+
+            <div class="field">
+                <label>Contrôle / expertise (€)</label>
+                <input id="dealInspection" type="number" value="0" min="0">
+            </div>
+
+            <div class="field">
+                <label>Réparations (€)</label>
+                <input id="dealRepairs" type="number" value="0" min="0">
+            </div>
+
+            <div class="field">
+                <label>Autres frais (€)</label>
+                <input id="dealOther" type="number" value="0" min="0">
             </div>
 
         </div>
 
-    </section>
+        <div class="button-row">
+
+            <button class="primary" onclick="analyzeDeal()">
+                🧮 ANALYSER AVEC V80
+            </button>
+
+            <button class="secondary" onclick="clearDealForm()">
+                Effacer
+            </button>
+
+        </div>
+
+    </div>
 
 
-    <!-- RESULTATS -->
+    <div id="analysisCard" class="card" style="display:none">
 
-    <section class="card">
+        <div class="card-title">Résultat V80</div>
 
-        <div class="result-main">
+        <div class="max-card">
 
-            <div class="result-label">
+            <div class="kicker">
                 Prix maximum à enchérir
             </div>
 
-            <div id="maxBid" class="max-bid">
-                0,00 €
+            <div id="dealMaxBid" class="max-value">
+                0 €
             </div>
 
-            <div id="lockStatus" class="lock-status">
+            <div id="dealLockStatus" class="locked">
                 Plafond non verrouillé
             </div>
 
         </div>
 
+        <div class="metrics">
 
-        <div class="results-grid">
-
-            <div class="result-box">
-                <div class="label">
-                    Coût total réel
-                </div>
-                <div id="totalCost" class="value">
-                    0,00 €
-                </div>
+            <div class="metric">
+                <div class="metric-label">Coût total</div>
+                <div id="dealTotal" class="metric-value">0 €</div>
             </div>
 
-            <div class="result-box">
-                <div class="label">
-                    Revente réaliste
-                </div>
-                <div id="resaleResult" class="value">
-                    0,00 €
-                </div>
+            <div class="metric">
+                <div class="metric-label">Revente</div>
+                <div id="dealResaleResult" class="metric-value">0 €</div>
             </div>
 
-            <div class="result-box">
-                <div class="label">
-                    Marge estimée
-                </div>
-                <div id="profit" class="value">
-                    0,00 €
-                </div>
+            <div class="metric">
+                <div class="metric-label">Marge</div>
+                <div id="dealProfit" class="metric-value">0 €</div>
             </div>
 
-            <div class="result-box">
-                <div class="label">
-                    ROI
-                </div>
-                <div id="roiResult" class="value">
-                    0 %
-                </div>
+            <div class="metric">
+                <div class="metric-label">ROI</div>
+                <div id="dealROI" class="metric-value">0 %</div>
             </div>
 
         </div>
 
-
-        <div id="decision" class="decision stop">
+        <div id="dealDecision" class="decision stop">
             🔴 STOP
         </div>
 
+        <div id="dealExplanation" class="explain"></div>
 
-        <div id="explanation" class="explanation">
-            Lance un calcul V80 pour obtenir l'analyse.
+        <div class="button-row">
+
+            <button class="blue" onclick="saveCurrentDeal()">
+                ⭐ Ajouter aux favoris
+            </button>
+
         </div>
 
-    </section>
+    </div>
+
+</section>
+
+
+<!-- ================= FAVORIS ================= -->
+
+<section id="page-favorites" class="page">
+
+    <div class="hero">
+        <h1>⭐ Favoris</h1>
+        <p>Les affaires que tu veux conserver.</p>
+    </div>
+
+    <div id="favoritesList"></div>
+
+</section>
+
+
+<!-- ================= PARAMÈTRES ================= -->
+
+<section id="page-settings" class="page">
+
+    <div class="hero">
+        <h1>⚙️ Paramètres</h1>
+        <p>
+            Les paramètres centraux du moteur V80.
+        </p>
+    </div>
+
+    <div class="card">
+
+        <div class="card-title">🎯 Tes règles</div>
+
+        <div class="grid">
+
+            <div class="field">
+                <label>Budget maximum (€)</label>
+                <input id="setBudget" type="number" value="300">
+            </div>
+
+            <div class="field">
+                <label>Rayon maximum (km)</label>
+                <input id="setRadius" type="number" value="80">
+            </div>
+
+            <div class="field">
+                <label>Marge minimum (%)</label>
+                <input id="setMargin" type="number" value="50">
+            </div>
+
+            <div class="field">
+                <label>ROI minimum (%)</label>
+                <input id="setROI" type="number" value="50">
+            </div>
+
+        </div>
+
+        <div class="button-row">
+
+            <button class="primary" onclick="saveSettings()">
+                💾 ENREGISTRER
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">🔐 Sécurité V80</div>
+
+        <p style="color:#4b5563;line-height:1.5">
+            Le plafond maximum à enchérir est calculé
+            séparément du coût total réel.
+            Un plafond verrouillé ne peut pas être augmenté
+            automatiquement.
+        </p>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav class="bottom-nav">
+
+    <div class="nav-inner">
+
+        <button class="nav-btn active" onclick="showPage('home')">
+            <span class="nav-icon">⌂</span>
+            Accueil
+        </button>
+
+        <button class="nav-btn" onclick="showPage('radar')">
+            <span class="nav-icon">📡</span>
+            Radar
+        </button>
+
+        <button class="nav-btn" onclick="showPage('add')">
+            <span class="nav-icon">＋</span>
+            Ajouter
+        </button>
+
+        <button class="nav-btn" onclick="showPage('favorites')">
+            <span class="nav-icon">☆</span>
+            Favoris
+        </button>
+
+        <button class="nav-btn" onclick="showPage('settings')">
+            <span class="nav-icon">⚙</span>
+            Réglages
+        </button>
+
+    </div>
+
+</nav>
+
+
+<div id="toast" class="toast"></div>
 
 </div>
 
 
 <script>
 
+/* =========================================================
+   V80 CORE
+========================================================= */
+
+let settings = {
+    budget:300,
+    radius:80,
+    margin:50,
+    roi:50
+};
+
 let lockedMaxBid = null;
+let currentAnalysis = null;
+let favorites = [];
 
 
-/* =========================
+/* =========================================================
    OUTILS
-========================= */
+========================================================= */
 
-function number(id) {
-    const value = parseFloat(document.getElementById(id).value);
+function num(id){
+
+    const value =
+        parseFloat(document.getElementById(id).value);
+
     return Number.isFinite(value) ? value : 0;
 }
 
 
-function euros(value) {
-    return new Intl.NumberFormat("fr-FR", {
-        style: "currency",
-        currency: "EUR"
+function euros(value){
+
+    return new Intl.NumberFormat("fr-FR",{
+        style:"currency",
+        currency:"EUR"
     }).format(value);
 }
 
 
-/* =========================
-   CALCUL V80
-========================= */
+function toast(message){
 
-function calculateV80() {
+    const element =
+        document.getElementById("toast");
 
-    const resale = number("resale");
-    const commissionRate = number("commission") / 100;
-    const fixedFees = number("fixedFees");
-    const transport = number("transport");
-    const inspection = number("inspection");
-    const repairs = number("repairs");
-    const otherFees = number("otherFees");
+    element.textContent = message;
+    element.classList.add("show");
 
-    const marginRate = number("margin") / 100;
-    const roiRate = number("roi") / 100;
-    const budget = number("budget");
+    setTimeout(()=>{
+        element.classList.remove("show");
+    },2200);
+}
 
 
-    const fixedCosts =
-        fixedFees +
-        transport +
-        inspection +
-        repairs +
-        otherFees;
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showPage(page){
+
+    document.querySelectorAll(".page")
+        .forEach(element=>{
+            element.classList.remove("active");
+        });
+
+    document.getElementById("page-"+page)
+        .classList.add("active");
+
+    document.querySelectorAll(".nav-btn")
+        .forEach(button=>{
+            button.classList.remove("active");
+        });
+
+    const buttons =
+        document.querySelectorAll(".nav-btn");
+
+    const index = {
+        home:0,
+        radar:1,
+        add:2,
+        favorites:3,
+        settings:4
+    }[page];
+
+    if(buttons[index]){
+        buttons[index].classList.add("active");
+    }
+
+    if(page==="favorites"){
+        renderFavorites();
+    }
+}
+
+
+/* =========================================================
+   MOTEUR V80
+========================================================= */
+
+function calculateEngine(data){
+
+    const resale = Math.max(0,data.resale);
+    const commission = Math.max(0,data.commission)/100;
+
+    const fixed =
+        Math.max(0,data.fixed) +
+        Math.max(0,data.transport) +
+        Math.max(0,data.inspection) +
+        Math.max(0,data.repairs) +
+        Math.max(0,data.other);
+
+    const marginRate =
+        Math.max(0,settings.margin)/100;
+
+    const roiRate =
+        Math.max(0,settings.roi)/100;
+
+    const budget =
+        Math.max(0,settings.budget);
 
 
     /*
        CONTRAINTE MARGE
 
-       resale - coût_total >= resale × marge
+       profit >= resale × marge
     */
 
     const maxTotalByMargin =
-        resale * (1 - marginRate);
+        resale * (1-marginRate);
 
 
     /*
        CONTRAINTE ROI
 
-       marge / coût_total >= ROI
+       profit / coût >= ROI
     */
 
     const maxTotalByROI =
-        resale / (1 + roiRate);
+        resale/(1+roiRate);
 
 
     /*
-       Le coût réel maximum autorisé
-       est limité simultanément par :
-       - marge
-       - ROI
-       - budget
+       Le coût total réel maximum
+       doit respecter toutes les contraintes.
     */
 
-    const maxRealCost = Math.max(
-        0,
-        Math.min(
-            maxTotalByMargin,
-            maxTotalByROI,
-            budget
-        )
-    );
+    const maxRealCost =
+        Math.max(
+            0,
+            Math.min(
+                maxTotalByMargin,
+                maxTotalByROI,
+                budget
+            )
+        );
 
 
-    /*
-       COÛT TOTAL = ENCHÈRE
-       + commission
-       + frais fixes
-    */
+    let theoreticalMaxBid = 0;
 
-    let calculatedMaxBid = 0;
+    if(maxRealCost > fixed){
 
-    if (maxRealCost > fixedCosts) {
-
-        calculatedMaxBid =
-            (maxRealCost - fixedCosts) /
-            (1 + commissionRate);
+        theoreticalMaxBid =
+            (maxRealCost-fixed)/
+            (1+commission);
     }
 
 
-    calculatedMaxBid = Math.max(0, calculatedMaxBid);
+    theoreticalMaxBid =
+        Math.max(0,theoreticalMaxBid);
 
 
     /*
-       SÉCURITÉ ABSOLUE DU PLAFOND
-
-       Si un plafond est verrouillé,
-       aucun calcul ne peut l'augmenter.
+       SÉCURITÉ DU PLAFOND VERROUILLÉ
     */
 
-    let finalMaxBid = calculatedMaxBid;
+    let maxBid =
+        theoreticalMaxBid;
 
-    if (lockedMaxBid !== null) {
-        finalMaxBid = Math.min(
-            calculatedMaxBid,
-            lockedMaxBid
-        );
+    if(lockedMaxBid !== null){
+
+        maxBid =
+            Math.min(
+                theoreticalMaxBid,
+                lockedMaxBid
+            );
     }
 
 
     const auctionFee =
-        finalMaxBid * commissionRate;
+        maxBid*commission;
 
-
-    const totalCost =
-        finalMaxBid +
-        auctionFee +
-        fixedCosts;
-
+    const total =
+        maxBid+
+        auctionFee+
+        fixed;
 
     const profit =
-        resale - totalCost;
+        resale-total;
+
+    const roi =
+        total>0
+        ? (profit/total)*100
+        : 0;
 
 
-    const realROI =
-        totalCost > 0
-            ? (profit / totalCost) * 100
-            : 0;
+    let decision="STOP";
+
+    if(
+        maxBid>0 &&
+        profit>=0 &&
+        roi>=settings.roi
+    ){
+        decision="GO";
+    }
+    else if(
+        maxBid>0 &&
+        profit>0
+    ){
+        decision="SURVEILLANCE";
+    }
 
 
-    document.getElementById("maxBid").textContent =
-        euros(finalMaxBid);
+    return {
+        resale,
+        commission,
+        fixed,
+        maxBid,
+        theoreticalMaxBid,
+        auctionFee,
+        total,
+        profit,
+        roi,
+        decision
+    };
+}
 
-    document.getElementById("totalCost").textContent =
-        euros(totalCost);
 
-    document.getElementById("resaleResult").textContent =
-        euros(resale);
+/* =========================================================
+   AFFICHAGE ACCUEIL
+========================================================= */
 
-    document.getElementById("profit").textContent =
-        euros(profit);
+function updateHome(result){
 
-    document.getElementById("roiResult").textContent =
-        realROI.toFixed(1) + " %";
+    document.getElementById("homeMaxBid")
+        .textContent=euros(result.maxBid);
+
+    document.getElementById("homeTotal")
+        .textContent=euros(result.total);
+
+    document.getElementById("homeResale")
+        .textContent=euros(result.resale);
+
+    document.getElementById("homeProfit")
+        .textContent=euros(result.profit);
+
+    document.getElementById("homeROI")
+        .textContent=result.roi.toFixed(1)+" %";
 
 
-    /* =========================
-       DECISION
-    ========================= */
+    const decision =
+        document.getElementById("homeDecision");
 
-    const decision = document.getElementById("decision");
+    decision.className="decision";
 
-    decision.className = "decision";
 
-    if (
-        finalMaxBid > 0 &&
-        profit >= 0 &&
-        realROI >= number("roi")
-    ) {
+    if(result.decision==="GO"){
 
         decision.classList.add("go");
-        decision.textContent = "🟢 GO";
+        decision.textContent="🟢 GO";
 
-    } else if (
-        finalMaxBid > 0 &&
-        profit > 0
-    ) {
+    }else if(result.decision==="SURVEILLANCE"){
 
         decision.classList.add("watch");
-        decision.textContent = "🟠 SURVEILLANCE";
+        decision.textContent="🟠 SURVEILLANCE";
 
-    } else {
+    }else{
 
         decision.classList.add("stop");
-        decision.textContent = "🔴 STOP";
+        decision.textContent="🔴 STOP";
     }
 
 
-    /* =========================
-       EXPLICATION
-    ========================= */
+    document.getElementById("homeLockStatus")
+        .textContent =
+        lockedMaxBid!==null
+        ? "🔒 Plafond verrouillé : "+euros(lockedMaxBid)
+        : "Plafond non verrouillé";
+}
+
+
+/* =========================================================
+   ANALYSE AFFAIRE
+========================================================= */
+
+function analyzeDeal(){
+
+    const data={
+
+        resale:num("dealResale"),
+        commission:num("dealCommission"),
+        fixed:num("dealFixed"),
+        transport:num("dealTransport"),
+        inspection:num("dealInspection"),
+        repairs:num("dealRepairs"),
+        other:num("dealOther")
+
+    };
+
+
+    const result =
+        calculateEngine(data);
+
+    currentAnalysis={
+        ...data,
+        ...result,
+        title:
+            document.getElementById("dealTitle").value ||
+            "Affaire sans titre",
+        url:
+            document.getElementById("dealUrl").value,
+        currentPrice:
+            num("currentPrice"),
+        description:
+            document.getElementById("dealDescription").value,
+        createdAt:
+            new Date().toISOString()
+    };
+
+
+    document.getElementById("analysisCard")
+        .style.display="block";
+
+
+    document.getElementById("dealMaxBid")
+        .textContent=euros(result.maxBid);
+
+    document.getElementById("dealTotal")
+        .textContent=euros(result.total);
+
+    document.getElementById("dealResaleResult")
+        .textContent=euros(result.resale);
+
+    document.getElementById("dealProfit")
+        .textContent=euros(result.profit);
+
+    document.getElementById("dealROI")
+        .textContent=result.roi.toFixed(1)+" %";
+
+
+    const decision =
+        document.getElementById("dealDecision");
+
+    decision.className="decision";
+
+
+    if(result.decision==="GO"){
+
+        decision.classList.add("go");
+        decision.textContent="🟢 GO";
+
+    }else if(result.decision==="SURVEILLANCE"){
+
+        decision.classList.add("watch");
+        decision.textContent="🟠 SURVEILLANCE";
+
+    }else{
+
+        decision.classList.add("stop");
+        decision.textContent="🔴 STOP";
+    }
+
 
     let explanation =
-        "Le plafond V80 est calculé à partir de la revente, " +
-        "de la commission, des frais connus, de la marge minimale, " +
-        "du ROI minimum et du budget maximum.";
+        "Le plafond est limité par les règles V80 : " +
+        "budget, marge minimum et ROI minimum.";
 
 
-    if (lockedMaxBid !== null) {
+    if(result.theoreticalMaxBid > result.maxBid){
 
-        if (calculatedMaxBid > lockedMaxBid) {
-
-            explanation +=
-                " Le calcul théorique aurait augmenté le plafond, " +
-                "mais le verrouillage V80 l'a empêché.";
-
-        } else {
-
-            explanation +=
-                " Le plafond verrouillé reste une limite absolue.";
-        }
+        explanation +=
+            " Le calcul théorique était de " +
+            euros(result.theoreticalMaxBid) +
+            ", mais une contrainte V80 limite le montant utilisable.";
     }
 
 
-    document.getElementById("explanation").textContent =
-        explanation;
+    if(lockedMaxBid!==null){
 
-
-    updateLockDisplay(finalMaxBid);
-}
-
-
-/* =========================
-   VERROUILLAGE
-========================= */
-
-function handleLockChange() {
-
-    const checkbox =
-        document.getElementById("lockMaxBid");
-
-
-    if (checkbox.checked) {
-
-        if (lockedMaxBid !== null) {
-            return;
-        }
-
-
-        const currentValue =
-            parseFloat(
-                document
-                    .getElementById("maxBid")
-                    .textContent
-                    .replace(/[^\d,.-]/g, "")
-                    .replace(",", ".")
-            );
-
-
-        if (!Number.isFinite(currentValue) || currentValue <= 0) {
-
-            checkbox.checked = false;
-
-            alert(
-                "Calcule d'abord le prix maximum à enchérir avant de verrouiller le plafond."
-            );
-
-            return;
-        }
-
-
-        const confirmation = confirm(
-            "Verrouiller le plafond V80 à " +
-            euros(currentValue) +
-            " ?\n\n" +
-            "Ce plafond ne pourra plus être augmenté " +
-            "automatiquement."
-        );
-
-
-        if (!confirmation) {
-
-            checkbox.checked = false;
-            return;
-        }
-
-
-        lockedMaxBid = currentValue;
-
-
-        localStorage.setItem(
-            "v80_locked_max_bid",
-            lockedMaxBid
-        );
-
-
-        updateLockDisplay(lockedMaxBid);
-
-        calculateV80();
-
-
-    } else {
-
-        /*
-           On ne permet pas un déverrouillage
-           silencieux.
-        */
-
-        checkbox.checked = true;
-
-        unlockMaxBid();
+        explanation +=
+            " Le plafond verrouillé reste une limite absolue.";
     }
+
+
+    document.getElementById("dealExplanation")
+        .textContent=explanation;
+
+
+    document.getElementById("dealLockStatus")
+        .textContent =
+        lockedMaxBid!==null
+        ? "🔒 Plafond verrouillé : "+euros(lockedMaxBid)
+        : "Plafond non verrouillé";
+
+
+    updateHome(result);
 }
 
 
-/* =========================
-   AFFICHAGE VERROU
-========================= */
+/* =========================================================
+   FAVORIS
+========================================================= */
 
-function updateLockDisplay(value) {
+function saveCurrentDeal(){
 
-    const panel =
-        document.getElementById("lockedPanel");
+    if(!currentAnalysis){
 
-    const lockedValue =
-        document.getElementById("lockedValue");
+        toast("Analyse d'abord l'affaire.");
 
-    const status =
-        document.getElementById("lockStatus");
-
-
-    if (lockedMaxBid !== null) {
-
-        panel.classList.add("active");
-
-        lockedValue.textContent =
-            euros(lockedMaxBid);
-
-        status.textContent =
-            "🔒 Plafond verrouillé : " +
-            euros(lockedMaxBid);
-
-    } else {
-
-        panel.classList.remove("active");
-
-        status.textContent =
-            "Plafond non verrouillé";
-    }
-}
-
-
-/* =========================
-   DÉVERROUILLAGE
-========================= */
-
-function unlockMaxBid() {
-
-    if (lockedMaxBid === null) {
         return;
     }
 
 
-    const confirmation = confirm(
-        "Déverrouiller le plafond maximum V80 de " +
-        euros(lockedMaxBid) +
-        " ?\n\n" +
-        "Un nouveau calcul pourra alors déterminer " +
-        "un nouveau plafond."
+    favorites.unshift(currentAnalysis);
+
+    localStorage.setItem(
+        "v80_favorites",
+        JSON.stringify(favorites)
     );
 
 
-    if (!confirmation) {
+    toast("⭐ Affaire ajoutée aux favoris");
+
+    showPage("favorites");
+}
+
+
+function renderFavorites(){
+
+    const container =
+        document.getElementById("favoritesList");
+
+
+    if(!favorites.length){
+
+        container.innerHTML=
+            `<div class="card empty">
+                Aucun favori pour le moment.
+            </div>`;
+
         return;
     }
 
 
-    lockedMaxBid = null;
+    container.innerHTML =
+        favorites.map((item,index)=>{
 
-    localStorage.removeItem(
-        "v80_locked_max_bid"
-    );
+            let pillClass="pill-stop";
+
+            if(item.decision==="GO"){
+                pillClass="pill-go";
+            }else if(item.decision==="SURVEILLANCE"){
+                pillClass="pill-watch";
+            }
 
 
-    document.getElementById("lockMaxBid").checked = false;
+            return `
+            <div class="opportunity">
 
-    updateLockDisplay(0);
+                <div class="opportunity-top">
 
-    calculateV80();
+                    <div class="opportunity-title">
+                        ${escapeHtml(item.title)}
+                    </div>
+
+                    <div class="pill ${pillClass}">
+                        ${item.decision}
+                    </div>
+
+                </div>
+
+                <div class="opportunity-price">
+                    ${euros(item.maxBid)}
+                </div>
+
+                <div class="opportunity-meta">
+
+                    <div class="mini">
+                        <span>Coût réel</span>
+                        <strong>${euros(item.total)}</strong>
+                    </div>
+
+                    <div class="mini">
+                        <span>Revente</span>
+                        <strong>${euros(item.resale)}</strong>
+                    </div>
+
+                    <div class="mini">
+                        <span>Marge</span>
+                        <strong>${euros(item.profit)}</strong>
+                    </div>
+
+                </div>
+
+                <div class="button-row">
+
+                    ${
+                        item.url
+                        ? `<button class="secondary"
+                           onclick="window.open('${safeUrl(item.url)}','_blank')">
+                           🔗 Ouvrir l'annonce
+                           </button>`
+                        : ""
+                    }
+
+                    <button class="danger"
+                        onclick="deleteFavorite(${index})">
+                        Supprimer
+                    </button>
+
+                </div>
+
+            </div>`;
+        }).join("");
 }
 
 
-/* =========================
-   RESTAURATION DU VERROU
-========================= */
+function deleteFavorite(index){
 
-window.addEventListener("DOMContentLoaded", () => {
+    favorites.splice(index,1);
 
-    const saved =
+    localStorage.setItem(
+        "v80_favorites",
+        JSON.stringify(favorites)
+    );
+
+    renderFavorites();
+
+    toast("Affaire supprimée");
+}
+
+
+/* =========================================================
+   SÉCURITÉ TEXTE / URL
+========================================================= */
+
+function escapeHtml(value){
+
+    return String(value||"")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+function safeUrl(value){
+
+    const url=String(value||"");
+
+    if(
+        url.startsWith("https://") ||
+        url.startsWith("http://")
+    ){
+        return url.replace(/'/g,"%27");
+    }
+
+    return "#";
+}
+
+
+/* =========================================================
+   PARAMÈTRES
+========================================================= */
+
+function saveSettings(){
+
+    settings={
+        budget:num("setBudget"),
+        radius:num("setRadius"),
+        margin:num("setMargin"),
+        roi:num("setROI")
+    };
+
+
+    localStorage.setItem(
+        "v80_settings",
+        JSON.stringify(settings)
+    );
+
+
+    updateRadarSettings();
+
+    const result =
+        calculateEngine({
+            resale:1500,
+            commission:14,
+            fixed:0,
+            transport:0,
+            inspection:0,
+            repairs:0,
+            other:0
+        });
+
+
+    updateHome(result);
+
+    toast("⚙️ Paramètres V80 enregistrés");
+}
+
+
+function updateRadarSettings(){
+
+    document.getElementById("radarBudget")
+        .textContent=euros(settings.budget);
+
+    document.getElementById("radarRadius")
+        .textContent=settings.radius+" km";
+
+    document.getElementById("radarMargin")
+        .textContent=settings.margin+" %";
+
+    document.getElementById("radarRoi")
+        .textContent=settings.roi+" %";
+}
+
+
+/* =========================================================
+   FORMULAIRE
+========================================================= */
+
+function clearDealForm(){
+
+    document.getElementById("dealTitle").value="";
+    document.getElementById("dealUrl").value="";
+    document.getElementById("currentPrice").value=0;
+    document.getElementById("dealResale").value=1500;
+    document.getElementById("dealDescription").value="";
+
+    document.getElementById("analysisCard")
+        .style.display="none";
+
+    currentAnalysis=null;
+}
+
+
+/* =========================================================
+   INITIALISATION
+========================================================= */
+
+window.addEventListener("DOMContentLoaded",()=>{
+
+    const savedSettings =
+        localStorage.getItem("v80_settings");
+
+    if(savedSettings){
+
+        try{
+
+            settings={
+                ...settings,
+                ...JSON.parse(savedSettings)
+            };
+
+        }catch(e){}
+    }
+
+
+    document.getElementById("setBudget").value=
+        settings.budget;
+
+    document.getElementById("setRadius").value=
+        settings.radius;
+
+    document.getElementById("setMargin").value=
+        settings.margin;
+
+    document.getElementById("setROI").value=
+        settings.roi;
+
+
+    const savedFavorites =
+        localStorage.getItem("v80_favorites");
+
+    if(savedFavorites){
+
+        try{
+            favorites=JSON.parse(savedFavorites);
+        }catch(e){
+            favorites=[];
+        }
+    }
+
+
+    const savedLock =
         parseFloat(
             localStorage.getItem(
                 "v80_locked_max_bid"
@@ -940,36 +1752,43 @@ window.addEventListener("DOMContentLoaded", () => {
         );
 
 
-    if (Number.isFinite(saved) && saved > 0) {
+    if(Number.isFinite(savedLock) && savedLock>0){
 
-        lockedMaxBid = saved;
-
-        document.getElementById(
-            "lockMaxBid"
-        ).checked = true;
+        lockedMaxBid=savedLock;
     }
 
 
-    updateLockDisplay(
-        lockedMaxBid || 0
-    );
+    updateRadarSettings();
 
 
-    calculateV80();
+    const initialResult =
+        calculateEngine({
+            resale:1500,
+            commission:14,
+            fixed:0,
+            transport:0,
+            inspection:0,
+            repairs:0,
+            other:0
+        });
+
+
+    updateHome(initialResult);
+
 });
 
 
-/* =========================
+/* =========================================================
    SERVICE WORKER
-========================= */
+========================================================= */
 
-if ("serviceWorker" in navigator) {
+if("serviceWorker" in navigator){
 
-    window.addEventListener("load", () => {
+    window.addEventListener("load",()=>{
 
         navigator.serviceWorker.register(
             "./service-worker.js"
-        ).catch(error => {
+        ).catch(error=>{
             console.log(
                 "Service Worker error:",
                 error
@@ -977,7 +1796,6 @@ if ("serviceWorker" in navigator) {
         });
 
     });
-
 }
 
 </script>

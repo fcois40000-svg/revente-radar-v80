@@ -3,10 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Radar V80">
+<link rel="manifest" href="./manifest.json">
 
 <title>Revente Radar V80</title>
 
 <style>
+:root {
+    --bg: #f5f5f7;
+    --card: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --blue: #007aff;
+    --green: #16a34a;
+    --orange: #ea580c;
+    --red: #dc2626;
+    --dark: #111827;
+}
 
 * {
     box-sizing: border-box;
@@ -14,1167 +31,746 @@
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #f5f5f7;
-    color: #111;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "SF Pro Text", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
 }
 
-.app {
-    max-width: 1100px;
-    margin: auto;
-    padding: 20px;
+.container {
+    width: min(760px, calc(100% - 28px));
+    margin: 0 auto;
+    padding: 24px 0 50px;
 }
 
-header {
+.header {
+    margin-bottom: 22px;
+}
+
+.header-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.logo {
-    font-size: 25px;
-    font-weight: 700;
-}
-
-.version {
-    color: #777;
-    font-size: 13px;
-    margin-left: 6px;
-}
-
-.status {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    padding: 8px 13px;
-    font-size: 13px;
-    white-space: nowrap;
+    gap: 12px;
 }
 
 h1 {
-    font-size: 32px;
-    margin-bottom: 8px;
+    margin: 0;
+    font-size: 30px;
+    letter-spacing: -0.8px;
 }
 
 .subtitle {
-    color: #6e6e73;
-    margin-bottom: 25px;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.badge {
+    background: #e8f0ff;
+    color: #155eef;
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
 }
 
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 18px;
-}
-
-.card {
-    background: white;
-    border-radius: 22px;
-    padding: 22px;
-    border: 1px solid #e5e5ea;
-    box-shadow: 0 5px 20px rgba(0,0,0,.04);
-}
-
-h2 {
-    font-size: 19px;
-    margin-top: 0;
+    gap: 13px;
 }
 
 .field {
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field.full {
+    grid-column: 1 / -1;
 }
 
 label {
-    display: block;
     font-size: 13px;
     font-weight: 600;
-    margin-bottom: 6px;
+    color: #374151;
 }
 
 input {
     width: 100%;
-    padding: 13px;
-    border: 1px solid #ddd;
-    border-radius: 12px;
+    padding: 13px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 13px;
+    background: #fff;
     font-size: 16px;
-    background: white;
+    outline: none;
 }
 
 input:focus {
-    outline: none;
-    border-color: #007aff;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(0,122,255,.12);
 }
 
 button {
     width: 100%;
     border: 0;
-    border-radius: 14px;
+    border-radius: 15px;
     padding: 15px;
-    background: #007aff;
-    color: white;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
 }
 
-button:active {
+.calculate {
+    background: var(--dark);
+    color: white;
+    margin-top: 8px;
+}
+
+.calculate:active {
     transform: scale(.99);
 }
 
-.secondary-button {
-    background: #f2f2f7;
-    color: #111;
+.lock-box {
+    margin-top: 15px;
+    padding: 16px;
+    border-radius: 17px;
+    border: 1px solid var(--border);
+    background: #fafafa;
+}
+
+.lock-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lock-row input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+
+.lock-row label {
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.locked-panel {
+    display: none;
+    margin-top: 13px;
+    padding: 15px;
+    border-radius: 14px;
+    background: #ecfdf3;
+    border: 1px solid #bbf7d0;
+}
+
+.locked-panel.active {
+    display: block;
+}
+
+.locked-title {
+    font-size: 12px;
+    color: #166534;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+}
+
+.locked-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: #166534;
+    margin-top: 3px;
+}
+
+.unlock-button {
     margin-top: 10px;
+    background: white;
+    color: #166534;
+    border: 1px solid #86efac;
+    padding: 10px;
+    font-size: 14px;
 }
 
-.max {
-    text-align: center;
-    background: #f2f2f7;
-    border-radius: 18px;
-    padding: 25px 10px;
-    margin-bottom: 18px;
+.result-main {
+    background: var(--dark);
+    color: white;
+    border-radius: 22px;
+    padding: 23px;
+    margin-bottom: 15px;
 }
 
-.max-label {
-    color: #6e6e73;
-    font-size: 13px;
-    font-weight: 600;
+.result-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .7px;
+    opacity: .7;
+    font-weight: 700;
 }
 
-.max-value {
-    font-size: 42px;
-    font-weight: 750;
+.max-bid {
+    font-size: 43px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
     margin-top: 5px;
 }
 
-.locked-main {
-    background: #fff4df;
-    border: 1px solid #f0d59c;
+.lock-status {
+    margin-top: 10px;
+    font-size: 13px;
+    opacity: .85;
 }
 
-.results {
+.results-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
 }
 
-.result {
-    background: #f8f8fa;
-    border-radius: 14px;
-    padding: 15px;
+.result-box {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 16px;
 }
 
-.result-label {
-    color: #6e6e73;
+.result-box .label {
+    color: var(--muted);
     font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
-.result-value {
-    font-size: 20px;
-    font-weight: 650;
-    margin-top: 5px;
+.result-box .value {
+    margin-top: 6px;
+    font-size: 23px;
+    font-weight: 800;
 }
 
 .decision {
-    margin-top: 18px;
-    border-radius: 16px;
-    padding: 15px;
+    margin-top: 15px;
     text-align: center;
-    font-size: 18px;
-    font-weight: 700;
+    padding: 16px;
+    border-radius: 17px;
+    font-size: 22px;
+    font-weight: 800;
 }
 
 .go {
-    background: #e9f9ee;
-    color: #188038;
+    background: #ecfdf3;
+    color: var(--green);
 }
 
 .watch {
-    background: #fff4df;
-    color: #b76e00;
+    background: #fff7ed;
+    color: var(--orange);
 }
 
 .stop {
-    background: #ffe9e7;
-    color: #c5221f;
-}
-
-.lock-box {
-    margin-top: 15px;
-    padding: 15px;
-    background: #f8f8fa;
-    border: 1px solid #e5e5ea;
-    border-radius: 15px;
-}
-
-.lock-label {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.lock-label input {
-    width: auto;
-    transform: scale(1.2);
-}
-
-.locked-value {
-    margin-top: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #6e6e73;
-}
-
-.locked-value.active {
-    color: #111;
-}
-
-.lock-warning {
-    margin-top: 8px;
-    font-size: 12px;
-    color: #6e6e73;
-    line-height: 1.4;
+    background: #fef2f2;
+    color: var(--red);
 }
 
 .explanation {
     margin-top: 15px;
     padding: 15px;
-    background: #f8f8fa;
+    background: #f9fafb;
     border-radius: 15px;
+    color: #4b5563;
     font-size: 14px;
     line-height: 1.5;
 }
 
-.explanation-title {
-    font-weight: 700;
-    margin-bottom: 7px;
-}
-
-.auction-status {
+.small-note {
     margin-top: 12px;
-    padding: 13px;
-    border-radius: 13px;
-    background: #f8f8fa;
-    font-size: 14px;
-}
-
-.good-price {
-    color: #188038;
-    font-weight: 700;
-}
-
-.bad-price {
-    color: #c5221f;
-    font-weight: 700;
-}
-
-.neutral {
-    color: #6e6e73;
-}
-
-.info {
-    margin-top: 18px;
-    padding: 13px;
-    background: #f8f8fa;
-    border-radius: 13px;
-    color: #6e6e73;
+    color: var(--muted);
     font-size: 12px;
-    line-height: 1.5;
+    line-height: 1.45;
 }
 
-.lock {
-    margin-top: 15px;
-    padding: 12px;
-    background: #f8f8fa;
-    border-radius: 12px;
-    color: #6e6e73;
-    font-size: 13px;
-}
+@media (max-width: 560px) {
+    .container {
+        width: min(100% - 20px, 760px);
+        padding-top: 18px;
+    }
 
-@media (max-width: 750px) {
-
-    .grid {
+    .grid,
+    .results-grid {
         grid-template-columns: 1fr;
     }
 
-    h1 {
-        font-size: 28px;
+    .field.full {
+        grid-column: auto;
     }
 
-    .max-value {
+    h1 {
+        font-size: 27px;
+    }
+
+    .max-bid {
         font-size: 38px;
     }
-
-    header {
-        align-items: flex-start;
-    }
-
 }
-
 </style>
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#111827">
-
 </head>
 
 <body>
 
-<div class="app">
+<div class="container">
 
-<header>
+    <header class="header">
+        <div class="header-top">
+            <div>
+                <h1>Revente Radar V80</h1>
+                <div class="subtitle">
+                    Calculateur professionnel d'achat-revente
+                </div>
+            </div>
 
-    <div class="logo">
-        Revente Radar <span class="version">V80</span>
-    </div>
+            <div class="badge">● V80 CORE</div>
+        </div>
+    </header>
+
+
+    <section class="card">
+
+        <div class="section-title">
+            🧮 Analyser une affaire
+        </div>
+
+        <div class="grid">
+
+            <div class="field full">
+                <label for="resale">Revente réaliste (€)</label>
+                <input id="resale" type="number" value="1500" min="0" step="0.01">
+            </div>
 
-    <div class="status">
-        ● V80 CORE
-    </div>
+            <div class="field">
+                <label for="commission">Commission achat (%)</label>
+                <input id="commission" type="number" value="14" min="0" step="0.01">
+            </div>
 
-</header>
+            <div class="field">
+                <label for="fixedFees">Frais fixes (€)</label>
+                <input id="fixedFees" type="number" value="0" min="0" step="0.01">
+            </div>
 
+            <div class="field">
+                <label for="transport">Transport (€)</label>
+                <input id="transport" type="number" value="0" min="0" step="0.01">
+            </div>
 
-<h1>Analyser une affaire</h1>
+            <div class="field">
+                <label for="inspection">Contrôle / expertise (€)</label>
+                <input id="inspection" type="number" value="0" min="0" step="0.01">
+            </div>
 
-<div class="subtitle">
-    Le moteur V80 calcule ton plafond financier maximum avant d'acheter.
-</div>
+            <div class="field">
+                <label for="repairs">Réparations (€)</label>
+                <input id="repairs" type="number" value="0" min="0" step="0.01">
+            </div>
 
+            <div class="field">
+                <label for="otherFees">Autres frais (€)</label>
+                <input id="otherFees" type="number" value="0" min="0" step="0.01">
+            </div>
 
-<div class="grid">
+            <div class="field">
+                <label for="margin">Marge minimum (%)</label>
+                <input id="margin" type="number" value="50" min="0" step="0.01">
+            </div>
 
+            <div class="field">
+                <label for="roi">ROI minimum (%)</label>
+                <input id="roi" type="number" value="50" min="0" step="0.01">
+            </div>
 
-<!-- =========================
-     DONNÉES
-========================= -->
+            <div class="field">
+                <label for="budget">Budget maximum (€)</label>
+                <input id="budget" type="number" value="300" min="0" step="0.01">
+            </div>
 
-<section class="card">
+        </div>
 
-<h2>📦 Données de l'affaire</h2>
+        <button class="calculate" onclick="calculateV80()">
+            🧮 CALCULER V80
+        </button>
 
 
-<div class="field">
-<label>Revente réaliste (€)</label>
-<input id="resale" type="number" value="1500" min="0" step="0.01">
-</div>
+        <!-- VERROUILLAGE -->
 
+        <div class="lock-box">
 
-<div class="field">
-<label>Prix actuel de l'enchère (€)</label>
-<input id="currentBid" type="number" value="0" min="0" step="0.01">
-</div>
+            <div class="lock-row">
+                <input
+                    type="checkbox"
+                    id="lockMaxBid"
+                    onchange="handleLockChange()"
+                >
 
+                <label for="lockMaxBid">
+                    🔒 VERROUILLER LE PLAFOND MAX À ENCHÉRIR
+                </label>
+            </div>
 
-<div class="field">
-<label>Commission d'achat (%)</label>
-<input id="commission" type="number" value="14" min="0" max="99" step="0.01">
-</div>
 
+            <div id="lockedPanel" class="locked-panel">
 
-<div class="field">
-<label>Frais fixes (€)</label>
-<input id="fixed" type="number" value="0" min="0" step="0.01">
-</div>
+                <div class="locked-title">
+                    🔒 Plafond V80 verrouillé
+                </div>
 
+                <div id="lockedValue" class="locked-value">
+                    0,00 €
+                </div>
 
-<div class="field">
-<label>Transport (€)</label>
-<input id="transport" type="number" value="0" min="0" step="0.01">
-</div>
+                <button
+                    type="button"
+                    class="unlock-button"
+                    onclick="unlockMaxBid()"
+                >
+                    🔓 Déverrouiller le plafond
+                </button>
 
+            </div>
 
-<div class="field">
-<label>Contrôle / expertise (€)</label>
-<input id="inspection" type="number" value="0" min="0" step="0.01">
-</div>
+            <div class="small-note">
+                Une fois verrouillé, le plafond ne peut pas être augmenté
+                automatiquement par un nouveau calcul, une automatisation
+                ou une future IA.
+            </div>
 
+        </div>
 
-<div class="field">
-<label>Réparations (€)</label>
-<input id="repairs" type="number" value="0" min="0" step="0.01">
-</div>
+    </section>
 
 
-<div class="field">
-<label>Autres frais (€)</label>
-<input id="other" type="number" value="0" min="0" step="0.01">
-</div>
+    <!-- RESULTATS -->
 
+    <section class="card">
 
-<h2>⚙️ Mes règles V80</h2>
+        <div class="result-main">
 
+            <div class="result-label">
+                Prix maximum à enchérir
+            </div>
 
-<div class="field">
-<label>Marge minimum (%)</label>
-<input id="margin" type="number" value="50" min="0" step="0.01">
-</div>
+            <div id="maxBid" class="max-bid">
+                0,00 €
+            </div>
 
+            <div id="lockStatus" class="lock-status">
+                Plafond non verrouillé
+            </div>
 
-<div class="field">
-<label>ROI minimum (%)</label>
-<input id="roi" type="number" value="50" min="0" step="0.01">
-</div>
+        </div>
 
 
-<div class="field">
-<label>Budget maximum (€)</label>
-<input id="budget" type="number" value="300" min="0" step="0.01">
-</div>
+        <div class="results-grid">
 
+            <div class="result-box">
+                <div class="label">
+                    Coût total réel
+                </div>
+                <div id="totalCost" class="value">
+                    0,00 €
+                </div>
+            </div>
 
-<button onclick="calculateV80()">
-🧮 CALCULER V80
-</button>
+            <div class="result-box">
+                <div class="label">
+                    Revente réaliste
+                </div>
+                <div id="resaleResult" class="value">
+                    0,00 €
+                </div>
+            </div>
 
+            <div class="result-box">
+                <div class="label">
+                    Marge estimée
+                </div>
+                <div id="profit" class="value">
+                    0,00 €
+                </div>
+            </div>
 
-<!-- =========================
-     VERROU
-========================= -->
+            <div class="result-box">
+                <div class="label">
+                    ROI
+                </div>
+                <div id="roiResult" class="value">
+                    0 %
+                </div>
+            </div>
 
-<div class="lock-box">
+        </div>
 
-<label class="lock-label">
 
-<input
-type="checkbox"
-id="lockMaxBid"
-onchange="toggleMaxBidLock()">
+        <div id="decision" class="decision stop">
+            🔴 STOP
+        </div>
 
-🔒 PLAFOND MAX À ENCHÉRIR VERROUILLÉ
 
-</label>
+        <div id="explanation" class="explanation">
+            Lance un calcul V80 pour obtenir l'analyse.
+        </div>
 
-
-<div id="lockedMaxBid" class="locked-value">
-Aucun plafond verrouillé
-</div>
-
-
-<div class="lock-warning">
-Une fois verrouillé, aucun calcul automatique ne peut augmenter ce plafond.
-</div>
-
-</div>
-
-
-<button
-class="secondary-button"
-onclick="unlockMaxBid()">
-
-🔓 Déverrouiller le plafond
-
-</button>
-
-
-</section>
-
-
-
-<!-- =========================
-     RESULTATS
-========================= -->
-
-<section class="card">
-
-<h2>🎯 Résultat V80</h2>
-
-
-<div class="max" id="maxBox">
-
-<div class="max-label">
-PRIX MAX À ENCHÉRIR
-</div>
-
-<div class="max-value" id="maxBid">
-0 €
-</div>
-
-</div>
-
-
-<div class="results">
-
-
-<div class="result">
-
-<div class="result-label">
-COÛT TOTAL RÉEL
-</div>
-
-<div class="result-value" id="total">
-0 €
-</div>
-
-</div>
-
-
-<div class="result">
-
-<div class="result-label">
-REVENTE RÉALISTE
-</div>
-
-<div class="result-value" id="resaleResult">
-0 €
-</div>
-
-</div>
-
-
-<div class="result">
-
-<div class="result-label">
-MARGE ESTIMÉE
-</div>
-
-<div class="result-value" id="profit">
-0 €
-</div>
+    </section>
 
 </div>
-
-
-<div class="result">
-
-<div class="result-label">
-ROI
-</div>
-
-<div class="result-value" id="roiResult">
-0 %
-</div>
-
-</div>
-
-
-<div class="result">
-
-<div class="result-label">
-ÉCART AVANT PLAFOND
-</div>
-
-<div class="result-value" id="remaining">
-0 €
-</div>
-
-</div>
-
-
-<div class="result">
-
-<div class="result-label">
-COÛT FIXE TOTAL
-</div>
-
-<div class="result-value" id="fixedResult">
-0 €
-</div>
-
-</div>
-
-
-</div>
-
-
-<div id="decision" class="decision stop">
-🔴 STOP
-</div>
-
-
-<!-- =========================
-     SITUATION ENCHÈRE
-========================= -->
-
-<div class="auction-status">
-
-<div class="explanation-title">
-📡 Situation de l'enchère
-</div>
-
-<div id="auctionStatus" class="neutral">
-Aucun prix actuel renseigné.
-</div>
-
-</div>
-
-
-<!-- =========================
-     POURQUOI
-========================= -->
-
-<div class="explanation">
-
-<div class="explanation-title">
-🧠 Pourquoi cette décision ?
-</div>
-
-<div id="whyDecision">
-Le moteur V80 attend les données.
-</div>
-
-</div>
-
-
-<div class="lock">
-🔒 Le plafond V80 est indépendant de toute future automatisation ou IA.
-</div>
-
-
-<div class="info">
-Les calculs financiers importants sont déterministes.
-Les estimations de revente et les données externes pourront être enrichies plus tard, mais aucune IA ne pourra augmenter automatiquement le plafond maximum.
-</div>
-
-
-</section>
-
-</div>
-
-</div>
-
 
 
 <script>
 
-/* =====================================================
-   V80 CORE
-   ===================================================== */
-
-/*
-   Le verrou est stocké numériquement.
-   Il est également sauvegardé dans le navigateur.
-*/
-
 let lockedMaxBid = null;
 
 
-/* =====================================================
-   CHARGEMENT DU VERROU
-   ===================================================== */
+/* =========================
+   OUTILS
+========================= */
 
-function loadLockedMaxBid() {
-
-    const saved =
-        localStorage.getItem("v80_locked_max_bid");
-
-    if (saved !== null) {
-
-        const value = Number(saved);
-
-        if (
-            Number.isFinite(value) &&
-            value > 0
-        ) {
-
-            lockedMaxBid = value;
-
-        }
-
-    }
-
+function number(id) {
+    const value = parseFloat(document.getElementById(id).value);
+    return Number.isFinite(value) ? value : 0;
 }
 
 
-/* =====================================================
-   SAUVEGARDE DU VERROU
-   ===================================================== */
-
-function saveLockedMaxBid() {
-
-    if (
-        lockedMaxBid !== null &&
-        Number.isFinite(lockedMaxBid)
-    ) {
-
-        localStorage.setItem(
-            "v80_locked_max_bid",
-            lockedMaxBid.toString()
-        );
-
-    } else {
-
-        localStorage.removeItem(
-            "v80_locked_max_bid"
-        );
-
-    }
-
+function euros(value) {
+    return new Intl.NumberFormat("fr-FR", {
+        style: "currency",
+        currency: "EUR"
+    }).format(value);
 }
 
 
-/* =====================================================
-   CALCUL DU PLAFOND THÉORIQUE
-   ===================================================== */
+/* =========================
+   CALCUL V80
+========================= */
 
-function calculateTheoreticalMaxBid() {
+function calculateV80() {
 
-    const resale =
-        Number(document.getElementById("resale").value) || 0;
+    const resale = number("resale");
+    const commissionRate = number("commission") / 100;
+    const fixedFees = number("fixedFees");
+    const transport = number("transport");
+    const inspection = number("inspection");
+    const repairs = number("repairs");
+    const otherFees = number("otherFees");
 
-    const commission =
-        Number(document.getElementById("commission").value) || 0;
-
-    const fixed =
-        Number(document.getElementById("fixed").value) || 0;
-
-    const transport =
-        Number(document.getElementById("transport").value) || 0;
-
-    const inspection =
-        Number(document.getElementById("inspection").value) || 0;
-
-    const repairs =
-        Number(document.getElementById("repairs").value) || 0;
-
-    const other =
-        Number(document.getElementById("other").value) || 0;
-
-
-    const marginRate =
-        (Number(document.getElementById("margin").value) || 0) / 100;
-
-    const roiRate =
-        (Number(document.getElementById("roi").value) || 0) / 100;
-
-    const budget =
-        Number(document.getElementById("budget").value) || 0;
+    const marginRate = number("margin") / 100;
+    const roiRate = number("roi") / 100;
+    const budget = number("budget");
 
 
     const fixedCosts =
-        fixed +
+        fixedFees +
         transport +
         inspection +
         repairs +
-        other;
+        otherFees;
 
 
     /*
-       Plafond selon marge
+       CONTRAINTE MARGE
+
+       resale - coût_total >= resale × marge
     */
 
-    const maxCostByMargin =
+    const maxTotalByMargin =
         resale * (1 - marginRate);
 
 
     /*
-       Plafond selon ROI
+       CONTRAINTE ROI
+
+       marge / coût_total >= ROI
     */
 
-    const maxCostByROI =
-        roiRate > 0
-            ? resale / (1 + roiRate)
-            : Infinity;
+    const maxTotalByROI =
+        resale / (1 + roiRate);
 
 
     /*
-       Plafond selon budget
+       Le coût réel maximum autorisé
+       est limité simultanément par :
+       - marge
+       - ROI
+       - budget
     */
 
-    const maxCostByBudget =
-        budget > 0
-            ? budget
-            : Infinity;
-
-
-    /*
-       Le plafond financier est toujours
-       le plus restrictif.
-    */
-
-    const maxRealCost =
-        Math.max(
-            0,
-            Math.min(
-                maxCostByMargin,
-                maxCostByROI,
-                maxCostByBudget
-            )
-        );
-
-
-    /*
-       Commission invalide
-    */
-
-    if (commission >= 100) {
-
-        return {
-            maxBid: 0,
-            fixedCosts,
-            maxRealCost
-        };
-
-    }
-
-
-    /*
-       Conversion coût total → enchère
-    */
-
-    const maxBid =
-        Math.max(
-            0,
-            (maxRealCost - fixedCosts)
-            / (1 + commission / 100)
-        );
-
-
-    return {
-        maxBid,
-        fixedCosts,
-        maxRealCost
-    };
-
-}
-
-
-/* =====================================================
-   CALCUL PRINCIPAL
-   ===================================================== */
-
-function calculateV80() {
-
-    const resale =
-        Number(document.getElementById("resale").value) || 0;
-
-    const commission =
-        Number(document.getElementById("commission").value) || 0;
-
-    const currentBid =
-        Number(document.getElementById("currentBid").value) || 0;
-
-    const roiRate =
-        (Number(document.getElementById("roi").value) || 0) / 100;
-
-
-    const theoretical =
-        calculateTheoreticalMaxBid();
-
-
-    /*
-       IMPORTANT :
-       Le plafond réel ne peut jamais dépasser
-       le plafond verrouillé.
-    */
-
-    let maxBid =
-        theoretical.maxBid;
-
-
-    if (
-        lockedMaxBid !== null &&
-        Number.isFinite(lockedMaxBid)
-    ) {
-
-        maxBid =
-            Math.min(
-                maxBid,
-                lockedMaxBid
-            );
-
-    }
-
-
-    /*
-       Frais de commission
-    */
-
-    const auctionFee =
-        maxBid * commission / 100;
-
-
-    /*
-       Coût total réel
-    */
-
-    const totalCost =
-        maxBid +
-        auctionFee +
-        theoretical.fixedCosts;
-
-
-    /*
-       Marge
-    */
-
-    const profit =
-        resale -
-        totalCost;
-
-
-    /*
-       ROI
-    */
-
-    const realROI =
-        totalCost > 0
-            ? profit / totalCost
-            : 0;
-
-
-    /*
-       Écart avant plafond
-    */
-
-    const remaining =
-        Math.max(
-            0,
-            maxBid - currentBid
-        );
-
-
-    /*
-       Décision
-    */
-
-    let decision =
-        "🔴 STOP";
-
-    let className =
-        "stop";
-
-    let reason =
-        "";
-
-
-    /*
-       Aucun plafond possible
-    */
-
-    if (maxBid <= 0) {
-
-        decision =
-            "🔴 STOP";
-
-        className =
-            "stop";
-
-        reason =
-            "Le moteur V80 ne trouve aucun prix d'achat compatible avec ton budget, ta marge ou ton ROI minimum.";
-
-    }
-
-
-    /*
-       Prix actuel déjà supérieur au plafond
-    */
-
-    else if (
-        currentBid > 0 &&
-        currentBid > maxBid
-    ) {
-
-        decision =
-            "🔴 STOP";
-
-        className =
-            "stop";
-
-        reason =
-            "Le prix actuel de l'enchère dépasse déjà ton plafond maximum V80. Il ne faut pas enchérir au-dessus de ce montant.";
-
-    }
-
-
-    /*
-       ROI insuffisant
-    */
-
-    else if (
-        realROI < roiRate
-    ) {
-
-        decision =
-            "🟠 SURVEILLANCE";
-
-        className =
-            "watch";
-
-        reason =
-            "Le prix calculé reste positif, mais le ROI réel affiché est inférieur au ROI minimum demandé.";
-
-    }
-
-
-    /*
-       Situation acceptable
-    */
-
-    else {
-
-        decision =
-            "🟢 GO";
-
-        className =
-            "go";
-
-        reason =
-            "Le prix maximum respecte actuellement les contraintes V80 de budget, marge et ROI.";
-
-    }
-
-
-    /*
-       Affichage
-    */
-
-    document.getElementById("maxBid").textContent =
-        euro(maxBid);
-
-
-    document.getElementById("total").textContent =
-        euro(totalCost);
-
-
-    document.getElementById("resaleResult").textContent =
-        euro(resale);
-
-
-    document.getElementById("profit").textContent =
-        euro(profit);
-
-
-    document.getElementById("roiResult").textContent =
-        (realROI * 100).toFixed(1) + " %";
-
-
-    document.getElementById("remaining").textContent =
-        euro(remaining);
-
-
-    document.getElementById("fixedResult").textContent =
-        euro(theoretical.fixedCosts);
-
-
-    /*
-       Décision
-    */
-
-    const decisionBox =
-        document.getElementById("decision");
-
-
-    decisionBox.textContent =
-        decision;
-
-
-    decisionBox.className =
-        "decision " + className;
-
-
-    /*
-       Pourquoi
-    */
-
-    document.getElementById("whyDecision").textContent =
-        reason;
-
-
-    /*
-       Situation de l'enchère
-    */
-
-    updateAuctionStatus(
-        currentBid,
-        maxBid
+    const maxRealCost = Math.max(
+        0,
+        Math.min(
+            maxTotalByMargin,
+            maxTotalByROI,
+            budget
+        )
     );
 
 
     /*
-       Affichage du verrou
+       COÛT TOTAL = ENCHÈRE
+       + commission
+       + frais fixes
     */
 
-    updateLockDisplay();
+    let calculatedMaxBid = 0;
+
+    if (maxRealCost > fixedCosts) {
+
+        calculatedMaxBid =
+            (maxRealCost - fixedCosts) /
+            (1 + commissionRate);
+    }
+
+
+    calculatedMaxBid = Math.max(0, calculatedMaxBid);
 
 
     /*
-       Couleur de la carte plafond
+       SÉCURITÉ ABSOLUE DU PLAFOND
+
+       Si un plafond est verrouillé,
+       aucun calcul ne peut l'augmenter.
     */
 
-    const maxBox =
-        document.getElementById("maxBox");
+    let finalMaxBid = calculatedMaxBid;
 
+    if (lockedMaxBid !== null) {
+        finalMaxBid = Math.min(
+            calculatedMaxBid,
+            lockedMaxBid
+        );
+    }
+
+
+    const auctionFee =
+        finalMaxBid * commissionRate;
+
+
+    const totalCost =
+        finalMaxBid +
+        auctionFee +
+        fixedCosts;
+
+
+    const profit =
+        resale - totalCost;
+
+
+    const realROI =
+        totalCost > 0
+            ? (profit / totalCost) * 100
+            : 0;
+
+
+    document.getElementById("maxBid").textContent =
+        euros(finalMaxBid);
+
+    document.getElementById("totalCost").textContent =
+        euros(totalCost);
+
+    document.getElementById("resaleResult").textContent =
+        euros(resale);
+
+    document.getElementById("profit").textContent =
+        euros(profit);
+
+    document.getElementById("roiResult").textContent =
+        realROI.toFixed(1) + " %";
+
+
+    /* =========================
+       DECISION
+    ========================= */
+
+    const decision = document.getElementById("decision");
+
+    decision.className = "decision";
 
     if (
-        lockedMaxBid !== null
+        finalMaxBid > 0 &&
+        profit >= 0 &&
+        realROI >= number("roi")
     ) {
 
-        maxBox.classList.add("locked-main");
+        decision.classList.add("go");
+        decision.textContent = "🟢 GO";
+
+    } else if (
+        finalMaxBid > 0 &&
+        profit > 0
+    ) {
+
+        decision.classList.add("watch");
+        decision.textContent = "🟠 SURVEILLANCE";
 
     } else {
 
-        maxBox.classList.remove("locked-main");
-
+        decision.classList.add("stop");
+        decision.textContent = "🔴 STOP";
     }
 
+
+    /* =========================
+       EXPLICATION
+    ========================= */
+
+    let explanation =
+        "Le plafond V80 est calculé à partir de la revente, " +
+        "de la commission, des frais connus, de la marge minimale, " +
+        "du ROI minimum et du budget maximum.";
+
+
+    if (lockedMaxBid !== null) {
+
+        if (calculatedMaxBid > lockedMaxBid) {
+
+            explanation +=
+                " Le calcul théorique aurait augmenté le plafond, " +
+                "mais le verrouillage V80 l'a empêché.";
+
+        } else {
+
+            explanation +=
+                " Le plafond verrouillé reste une limite absolue.";
+        }
+    }
+
+
+    document.getElementById("explanation").textContent =
+        explanation;
+
+
+    updateLockDisplay(finalMaxBid);
 }
 
 
-/* =====================================================
-   SITUATION ENCHÈRE
-   ===================================================== */
-
-function updateAuctionStatus(
-    currentBid,
-    maxBid
-) {
-
-    const element =
-        document.getElementById("auctionStatus");
-
-
-    if (currentBid <= 0) {
-
-        element.className =
-            "neutral";
-
-        element.textContent =
-            "Aucun prix actuel renseigné.";
-
-        return;
-
-    }
-
-
-    if (currentBid > maxBid) {
-
-        element.className =
-            "bad-price";
-
-        element.textContent =
-            "🔴 Prix actuel supérieur au plafond V80. STOP.";
-
-        return;
-
-    }
-
-
-    const difference =
-        maxBid - currentBid;
-
-
-    element.className =
-        "good-price";
-
-    element.textContent =
-        "🟢 Sous le plafond V80. Il reste " +
-        euro(difference) +
-        " avant d'atteindre le maximum.";
-
-}
-
-
-/* =====================================================
+/* =========================
    VERROUILLAGE
-   ===================================================== */
+========================= */
 
-function toggleMaxBidLock() {
+function handleLockChange() {
 
     const checkbox =
         document.getElementById("lockMaxBid");
@@ -1182,201 +778,205 @@ function toggleMaxBidLock() {
 
     if (checkbox.checked) {
 
-        const theoretical =
-            calculateTheoreticalMaxBid();
+        if (lockedMaxBid !== null) {
+            return;
+        }
 
 
-        if (
-            theoretical.maxBid <= 0
-        ) {
+        const currentValue =
+            parseFloat(
+                document
+                    .getElementById("maxBid")
+                    .textContent
+                    .replace(/[^\d,.-]/g, "")
+                    .replace(",", ".")
+            );
 
-            checkbox.checked =
-                false;
+
+        if (!Number.isFinite(currentValue) || currentValue <= 0) {
+
+            checkbox.checked = false;
 
             alert(
-                "Impossible de verrouiller un plafond nul."
+                "Calcule d'abord le prix maximum à enchérir avant de verrouiller le plafond."
             );
 
             return;
-
         }
 
 
-        lockedMaxBid =
-            theoretical.maxBid;
+        const confirmation = confirm(
+            "Verrouiller le plafond V80 à " +
+            euros(currentValue) +
+            " ?\n\n" +
+            "Ce plafond ne pourra plus être augmenté " +
+            "automatiquement."
+        );
 
 
-        saveLockedMaxBid();
+        if (!confirmation) {
+
+            checkbox.checked = false;
+            return;
+        }
+
+
+        lockedMaxBid = currentValue;
+
+
+        localStorage.setItem(
+            "v80_locked_max_bid",
+            lockedMaxBid
+        );
+
+
+        updateLockDisplay(lockedMaxBid);
+
+        calculateV80();
 
 
     } else {
 
+        /*
+           On ne permet pas un déverrouillage
+           silencieux.
+        */
+
+        checkbox.checked = true;
+
         unlockMaxBid();
-
-        return;
-
     }
-
-
-    calculateV80();
-
 }
 
 
-/* =====================================================
-   DÉVERROUILLAGE EXPLICITE
-   ===================================================== */
+/* =========================
+   AFFICHAGE VERROU
+========================= */
+
+function updateLockDisplay(value) {
+
+    const panel =
+        document.getElementById("lockedPanel");
+
+    const lockedValue =
+        document.getElementById("lockedValue");
+
+    const status =
+        document.getElementById("lockStatus");
+
+
+    if (lockedMaxBid !== null) {
+
+        panel.classList.add("active");
+
+        lockedValue.textContent =
+            euros(lockedMaxBid);
+
+        status.textContent =
+            "🔒 Plafond verrouillé : " +
+            euros(lockedMaxBid);
+
+    } else {
+
+        panel.classList.remove("active");
+
+        status.textContent =
+            "Plafond non verrouillé";
+    }
+}
+
+
+/* =========================
+   DÉVERROUILLAGE
+========================= */
 
 function unlockMaxBid() {
 
-    const confirmed =
-        confirm(
-            "Déverrouiller le plafond maximum V80 ?"
-        );
-
-
-    if (!confirmed) {
-
-        updateLockDisplay();
-
+    if (lockedMaxBid === null) {
         return;
-
     }
 
 
-    lockedMaxBid =
-        null;
+    const confirmation = confirm(
+        "Déverrouiller le plafond maximum V80 de " +
+        euros(lockedMaxBid) +
+        " ?\n\n" +
+        "Un nouveau calcul pourra alors déterminer " +
+        "un nouveau plafond."
+    );
 
 
-    saveLockedMaxBid();
+    if (!confirmation) {
+        return;
+    }
 
 
-    document.getElementById(
-        "lockMaxBid"
-    ).checked = false;
+    lockedMaxBid = null;
+
+    localStorage.removeItem(
+        "v80_locked_max_bid"
+    );
+
+
+    document.getElementById("lockMaxBid").checked = false;
+
+    updateLockDisplay(0);
+
+    calculateV80();
+}
+
+
+/* =========================
+   RESTAURATION DU VERROU
+========================= */
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    const saved =
+        parseFloat(
+            localStorage.getItem(
+                "v80_locked_max_bid"
+            )
+        );
+
+
+    if (Number.isFinite(saved) && saved > 0) {
+
+        lockedMaxBid = saved;
+
+        document.getElementById(
+            "lockMaxBid"
+        ).checked = true;
+    }
+
+
+    updateLockDisplay(
+        lockedMaxBid || 0
+    );
 
 
     calculateV80();
-
-}
-
-
-/* =====================================================
-   AFFICHAGE DU VERROU
-   ===================================================== */
-
-function updateLockDisplay() {
-
-    const display =
-        document.getElementById("lockedMaxBid");
-
-    const checkbox =
-        document.getElementById("lockMaxBid");
+});
 
 
-    if (
-        lockedMaxBid !== null &&
-        Number.isFinite(lockedMaxBid)
-    ) {
+/* =========================
+   SERVICE WORKER
+========================= */
 
-        display.textContent =
-            "🔒 Plafond verrouillé : " +
-            euro(lockedMaxBid);
+if ("serviceWorker" in navigator) {
 
+    window.addEventListener("load", () => {
 
-        display.classList.add(
-            "active"
-        );
-
-
-        checkbox.checked =
-            true;
-
-    } else {
-
-        display.textContent =
-            "Aucun plafond verrouillé";
-
-
-        display.classList.remove(
-            "active"
-        );
-
-
-        checkbox.checked =
-            false;
-
-    }
-
-}
-
-
-/* =====================================================
-   FORMAT EURO
-   ===================================================== */
-
-function euro(value) {
-
-    return new Intl.NumberFormat(
-        "fr-FR",
-        {
-            style: "currency",
-            currency: "EUR"
-        }
-    ).format(value);
-
-}
-
-
-/* =====================================================
-   INITIALISATION
-   ===================================================== */
-
-loadLockedMaxBid();
-
-calculateV80();
-
-
-/* =====================================================
-   MISE À JOUR AUTOMATIQUE DES CALCULS
-   ===================================================== */
-
-document.querySelectorAll(
-    "input"
-).forEach(
-    input => {
-
-        input.addEventListener(
-            "input",
-            calculateV80
-        );
-
-    }
-);
-
-</script>
-
-
-<script>
-
-/* =====================================================
-   SERVICE WORKER PWA
-   ===================================================== */
-
-if (
-    "serviceWorker" in navigator
-) {
-
-    window.addEventListener(
-        "load",
-        () => {
-
-            navigator.serviceWorker.register(
-                "./service-worker.js"
+        navigator.serviceWorker.register(
+            "./service-worker.js"
+        ).catch(error => {
+            console.log(
+                "Service Worker error:",
+                error
             );
+        });
 
-        }
-    );
+    });
 
 }
 

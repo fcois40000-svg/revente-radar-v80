@@ -177,6 +177,48 @@ button {
     color: #c5221f;
 }
 
+/* VERROU V80 */
+
+.lock-box {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f8f8fa;
+    border: 1px solid #e5e5ea;
+    border-radius: 15px;
+}
+
+.lock-label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.lock-label input {
+    width: auto;
+    transform: scale(1.2);
+}
+
+.locked-value {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6e6e73;
+}
+
+.locked-value.active {
+    color: #111;
+}
+
+.lock-warning {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #6e6e73;
+    line-height: 1.4;
+}
+
 .lock {
     margin-top: 15px;
     padding: 12px;
@@ -187,6 +229,7 @@ button {
 }
 
 @media (max-width: 750px) {
+
     .grid {
         grid-template-columns: 1fr;
     }
@@ -198,10 +241,13 @@ button {
     .max-value {
         font-size: 38px;
     }
+
 }
 </style>
-    <link rel="manifest" href="manifest.json">
+
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#111827">
+
 </head>
 
 <body>
@@ -209,6 +255,7 @@ button {
 <div class="app">
 
 <header>
+
     <div class="logo">
         Revente Radar <span class="version">V80</span>
     </div>
@@ -216,6 +263,7 @@ button {
     <div class="status">
         ● V80 CORE
     </div>
+
 </header>
 
 <h1>Analyser une affaire</h1>
@@ -285,17 +333,29 @@ button {
 <button onclick="calculateV80()">
 🧮 CALCULER V80
 </button>
-<div class="lock-box">
-    <label>
-        <input type="checkbox" id="lockMaxBid" onchange="toggleMaxBidLock()">
-        🔒 PLAFOND MAX À ENCHÉRIR VERROUILLÉ
-    </label>
 
-    <div id="lockedMaxBid" class="locked-value">
-        Aucun plafond verrouillé
-    </div>
+<div class="lock-box">
+
+<label class="lock-label">
+<input
+type="checkbox"
+id="lockMaxBid"
+onchange="toggleMaxBidLock()">
+🔒 PLAFOND MAX À ENCHÉRIR VERROUILLÉ
+</label>
+
+<div id="lockedMaxBid" class="locked-value">
+Aucun plafond verrouillé
 </div>
+
+<div class="lock-warning">
+Une fois verrouillé, le plafond ne pourra pas être augmenté par un calcul automatique.
+</div>
+
+</div>
+
 </section>
+
 
 <section class="card">
 
@@ -316,33 +376,66 @@ PRIX MAX À ENCHÉRIR
 <div class="results">
 
 <div class="result">
-<div class="result-label">COÛT TOTAL RÉEL</div>
-<div class="result-value" id="total">0 €</div>
+
+<div class="result-label">
+COÛT TOTAL RÉEL
 </div>
+
+<div class="result-value" id="total">
+0 €
+</div>
+
+</div>
+
 
 <div class="result">
-<div class="result-label">REVENTE RÉALISTE</div>
-<div class="result-value" id="resaleResult">0 €</div>
+
+<div class="result-label">
+REVENTE RÉALISTE
 </div>
+
+<div class="result-value" id="resaleResult">
+0 €
+</div>
+
+</div>
+
 
 <div class="result">
-<div class="result-label">MARGE ESTIMÉE</div>
-<div class="result-value" id="profit">0 €</div>
+
+<div class="result-label">
+MARGE ESTIMÉE
 </div>
+
+<div class="result-value" id="profit">
+0 €
+</div>
+
+</div>
+
 
 <div class="result">
-<div class="result-label">ROI</div>
-<div class="result-value" id="roiResult">0 %</div>
+
+<div class="result-label">
+ROI
+</div>
+
+<div class="result-value" id="roiResult">
+0 %
 </div>
 
 </div>
+
+</div>
+
 
 <div id="decision" class="decision stop">
 🔴 STOP
 </div>
 
+
 <div class="lock">
-🔒 Le plafond V80 pourra être verrouillé avant toute automatisation.
+🔒 Le plafond V80 protège le montant maximum avant toute automatisation.
 </div>
 
 </section>
@@ -351,17 +444,39 @@ PRIX MAX À ENCHÉRIR
 
 </div>
 
+
 <script>
+
 let lockedMaxBid = null;
+
+
+/* =========================
+   CALCUL V80
+========================= */
+
 function calculateV80() {
 
-    const resale = Number(document.getElementById("resale").value) || 0;
-    const commission = Number(document.getElementById("commission").value) || 0;
-    const fixed = Number(document.getElementById("fixed").value) || 0;
-    const transport = Number(document.getElementById("transport").value) || 0;
-    const inspection = Number(document.getElementById("inspection").value) || 0;
-    const repairs = Number(document.getElementById("repairs").value) || 0;
-    const other = Number(document.getElementById("other").value) || 0;
+    const resale =
+        Number(document.getElementById("resale").value) || 0;
+
+    const commission =
+        Number(document.getElementById("commission").value) || 0;
+
+    const fixed =
+        Number(document.getElementById("fixed").value) || 0;
+
+    const transport =
+        Number(document.getElementById("transport").value) || 0;
+
+    const inspection =
+        Number(document.getElementById("inspection").value) || 0;
+
+    const repairs =
+        Number(document.getElementById("repairs").value) || 0;
+
+    const other =
+        Number(document.getElementById("other").value) || 0;
+
 
     const marginRate =
         (Number(document.getElementById("margin").value) || 0) / 100;
@@ -372,13 +487,6 @@ function calculateV80() {
     const budget =
         Number(document.getElementById("budget").value) || 0;
 
-    /*
-     * V80 CORE
-     *
-     * Le budget représente le coût total réel maximum.
-     * La marge est calculée sur le prix de revente.
-     * Le ROI est calculé sur le coût total réel.
-     */
 
     const fixedCosts =
         fixed +
@@ -387,26 +495,39 @@ function calculateV80() {
         repairs +
         other;
 
-    // Coût total maximum autorisé par la marge
+
+    /*
+     * PLAFOND PAR MARGE
+     */
+
     const maxCostByMargin =
         resale * (1 - marginRate);
 
-    // Coût total maximum autorisé par le ROI
+
+    /*
+     * PLAFOND PAR ROI
+     */
+
     const maxCostByROI =
         roiRate > 0
             ? resale / (1 + roiRate)
             : Infinity;
 
-    // Budget maximum de l'utilisateur
+
+    /*
+     * PLAFOND PAR BUDGET
+     */
+
     const maxCostByBudget =
         budget > 0
             ? budget
             : Infinity;
 
+
     /*
-     * Le plafond financier V80 est toujours
-     * le PLUS PETIT des plafonds disponibles.
+     * PLAFOND TOTAL V80
      */
+
     const maxRealCost =
         Math.max(
             0,
@@ -417,45 +538,92 @@ function calculateV80() {
             )
         );
 
+
     /*
-     * Conversion du coût total maximum
-     * en enchère maximum.
+     * CONVERSION EN PRIX MAX D'ENCHÈRE
      */
-    let maxBid = 0;
+
+    let calculatedMaxBid = 0;
 
     if (commission < 100) {
 
-        maxBid =
+        calculatedMaxBid =
             (maxRealCost - fixedCosts)
             / (1 + commission / 100);
 
     }
 
-    maxBid = Math.max(0, maxBid);
+    calculatedMaxBid =
+        Math.max(0, calculatedMaxBid);
+
+
+    /*
+     * VRAI VERROU NUMÉRIQUE
+     *
+     * Le calcul ne peut jamais dépasser
+     * le plafond précédemment verrouillé.
+     */
+
+    let maxBid = calculatedMaxBid;
+
+    if (
+        lockedMaxBid !== null &&
+        Number.isFinite(lockedMaxBid)
+    ) {
+
+        maxBid =
+            Math.min(
+                calculatedMaxBid,
+                lockedMaxBid
+            );
+
+    }
+
+
+    /*
+     * FRAIS D'ENCHÈRE
+     */
 
     const auctionFee =
         maxBid * commission / 100;
+
+
+    /*
+     * COÛT TOTAL RÉEL
+     */
 
     const totalCost =
         maxBid +
         auctionFee +
         fixedCosts;
 
+
+    /*
+     * MARGE
+     */
+
     const profit =
         resale -
         totalCost;
+
+
+    /*
+     * ROI
+     */
 
     const realROI =
         totalCost > 0
             ? profit / totalCost
             : 0;
 
+
     /*
-     * Décision V80
+     * DÉCISION
      */
 
     let decision = "🔴 STOP";
     let className = "stop";
+
 
     if (
         maxBid > 0 &&
@@ -473,10 +641,12 @@ function calculateV80() {
 
         decision = "🟠 SURVEILLANCE";
         className = "watch";
+
     }
 
+
     /*
-     * Affichage
+     * AFFICHAGE
      */
 
     document.getElementById("maxBid").textContent =
@@ -494,14 +664,30 @@ function calculateV80() {
     document.getElementById("roiResult").textContent =
         (realROI * 100).toFixed(1) + " %";
 
+
     const decisionBox =
         document.getElementById("decision");
 
-    decisionBox.textContent = decision;
+    decisionBox.textContent =
+        decision;
 
     decisionBox.className =
         "decision " + className;
+
+
+    /*
+     * AFFICHAGE DU VERROU
+     */
+
+    updateLockDisplay();
+
 }
+
+
+/* =========================
+   VERROU DU PLAFOND
+========================= */
+
 function toggleMaxBidLock() {
 
     const checkbox =
@@ -510,18 +696,36 @@ function toggleMaxBidLock() {
     const display =
         document.getElementById("lockedMaxBid");
 
+
     if (checkbox.checked) {
 
-        const maxBidElement =
-            document.getElementById("maxBid");
+        const currentMaxBid =
+            calculateDisplayedMaxBid();
 
-        const value =
-            maxBidElement.textContent;
 
-        lockedMaxBid = value;
+        if (currentMaxBid <= 0) {
+
+            checkbox.checked = false;
+
+            lockedMaxBid = null;
+
+            display.textContent =
+                "Impossible de verrouiller un plafond nul.";
+
+            return;
+        }
+
+
+        lockedMaxBid =
+            currentMaxBid;
+
 
         display.textContent =
-            "🔒 Plafond verrouillé : " + value;
+            "🔒 Plafond verrouillé : " +
+            euro(lockedMaxBid);
+
+        display.classList.add("active");
+
 
     } else {
 
@@ -529,8 +733,147 @@ function toggleMaxBidLock() {
 
         display.textContent =
             "Aucun plafond verrouillé";
+
+        display.classList.remove("active");
+
     }
+
+
+    calculateV80();
+
 }
+
+
+/* =========================
+   CALCUL DU PLAFOND ACTUEL
+========================= */
+
+function calculateDisplayedMaxBid() {
+
+    const resale =
+        Number(document.getElementById("resale").value) || 0;
+
+    const commission =
+        Number(document.getElementById("commission").value) || 0;
+
+    const fixed =
+        Number(document.getElementById("fixed").value) || 0;
+
+    const transport =
+        Number(document.getElementById("transport").value) || 0;
+
+    const inspection =
+        Number(document.getElementById("inspection").value) || 0;
+
+    const repairs =
+        Number(document.getElementById("repairs").value) || 0;
+
+    const other =
+        Number(document.getElementById("other").value) || 0;
+
+    const marginRate =
+        (Number(document.getElementById("margin").value) || 0) / 100;
+
+    const roiRate =
+        (Number(document.getElementById("roi").value) || 0) / 100;
+
+    const budget =
+        Number(document.getElementById("budget").value) || 0;
+
+
+    const fixedCosts =
+        fixed +
+        transport +
+        inspection +
+        repairs +
+        other;
+
+
+    const maxCostByMargin =
+        resale * (1 - marginRate);
+
+
+    const maxCostByROI =
+        roiRate > 0
+            ? resale / (1 + roiRate)
+            : Infinity;
+
+
+    const maxCostByBudget =
+        budget > 0
+            ? budget
+            : Infinity;
+
+
+    const maxRealCost =
+        Math.max(
+            0,
+            Math.min(
+                maxCostByMargin,
+                maxCostByROI,
+                maxCostByBudget
+            )
+        );
+
+
+    if (commission >= 100) {
+        return 0;
+    }
+
+
+    return Math.max(
+        0,
+        (maxRealCost - fixedCosts)
+        / (1 + commission / 100)
+    );
+
+}
+
+
+/* =========================
+   AFFICHAGE DU VERROU
+========================= */
+
+function updateLockDisplay() {
+
+    const display =
+        document.getElementById("lockedMaxBid");
+
+    const checkbox =
+        document.getElementById("lockMaxBid");
+
+
+    if (
+        lockedMaxBid !== null &&
+        Number.isFinite(lockedMaxBid)
+    ) {
+
+        display.textContent =
+            "🔒 Plafond verrouillé : " +
+            euro(lockedMaxBid);
+
+        display.classList.add("active");
+
+        checkbox.checked = true;
+
+    } else {
+
+        display.textContent =
+            "Aucun plafond verrouillé";
+
+        display.classList.remove("active");
+
+        checkbox.checked = false;
+
+    }
+
+}
+
+
+/* =========================
+   FORMAT EURO
+========================= */
+
 function euro(value) {
 
     return new Intl.NumberFormat(
@@ -540,17 +883,34 @@ function euro(value) {
             currency: "EUR"
         }
     ).format(value);
+
 }
+
+
+/* =========================
+   INITIALISATION
+========================= */
 
 calculateV80();
 
 </script>
+
+
 <script>
+
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js");
-  });
+
+    window.addEventListener("load", () => {
+
+        navigator.serviceWorker.register(
+            "./service-worker.js"
+        );
+
+    });
+
 }
+
 </script>
+
 </body>
 </html>

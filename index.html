@@ -2,485 +2,805 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Revente Radar V80</title>
-
-<link rel="manifest" href="manifest.json">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Radar V80">
+<link rel="manifest" href="manifest.json">
+
+<title>Revente Radar V80</title>
 
 <style>
 :root{
---bg:#f5f5f7;--card:#fff;--text:#111827;--muted:#6b7280;
---border:#e5e7eb;--blue:#2563eb;--green:#16a34a;
---orange:#d97706;--red:#dc2626;--dark:#111827;
+  --bg:#f5f5f7;
+  --card:#ffffff;
+  --text:#111827;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --blue:#007aff;
+  --green:#16a34a;
+  --orange:#f59e0b;
+  --red:#dc2626;
+  --shadow:0 8px 30px rgba(0,0,0,.07);
 }
+
 *{box-sizing:border-box}
+
 body{
-margin:0;background:var(--bg);color:var(--text);
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
+  "Segoe UI",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-.topbar{
-position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);
-backdrop-filter:blur(18px);border-bottom:1px solid var(--border)
+
+header{
+  padding:20px 18px 12px;
+  background:rgba(245,245,247,.92);
+  position:sticky;
+  top:0;
+  z-index:10;
+  backdrop-filter:blur(15px);
 }
-.topbar-inner{
-max-width:1100px;margin:auto;padding:14px 18px;
-display:flex;justify-content:space-between;align-items:center
+
+.header-title{
+  font-size:27px;
+  font-weight:800;
+  letter-spacing:-.8px;
 }
-.brand{font-weight:800;font-size:18px}
-.version{font-size:12px;color:var(--green);font-weight:700}
-.container{max-width:1100px;margin:auto;padding:22px 16px 100px}
-.nav{display:flex;gap:7px;overflow-x:auto;padding:10px 0 4px}
-.nav button{
-border:1px solid var(--border);background:#fff;padding:9px 13px;
-border-radius:999px;white-space:nowrap
+
+.header-sub{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
 }
-.nav button.active{background:var(--dark);color:#fff}
-.page{display:none}.page.active{display:block}
-h1{font-size:30px;margin:8px 0 6px;letter-spacing:-.7px}
-h2{margin-top:0}
-.subtitle{color:var(--muted);margin-bottom:22px}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:14px 16px 100px;
+}
+
+nav{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:4px 0 14px;
+}
+
+nav button{
+  border:0;
+  background:white;
+  padding:10px 14px;
+  border-radius:20px;
+  font-weight:600;
+  white-space:nowrap;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+nav button.active{
+  background:#111827;
+  color:white;
+}
+
 .card{
-background:var(--card);border:1px solid var(--border);border-radius:22px;
-padding:20px;margin-bottom:16px;box-shadow:0 8px 30px rgba(15,23,42,.04)
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:14px;
+  box-shadow:var(--shadow);
 }
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.field{display:flex;flex-direction:column;gap:7px}
-.field.full{grid-column:1/-1}
-label{font-size:13px;font-weight:700}
-input,textarea,select{
-width:100%;border:1px solid #d1d5db;border-radius:13px;padding:12px;
-background:#fff;color:var(--text);outline:none
+
+.card h2{
+  margin:0 0 14px;
+  font-size:19px;
+  letter-spacing:-.3px;
 }
-input:focus,textarea:focus,select:focus{border-color:var(--blue)}
-textarea{min-height:100px;resize:vertical}
-.section-title{margin:22px 0 12px;font-size:17px;font-weight:800}
-.primary{
-width:100%;border:0;border-radius:15px;background:var(--dark);
-color:#fff;padding:15px;font-weight:800;margin-top:18px
+
+.section-title{
+  margin:22px 2px 10px;
+  font-size:13px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.7px;
+  color:var(--muted);
 }
-.lock{
-display:flex;align-items:center;justify-content:space-between;gap:12px;
-background:#f8fafc;border:1px solid var(--border);
-border-radius:15px;padding:13px;margin-top:14px
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
 }
-.lock-left{display:flex;align-items:center;gap:10px}
-.lock input{width:auto}
-.result{margin-top:20px}
-.result-main{background:var(--dark);color:#fff;border-radius:24px;padding:24px}
-.result-label{font-size:12px;opacity:.7;font-weight:800;letter-spacing:.6px}
-.maxbid{font-size:42px;font-weight:900;letter-spacing:-1.5px;margin-top:5px}
-.locked{
-display:inline-block;margin-top:8px;padding:6px 10px;border-radius:999px;
-background:#374151;font-size:12px
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
 }
-.result-grid{
-display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px
+
+.field.full{
+  grid-column:1/-1;
 }
+
+label{
+  font-size:12px;
+  font-weight:700;
+  color:#4b5563;
+}
+
+input,select{
+  width:100%;
+  border:1px solid var(--border);
+  background:#fafafa;
+  border-radius:13px;
+  padding:13px 12px;
+  font-size:16px;
+  outline:none;
+}
+
+input:focus,select:focus{
+  border-color:var(--blue);
+  background:white;
+}
+
+button.primary{
+  width:100%;
+  border:0;
+  border-radius:15px;
+  padding:15px;
+  background:#111827;
+  color:white;
+  font-size:16px;
+  font-weight:800;
+  margin-top:16px;
+}
+
+button.secondary{
+  border:0;
+  border-radius:13px;
+  padding:11px 14px;
+  background:#eef2f7;
+  font-weight:700;
+}
+
+button.danger{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.hero{
+  text-align:center;
+  padding:24px 15px;
+  border-radius:20px;
+  background:#111827;
+  color:white;
+}
+
+.hero-label{
+  font-size:13px;
+  font-weight:700;
+  opacity:.75;
+  letter-spacing:.7px;
+}
+
+.hero-value{
+  font-size:42px;
+  font-weight:900;
+  letter-spacing:-1.8px;
+  margin:7px 0;
+}
+
+.hero-small{
+  font-size:12px;
+  opacity:.7;
+}
+
+.metrics{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:12px;
+}
+
 .metric{
-background:#fff;border:1px solid var(--border);border-radius:17px;padding:15px
+  background:#f8fafc;
+  border-radius:15px;
+  padding:14px;
 }
-.metric-label{color:var(--muted);font-size:12px;font-weight:700}
-.metric-value{margin-top:5px;font-size:21px;font-weight:850}
-.decision{margin-top:14px;padding:15px;border-radius:17px;font-weight:900;text-align:center}
-.go{background:#dcfce7;color:#166534}
-.watch{background:#fef3c7;color:#92400e}
-.stop{background:#fee2e2;color:#991b1b}
-.explanation{
-margin-top:14px;background:#f8fafc;border-radius:15px;
-padding:14px;font-size:14px;line-height:1.5
+
+.metric-label{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
 }
-.source-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.source{border:1px solid var(--border);border-radius:17px;padding:16px;background:#fff}
-.source strong{display:block;margin-bottom:5px}
-.source a{color:var(--blue);text-decoration:none;font-size:13px}
-.favorite{
-border:1px solid var(--border);border-radius:17px;padding:16px;
-margin-bottom:10px;background:#fff
+
+.metric-value{
+  font-size:22px;
+  font-weight:850;
+  margin-top:4px;
 }
-.small{color:var(--muted);font-size:13px}
-.empty{color:var(--muted);text-align:center;padding:30px 10px}
-.warning{
-background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;
-padding:13px;border-radius:14px;margin-top:12px;font-size:13px
+
+.decision{
+  margin-top:12px;
+  text-align:center;
+  padding:13px;
+  border-radius:14px;
+  font-weight:900;
+  font-size:17px;
 }
+
+.go{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.watch{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.stop{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.lock{
+  margin-top:12px;
+  padding:14px;
+  border-radius:15px;
+  background:#f1f5f9;
+}
+
+.lock strong{
+  display:block;
+  margin-bottom:5px;
+}
+
 .info{
-background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;
-padding:13px;border-radius:14px;margin-top:12px;font-size:13px;line-height:1.5
+  background:#eff6ff;
+  color:#1e40af;
+  padding:13px;
+  border-radius:14px;
+  font-size:13px;
+  line-height:1.45;
+  margin-top:12px;
 }
-@media(max-width:700px){
-.grid{grid-template-columns:1fr}
-.field.full{grid-column:auto}
-.source-grid{grid-template-columns:1fr}
-.maxbid{font-size:36px}
+
+.warning{
+  background:#fff7ed;
+  color:#9a3412;
+  padding:13px;
+  border-radius:14px;
+  font-size:13px;
+  line-height:1.45;
+  margin-top:12px;
+}
+
+.detail{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid var(--border);
+  font-size:14px;
+}
+
+.detail:last-child{
+  border-bottom:0;
+}
+
+.detail span:first-child{
+  color:var(--muted);
+}
+
+.source{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  margin-bottom:9px;
+}
+
+.source a{
+  color:var(--blue);
+  font-weight:700;
+  text-decoration:none;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.small{
+  font-size:12px;
+  color:var(--muted);
+}
+
+@media(max-width:600px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .field.full{
+    grid-column:auto;
+  }
+
+  .hero-value{
+    font-size:37px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header class="topbar">
-<div class="topbar-inner">
-<div>
-<div class="brand">🚀 Revente Radar</div>
-<div class="version">● V80 ENGINE 1.1.1</div>
-</div>
-</div>
+<header>
+  <div class="header-title">Revente Radar V80</div>
+  <div class="header-sub">● V80 CORE 1.2 — moteur financier sécurisé</div>
 </header>
 
 <div class="container">
 
-<nav class="nav">
-<button onclick="showPage('home')" id="nav-home">Accueil</button>
-<button onclick="showPage('radar')" id="nav-radar">Radar</button>
-<button onclick="showPage('add')" id="nav-add">Ajouter</button>
-<button onclick="showPage('favorites')" id="nav-favorites">Favoris</button>
-<button onclick="showPage('settings')" id="nav-settings">Réglages</button>
+<nav>
+  <button class="active" onclick="showPage('home',this)">Accueil</button>
+  <button onclick="showPage('radar',this)">Radar</button>
+  <button onclick="showPage('add',this)">Ajouter</button>
+  <button onclick="showPage('favorites',this)">Favoris</button>
+  <button onclick="showPage('settings',this)">Réglages</button>
 </nav>
-
 
 <!-- ACCUEIL -->
 
-<section id="page-home" class="page">
+<section id="home">
 
-<h1>Revente Radar V80</h1>
+<div class="card">
+<h2>V80 CORE</h2>
 
-<div class="subtitle">
-Le moteur calcule le prix maximum à enchérir et le coût total réel.
+<div class="metrics">
+<div class="metric">
+<div class="metric-label">Budget maximum</div>
+<div class="metric-value" id="homeBudget">300 €</div>
+</div>
+
+<div class="metric">
+<div class="metric-label">Marge minimum</div>
+<div class="metric-value" id="homeMargin">50 %</div>
+</div>
+
+<div class="metric">
+<div class="metric-label">ROI minimum</div>
+<div class="metric-value" id="homeROI">50 %</div>
+</div>
+
+<div class="metric">
+<div class="metric-label">Rayon</div>
+<div class="metric-value" id="homeRadius">80 km</div>
+</div>
+</div>
+
+<div class="info">
+Le moteur V80 calcule séparément le <strong>prix maximum à enchérir</strong> et le <strong>coût total réel</strong>.
+</div>
+
 </div>
 
 <div class="card">
-<h2>🧠 V80 CORE</h2>
-<p class="small">
-Calcul financier déterministe. La future IA pourra enrichir les données,
-mais ne pourra jamais augmenter arbitrairement le plafond.
-</p>
-<button class="primary" onclick="showPage('add')">
-+ Analyser une affaire
-</button>
+<h2>Règle de sécurité</h2>
+
+<div class="detail">
+<span>Calcul financier</span>
+<strong>V80 déterministe</strong>
 </div>
 
-<div class="card">
-
-<div class="section-title">Tes limites actuelles</div>
-
-<div class="result-grid">
-
-<div class="metric">
-<div class="metric-label">BUDGET MAXIMUM</div>
-<div class="metric-value" id="home-budget">300 €</div>
+<div class="detail">
+<span>IA</span>
+<strong>Jamais autorisée à augmenter le plafond</strong>
 </div>
 
-<div class="metric">
-<div class="metric-label">MARGE MINIMUM</div>
-<div class="metric-value" id="home-margin">50 %</div>
+<div class="detail">
+<span>Plafond verrouillé</span>
+<strong>Prioritaire</strong>
 </div>
 
-<div class="metric">
-<div class="metric-label">ROI MINIMUM</div>
-<div class="metric-value" id="home-roi">50 %</div>
-</div>
-
-<div class="metric">
-<div class="metric-label">RAYON</div>
-<div class="metric-value" id="home-radius">80 km</div>
+<div class="detail">
+<span>Automatisation</span>
+<strong>Aucun dépassement autorisé</strong>
 </div>
 
 </div>
-</div>
+
 </section>
 
 
 <!-- RADAR -->
 
-<section id="page-radar" class="page">
-
-<h1>Radar</h1>
-
-<div class="subtitle">Sources disponibles.</div>
+<section id="radar" class="hidden">
 
 <div class="card">
-
-<div class="source-grid">
+<h2>🎯 Radar des sources</h2>
 
 <div class="source">
-<strong>🔨 Interencheres</strong>
-<span class="small">Enchères</span><br>
+<div>
+<strong>Interencheres</strong>
+<div class="small">Enchères et ventes</div>
+</div>
 <a href="https://www.interencheres.com/" target="_blank">Ouvrir</a>
 </div>
 
 <div class="source">
-<strong>🛒 Leboncoin</strong>
-<span class="small">Petites annonces</span><br>
+<div>
+<strong>Leboncoin</strong>
+<div class="small">Petites annonces</div>
+</div>
 <a href="https://www.leboncoin.fr/" target="_blank">Ouvrir</a>
 </div>
 
 <div class="source">
-<strong>📦 eBay</strong>
-<span class="small">Marketplace</span><br>
+<div>
+<strong>eBay</strong>
+<div class="small">Marketplace</div>
+</div>
 <a href="https://www.ebay.fr/" target="_blank">Ouvrir</a>
 </div>
 
 <div class="source">
-<strong>🎁 Dons</strong>
-<span class="small">Objets gratuits</span>
+<div>
+<strong>Dons</strong>
+<div class="small">Opportunités gratuites locales</div>
+</div>
+<span>V80.2</span>
 </div>
 
 <div class="source">
-<strong>🏷️ Liquidations</strong>
-<span class="small">Stocks / entreprises</span>
+<div>
+<strong>Liquidations</strong>
+<div class="small">Stocks et entreprises</div>
+</div>
+<span>V80.2</span>
 </div>
 
 <div class="source">
-<strong>📦 Déstockage</strong>
-<span class="small">Lots / invendus</span>
+<div>
+<strong>Déstockage</strong>
+<div class="small">Stocks professionnels</div>
+</div>
+<span>V80.2</span>
+</div>
+
+<div class="info">
+Le Radar automatique sera branché sur ce moteur. Il ne pourra jamais contourner les règles financières V80.
 </div>
 
 </div>
-</div>
+
 </section>
 
 
 <!-- AJOUTER -->
 
-<section id="page-add" class="page">
-
-<h1>Analyser une affaire</h1>
-
-<div class="subtitle">
-Renseigne les données disponibles.
-</div>
+<section id="add" class="hidden">
 
 <div class="card">
+
+<h2>🔎 Analyser une affaire</h2>
 
 <div class="section-title">Annonce</div>
 
 <div class="grid">
 
 <div class="field full">
-<label>Nom de l'affaire</label>
-<input id="title" placeholder="Ex : Robot de cuisine professionnel">
+<label>Lien de l'annonce</label>
+<input id="listingUrl" type="url" placeholder="https://...">
 </div>
 
 <div class="field full">
-<label>Lien de l'annonce</label>
-<input id="url" type="url" placeholder="https://...">
+<label>Nom / description</label>
+<input id="listingTitle" placeholder="Ex : machine à glaçons professionnelle">
 </div>
 
-<div class="field">
-<label>Prix actuel / mise de départ (€)</label>
-<input id="currentPrice" type="number" min="0" step="0.01" value="0">
 </div>
+
+
+<div class="section-title">Revente</div>
+
+<div class="grid">
 
 <div class="field">
 <label>Revente réaliste (€)</label>
-<input id="resale" type="number" min="0" step="0.01" value="1500">
-</div>
-
-<div class="field full">
-<label>Description</label>
-<textarea id="description"
-placeholder="Marque, modèle, état, accessoires, défauts..."></textarea>
+<input id="resale" type="number" value="1500">
 </div>
 
 </div>
 
 
-<!-- ACHAT -->
-
-<div class="section-title">💰 Frais d'achat</div>
+<div class="section-title">Frais d'achat</div>
 
 <div class="grid">
 
 <div class="field">
 <label>Commission acheteur (%)</label>
-<input id="buyerCommission" type="number" min="0" step="0.01" value="14">
+<input id="buyerCommission" type="number" value="14">
 </div>
 
 <div class="field">
 <label>TVA sur commission (%)</label>
-<input id="commissionVat" type="number" min="0" step="0.01" value="20">
+<input id="commissionVat" type="number" value="20">
 </div>
 
 <div class="field">
-<label>TVA sur le prix d'achat (%)</label>
-<input id="purchaseVat" type="number" min="0" step="0.01" value="0">
+<label>TVA sur prix d'achat (%)</label>
+<input id="purchaseVat" type="number" value="0">
 </div>
 
 <div class="field">
 <label>Frais fixes (€)</label>
-<input id="fixed" type="number" min="0" step="0.01" value="0">
+<input id="fixed" type="number" value="0">
 </div>
 
 <div class="field">
 <label>Frais de dossier (€)</label>
-<input id="dossier" type="number" min="0" step="0.01" value="0">
+<input id="dossier" type="number" value="0">
 </div>
 
 </div>
 
-<div class="info">
-💡 La TVA est maintenant visible séparément.
-Par défaut, la TVA sur le prix d'achat est à <strong>0 %</strong>.
-Elle ne sera appliquée que lorsque le régime du lot le justifie.
-</div>
 
-
-<!-- LOGISTIQUE -->
-
-<div class="section-title">🚚 Logistique</div>
+<div class="section-title">Logistique</div>
 
 <div class="grid">
 
 <div class="field">
 <label>Transport / livraison (€)</label>
-<input id="transport" type="number" min="0" step="0.01" value="0">
+<input id="transport" type="number" value="0">
 </div>
 
 <div class="field">
 <label>Déplacement (€)</label>
-<input id="travel" type="number" min="0" step="0.01" value="0">
+<input id="travel" type="number" value="0">
 </div>
 
 <div class="field">
 <label>Contrôle / expertise (€)</label>
-<input id="inspection" type="number" min="0" step="0.01" value="0">
+<input id="inspection" type="number" value="0">
 </div>
 
 <div class="field">
 <label>Réparations (€)</label>
-<input id="repairs" type="number" min="0" step="0.01" value="0">
+<input id="repairs" type="number" value="0">
 </div>
 
 <div class="field">
 <label>Remise en état (€)</label>
-<input id="refurbishment" type="number" min="0" step="0.01" value="0">
+<input id="refurbishment" type="number" value="0">
 </div>
 
 <div class="field">
 <label>Autres frais (€)</label>
-<input id="other" type="number" min="0" step="0.01" value="0">
+<input id="other" type="number" value="0">
 </div>
 
 </div>
 
 
-<!-- REVENTE -->
-
-<div class="section-title">🏷️ Frais de revente</div>
+<div class="section-title">Frais de revente</div>
 
 <div class="grid">
 
 <div class="field">
 <label>Commission de vente (%)</label>
-<input id="sellerCommission" type="number" min="0" step="0.01" value="0">
+<input id="sellerCommission" type="number" value="0">
 </div>
 
 <div class="field">
-<label>TVA sur commission de vente (%)</label>
-<input id="saleCommissionVat" type="number" min="0" step="0.01" value="0">
+<label>TVA sur commission vente (%)</label>
+<input id="saleCommissionVat" type="number" value="0">
 </div>
 
 <div class="field">
-<label>TVA sur la revente (%)</label>
-<input id="saleVat" type="number" min="0" step="0.01" value="0">
+<label>TVA sur revente (%)</label>
+<input id="saleVat" type="number" value="0">
 </div>
 
 <div class="field">
 <label>Frais fixes de vente (€)</label>
-<input id="saleFixed" type="number" min="0" step="0.01" value="0">
+<input id="saleFixed" type="number" value="0">
 </div>
 
 </div>
 
 
-<div class="info">
-💡 La TVA de revente est distincte de la commission de vente.
-Cela permettra plus tard de gérer différents régimes fiscaux sans modifier le moteur.
+<div class="section-title">Sécurité V80</div>
+
+<div class="grid">
+
+<div class="field">
+<label>Marge de sécurité (€)</label>
+<input id="safety" type="number" value="0">
+</div>
+
+</div>
+
+<button class="primary" onclick="calculate()">🧮 CALCULER V80</button>
+
 </div>
 
 
-<!-- VERROU -->
+<div id="result" class="hidden">
+
+<div class="card">
+
+<div class="hero">
+<div class="hero-label">PRIX MAX À ENCHÉRIR</div>
+<div class="hero-value" id="maxBid">0 €</div>
+<div class="hero-small">Montant maximum à saisir sur la plateforme</div>
+</div>
+
+
+<div class="metrics">
+
+<div class="metric">
+<div class="metric-label">Coût total réel</div>
+<div class="metric-value" id="totalCost">0 €</div>
+</div>
+
+<div class="metric">
+<div class="metric-label">Revente réaliste</div>
+<div class="metric-value" id="resaleDisplay">0 €</div>
+</div>
+
+<div class="metric">
+<div class="metric-label">Marge estimée</div>
+<div class="metric-value" id="profit">0 €</div>
+</div>
+
+<div class="metric">
+<div class="metric-label">Marge / revente</div>
+<div class="metric-value" id="marginDisplay">0 %</div>
+</div>
+
+<div class="metric">
+<div class="metric-label">ROI</div>
+<div class="metric-value" id="roiDisplay">0 %</div>
+</div>
+
+<div class="metric">
+<div class="metric-label">Confiance</div>
+<div class="metric-value">À déterminer</div>
+</div>
+
+</div>
+
+
+<div id="decision" class="decision"></div>
+
 
 <div class="lock">
 
-<div class="lock-left">
-<span>🔒</span>
-<div>
-<strong>Plafond maximum verrouillé</strong>
-<div class="small">
-Aucune automatisation ou IA ne pourra l'augmenter.
-</div>
-</div>
+<strong>🔒 PLAFOND V80</strong>
+
+<div id="lockText" class="small">
+Aucun plafond verrouillé.
 </div>
 
-<input type="checkbox" id="lockCheckbox" onchange="toggleLock()">
-
-</div>
-
-
-<button class="primary" onclick="calculate()">
-🧮 CALCULER V80
+<button id="lockButton" class="secondary" onclick="toggleLock()">
+🔒 Verrouiller ce plafond
 </button>
 
-<div id="result"></div>
+</div>
 
 </div>
+
+
+<div class="card">
+
+<h2>🧮 Décomposition du calcul</h2>
+
+<div class="detail">
+<span>Prix maximum théorique</span>
+<strong id="theoretical">0 €</strong>
+</div>
+
+<div class="detail">
+<span>Commission acheteur</span>
+<strong id="buyerFee">0 €</strong>
+</div>
+
+<div class="detail">
+<span>TVA commission</span>
+<strong id="buyerVat">0 €</strong>
+</div>
+
+<div class="detail">
+<span>TVA achat</span>
+<strong id="purchaseVatAmount">0 €</strong>
+</div>
+
+<div class="detail">
+<span>Frais fixes + logistique</span>
+<strong id="fixedCosts">0 €</strong>
+</div>
+
+<div class="detail">
+<span>Frais de revente</span>
+<strong id="saleFees">0 €</strong>
+</div>
+
+<div class="detail">
+<span>Contrainte principale</span>
+<strong id="constraint">—</strong>
+</div>
+
+<div class="detail">
+<span>Marge de sécurité</span>
+<strong id="safetyDisplay">0 €</strong>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>📋 Pourquoi cette décision ?</h2>
+
+<div id="explanation" class="info"></div>
+
+<div class="warning">
+⚠️ Les taux de TVA doivent toujours correspondre aux conditions réelles du lot et du régime de vente. Le moteur V80 calcule les montants saisis ; il ne constitue pas une validation fiscale.
+</div>
+
+</div>
+
+</div>
+
 </section>
 
 
 <!-- FAVORIS -->
 
-<section id="page-favorites" class="page">
+<section id="favorites" class="hidden">
 
-<h1>Favoris</h1>
+<div class="card">
 
-<div class="subtitle">
-Tes opportunités enregistrées.
+<h2>⭐ Favoris</h2>
+
+<div id="favoritesList" class="small">
+Aucune affaire enregistrée.
 </div>
 
-<div class="card" id="favoritesList"></div>
+</div>
 
 </section>
 
 
 <!-- REGLAGES -->
 
-<section id="page-settings" class="page">
-
-<h1>Réglages</h1>
-
-<div class="subtitle">
-Paramètres centraux du moteur V80.
-</div>
+<section id="settings" class="hidden">
 
 <div class="card">
+
+<h2>⚙️ Réglages V80</h2>
 
 <div class="grid">
 
 <div class="field">
 <label>Budget maximum (€)</label>
-<input id="settingBudget" type="number" min="0" step="0.01">
-</div>
-
-<div class="field">
-<label>Rayon maximum (km)</label>
-<input id="settingRadius" type="number" min="0" step="1">
+<input id="settingBudget" type="number">
 </div>
 
 <div class="field">
 <label>Marge minimum (%)</label>
-<input id="settingMargin" type="number" min="0" step="0.1">
+<input id="settingMargin" type="number">
 </div>
 
 <div class="field">
 <label>ROI minimum (%)</label>
-<input id="settingROI" type="number" min="0" step="0.1">
+<input id="settingROI" type="number">
+</div>
+
+<div class="field">
+<label>Rayon maximum (km)</label>
+<input id="settingRadius" type="number">
 </div>
 
 </div>
@@ -489,14 +809,37 @@ Paramètres centraux du moteur V80.
 💾 ENREGISTRER LES RÉGLAGES
 </button>
 
+<div class="info">
+Ces paramètres deviennent les règles centrales du moteur V80.
 </div>
 
+</div>
+
+
 <div class="card">
-<h2>🔐 Sécurité V80</h2>
-<p class="small">
-Le plafond maximum est calculé par le moteur et peut être verrouillé.
-Une future IA ne pourra pas le dépasser.
-</p>
+
+<h2>🛡️ Sécurité</h2>
+
+<div class="detail">
+<span>IA autorisée à augmenter le plafond</span>
+<strong>NON</strong>
+</div>
+
+<div class="detail">
+<span>Automatisation autorisée à dépasser le plafond</span>
+<strong>NON</strong>
+</div>
+
+<div class="detail">
+<span>Enchère automatique</span>
+<strong>NON</strong>
+</div>
+
+<div class="detail">
+<span>Plafond verrouillé</span>
+<strong>PRIORITAIRE</strong>
+</div>
+
 </div>
 
 </section>
@@ -506,886 +849,849 @@ Une future IA ne pourra pas le dépasser.
 
 <script>
 
-let settings=JSON.parse(localStorage.getItem("v80Settings"))||{
-budget:300,
-radius:80,
-margin:50,
-roi:50
+const DEFAULT_SETTINGS = {
+  budget:300,
+  margin:50,
+  roi:50,
+  radius:80
 };
 
-let lockedMaxBid=
-localStorage.getItem("v80LockedMaxBid")!==null
-?Number(localStorage.getItem("v80LockedMaxBid"))
-:null;
+let settings =
+  JSON.parse(localStorage.getItem("v80_settings"))
+  || DEFAULT_SETTINGS;
 
+let lockedMaxBid =
+  localStorage.getItem("v80_lockedMaxBid") !== null
+  ? Number(localStorage.getItem("v80_lockedMaxBid"))
+  : null;
+
+let lastResult = null;
+
+
+/* -------------------------
+   OUTILS
+------------------------- */
+
+function money(value){
+  return Number(value || 0).toLocaleString("fr-FR",{
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  })+" €";
+}
 
 function num(id){
-const el=document.getElementById(id);
-if(!el)return 0;
-const value=Number(el.value);
-return Number.isFinite(value)&&value>0?value:0;
+  return Math.max(
+    0,
+    Number(document.getElementById(id).value)||0
+  );
 }
 
 
-function euro(value){
-return new Intl.NumberFormat("fr-FR",{
-style:"currency",
-currency:"EUR",
-maximumFractionDigits:2
-}).format(value);
+/* -------------------------
+   NAVIGATION
+------------------------- */
+
+function showPage(page,button){
+
+  document.querySelectorAll(
+    ".container > section"
+  ).forEach(s=>s.classList.add("hidden"));
+
+  document.getElementById(page)
+    .classList.remove("hidden");
+
+  document.querySelectorAll("nav button")
+    .forEach(b=>b.classList.remove("active"));
+
+  if(button){
+    button.classList.add("active");
+  }
+
+  if(page==="settings"){
+    loadSettings();
+  }
+
+  if(page==="favorites"){
+    loadFavorites();
+  }
 }
 
 
-function showPage(page){
-
-document.querySelectorAll(".page")
-.forEach(el=>el.classList.remove("active"));
-
-document.querySelectorAll(".nav button")
-.forEach(el=>el.classList.remove("active"));
-
-document.getElementById("page-"+page)
-.classList.add("active");
-
-document.getElementById("nav-"+page)
-.classList.add("active");
-
-if(page==="favorites")renderFavorites();
-
-updateHome();
-}
-
-
-/* =========================
-   MOTEUR V80 1.1.1
-========================= */
+/* -------------------------
+   MOTEUR V80
+------------------------- */
 
 function calculateEngine(data){
 
-const resale=Math.max(0,data.resale);
+  const resale=Math.max(0,data.resale);
+
+  const buyerCommission =
+    Math.max(0,data.buyerCommission)/100;
 
-const buyerCommission=Math.max(0,data.buyerCommission)/100;
-const commissionVat=Math.max(0,data.commissionVat)/100;
-const purchaseVat=Math.max(0,data.purchaseVat)/100;
+  const commissionVat =
+    Math.max(0,data.commissionVat)/100;
+
+  const purchaseVat =
+    Math.max(0,data.purchaseVat)/100;
+
+  const sellerCommission =
+    Math.max(0,data.sellerCommission)/100;
+
+  const saleCommissionVat =
+    Math.max(0,data.saleCommissionVat)/100;
 
-const sellerCommission=Math.max(0,data.sellerCommission)/100;
-const saleCommissionVat=
-Math.max(0,data.saleCommissionVat)/100;
+  const saleVat =
+    Math.max(0,data.saleVat)/100;
 
-const saleVat=Math.max(0,data.saleVat)/100;
+  const fixedPurchaseCosts =
+    Math.max(0,data.fixed)+
+    Math.max(0,data.dossier)+
+    Math.max(0,data.transport)+
+    Math.max(0,data.travel)+
+    Math.max(0,data.inspection)+
+    Math.max(0,data.repairs)+
+    Math.max(0,data.refurbishment)+
+    Math.max(0,data.other);
 
+  const saleCommissionAmount =
+    resale*sellerCommission;
 
-/*
-TVA SUR LE PRIX D'ACHAT
+  const saleCommissionVatAmount =
+    saleCommissionAmount*saleCommissionVat;
 
-Cette TVA est appliquée au montant de l'enchère.
-*/
+  const saleTaxAmount =
+    resale*saleVat;
 
-const purchaseVatFactor=purchaseVat;
+  const saleFixed =
+    Math.max(0,data.saleFixed);
 
+  const totalSaleFees =
+    saleCommissionAmount+
+    saleCommissionVatAmount+
+    saleTaxAmount+
+    saleFixed;
 
-/*
-COMMISSION ACHETEUR + TVA SUR COMMISSION
-*/
+  const resaleNet =
+    Math.max(0,resale-totalSaleFees);
 
-const buyerFeeFactor=
-buyerCommission*(1+commissionVat);
+  const marginRate =
+    Math.max(0,settings.margin)/100;
 
+  const roiRate =
+    Math.max(0,settings.roi)/100;
 
-/*
-FRAIS FIXES ET LOGISTIQUES
-*/
+  const budget =
+    Math.max(0,settings.budget);
 
-const fixedPurchaseCosts=
-Math.max(0,data.fixed)+
-Math.max(0,data.dossier)+
-Math.max(0,data.transport)+
-Math.max(0,data.travel)+
-Math.max(0,data.inspection)+
-Math.max(0,data.repairs)+
-Math.max(0,data.refurbishment)+
-Math.max(0,data.other);
+  const safety =
+    Math.max(0,data.safety);
 
+  const maxTotalByMargin =
+    resaleNet*(1-marginRate);
 
-/*
-FRAIS DE REVENTE
+  const maxTotalByROI =
+    resaleNet/(1+roiRate);
 
-Commission + TVA sur commission
-*/
+  const maxTotalByBudget =
+    budget-safety;
 
-const sellerFeeFactor=
-sellerCommission*(1+saleCommissionVat);
+  const limits=[
+    {
+      name:"Marge minimum",
+      value:maxTotalByMargin
+    },
+    {
+      name:"ROI minimum",
+      value:maxTotalByROI
+    },
+    {
+      name:"Budget maximum",
+      value:maxTotalByBudget
+    }
+  ];
+
+  const maxRealCost =
+    Math.max(
+      0,
+      Math.min(...limits.map(x=>x.value))
+    );
+
+  const purchaseVariableFactor =
+    1+
+    purchaseVat+
+    buyerCommission*(1+commissionVat);
+
+  let theoreticalMaxBid=0;
+
+  if(maxRealCost>fixedPurchaseCosts){
+
+    theoreticalMaxBid =
+      (
+        maxRealCost-
+        fixedPurchaseCosts
+      )/
+      purchaseVariableFactor;
+
+  }
+
+  theoreticalMaxBid =
+    Math.max(0,theoreticalMaxBid);
+
+  let maxBid=theoreticalMaxBid;
 
+  if(lockedMaxBid!==null){
+
+    maxBid=Math.min(
+      theoreticalMaxBid,
+      lockedMaxBid
+    );
 
-/*
-TVA SUR LA REVENTE
+  }
 
-Version moteur actuelle :
-on la traite comme un coût séparé
-pour rester conservateur.
+  const purchaseVatAmount =
+    maxBid*purchaseVat;
 
-Le régime fiscal définitif pourra être
-configuré dans une prochaine version.
-*/
+  const buyerCommissionAmount =
+    maxBid*buyerCommission;
 
-const saleTaxAmount=
-resale*saleVat;
+  const buyerCommissionVatAmount =
+    buyerCommissionAmount*commissionVat;
 
+  const total =
+    maxBid+
+    purchaseVatAmount+
+    buyerCommissionAmount+
+    buyerCommissionVatAmount+
+    fixedPurchaseCosts;
 
-/*
-FRAIS DE VENTE
-*/
+  const profit =
+    resale-
+    totalSaleFees-
+    total;
 
-const saleCommissionAmount=
-resale*sellerCommission;
+  const roi =
+    total>0
+    ?(profit/total)*100
+    :0;
 
-const saleCommissionVatAmount=
-saleCommissionAmount*saleCommissionVat;
+  const margin =
+    resale>0
+    ?(profit/resale)*100
+    :0;
 
-const saleFixed=
-Math.max(0,data.saleFixed);
+  const smallest=Math.min(
+    ...limits.map(x=>x.value)
+  );
 
-const totalSaleFees=
-saleCommissionAmount+
-saleCommissionVatAmount+
-saleTaxAmount+
-saleFixed;
+  const active=limits.find(
+    x=>Math.abs(x.value-smallest)<0.01
+  );
 
+  const constraint =
+    active
+    ?active.name
+    :"Aucune";
 
-/*
-REVENTE NETTE
-*/
+  let decision="STOP";
 
-const resaleNet=
-Math.max(
-0,
-resale-totalSaleFees
-);
+  if(
+    maxBid>0 &&
+    profit>=0 &&
+    roi>=settings.roi &&
+    margin>=settings.margin
+  ){
+    decision="GO";
+  }
+  else if(
+    maxBid>0 &&
+    profit>0
+  ){
+    decision="SURVEILLANCE";
+  }
 
+  return {
 
-/*
-PARAMETRES V80
-*/
+    resale,
+    resaleNet,
 
-const marginRate=
-Math.max(0,settings.margin)/100;
+    buyerCommission,
+    commissionVat,
+    purchaseVat,
 
-const roiRate=
-Math.max(0,settings.roi)/100;
+    sellerCommission,
+    saleCommissionVat,
+    saleVat,
 
-const budget=
-Math.max(0,settings.budget);
+    fixedPurchaseCosts,
+    saleFixed,
 
+    purchaseVatAmount,
+    buyerCommissionAmount,
+    buyerCommissionVatAmount,
 
-/*
-LIMITE MARGE
-*/
+    saleCommissionAmount,
+    saleCommissionVatAmount,
+    saleTaxAmount,
 
-const maxTotalByMargin=
-resaleNet*(1-marginRate);
+    totalSaleFees,
 
+    theoreticalMaxBid,
+    maxBid,
 
-/*
-LIMITE ROI
-*/
+    total,
+    profit,
+    roi,
+    margin,
 
-const maxTotalByROI=
-resaleNet/(1+roiRate);
+    safety,
 
+    decision,
+    constraint
 
-/*
-LIMITE BUDGET
-*/
-
-const maxRealCost=
-Math.max(
-0,
-Math.min(
-maxTotalByMargin,
-maxTotalByROI,
-budget
-)
-);
-
-
-/*
-CALCUL DU MAX D'ENCHERE
-
-Coût réel achat :
-
-enchère
-+ TVA achat
-+ commission
-+ TVA commission
-+ frais fixes
-*/
-
-let theoreticalMaxBid=0;
-
-const purchaseVariableFactor=
-1+
-purchaseVatFactor+
-buyerFeeFactor;
-
-if(maxRealCost>fixedPurchaseCosts){
-
-theoreticalMaxBid=
-(
-maxRealCost-fixedPurchaseCosts
-)/
-purchaseVariableFactor;
-
-}
-
-theoreticalMaxBid=
-Math.max(0,theoreticalMaxBid);
-
-
-/*
-VERROUILLAGE
-*/
-
-let maxBid=theoreticalMaxBid;
-
-if(lockedMaxBid!==null){
-
-maxBid=Math.min(
-theoreticalMaxBid,
-lockedMaxBid
-);
-
-}
-
-
-/*
-FRAIS ACHAT
-*/
-
-const purchaseVatAmount=
-maxBid*purchaseVat;
-
-const buyerCommissionAmount=
-maxBid*buyerCommission;
-
-const buyerCommissionVatAmount=
-buyerCommissionAmount*commissionVat;
-
-
-/*
-COÛT TOTAL RÉEL
-*/
-
-const total=
-maxBid+
-purchaseVatAmount+
-buyerCommissionAmount+
-buyerCommissionVatAmount+
-fixedPurchaseCosts;
-
-
-/*
-BÉNÉFICE
-*/
-
-const profit=
-resale-
-totalSaleFees-
-total;
-
-
-/*
-ROI
-*/
-
-const roi=
-total>0?(profit/total)*100:0;
-
-
-/*
-MARGE SUR REVENTE
-*/
-
-const margin=
-resale>0?(profit/resale)*100:0;
-
-
-/*
-CONTRAINTE
-*/
-
-const limits=[
-{name:"Marge minimum",value:maxTotalByMargin},
-{name:"ROI minimum",value:maxTotalByROI},
-{name:"Budget maximum",value:budget}
-];
-
-const smallest=Math.min(...limits.map(x=>x.value));
-
-const active=limits.find(
-x=>Math.abs(x.value-smallest)<0.01
-);
-
-const constraint=active?active.name:"Aucune";
-
-
-/*
-DECISION
-*/
-
-let decision="STOP";
-
-if(
-maxBid>0 &&
-profit>=0 &&
-roi>=settings.roi &&
-margin>=settings.margin
-){
-decision="GO";
-}
-else if(
-maxBid>0 &&
-profit>0
-){
-decision="SURVEILLANCE";
-}
-
-
-return{
-
-resale,
-resaleNet,
-
-buyerCommission,
-commissionVat,
-purchaseVat,
-
-sellerCommission,
-saleCommissionVat,
-saleVat,
-
-fixedPurchaseCosts,
-saleFixed,
-
-purchaseVatAmount,
-buyerCommissionAmount,
-buyerCommissionVatAmount,
-
-saleCommissionAmount,
-saleCommissionVatAmount,
-saleTaxAmount,
-
-totalSaleFees,
-
-theoreticalMaxBid,
-maxBid,
-
-total,
-profit,
-roi,
-margin,
-
-decision,
-constraint
-};
+  };
 
 }
 
 
-/* =========================
-   DONNEES FORMULAIRE
-========================= */
-
-function getFormData(){
-
-return{
-
-title:document.getElementById("title").value.trim(),
-
-url:document.getElementById("url").value.trim(),
-
-currentPrice:num("currentPrice"),
-
-resale:num("resale"),
-
-description:
-document.getElementById("description").value.trim(),
-
-buyerCommission:num("buyerCommission"),
-
-commissionVat:num("commissionVat"),
-
-purchaseVat:num("purchaseVat"),
-
-fixed:num("fixed"),
-
-dossier:num("dossier"),
-
-transport:num("transport"),
-
-travel:num("travel"),
-
-inspection:num("inspection"),
-
-repairs:num("repairs"),
-
-refurbishment:num("refurbishment"),
-
-other:num("other"),
-
-sellerCommission:num("sellerCommission"),
-
-saleCommissionVat:num("saleCommissionVat"),
-
-saleVat:num("saleVat"),
-
-saleFixed:num("saleFixed")
-
-};
-
-}
-
+/* -------------------------
+   CALCUL
+------------------------- */
 
 function calculate(){
 
-const data=getFormData();
+  const data={
 
-const result=calculateEngine(data);
+    resale:num("resale"),
 
-renderResult(result,data);
+    buyerCommission:num("buyerCommission"),
+    commissionVat:num("commissionVat"),
+    purchaseVat:num("purchaseVat"),
 
-}
+    fixed:num("fixed"),
+    dossier:num("dossier"),
 
+    transport:num("transport"),
+    travel:num("travel"),
+    inspection:num("inspection"),
+    repairs:num("repairs"),
+    refurbishment:num("refurbishment"),
+    other:num("other"),
 
-/* =========================
-   RESULTAT
-========================= */
+    sellerCommission:num("sellerCommission"),
+    saleCommissionVat:num("saleCommissionVat"),
+    saleVat:num("saleVat"),
+    saleFixed:num("saleFixed"),
 
-function renderResult(result,data){
+    safety:num("safety")
 
-const box=document.getElementById("result");
+  };
 
-let decisionClass="stop";
-let decisionText="🔴 STOP";
+  lastResult=calculateEngine(data);
 
-if(result.decision==="GO"){
-decisionClass="go";
-decisionText="🟢 GO";
-}
-else if(result.decision==="SURVEILLANCE"){
-decisionClass="watch";
-decisionText="🟠 SURVEILLANCE";
-}
-
-const lockedText=
-lockedMaxBid!==null
-?`<div class="locked">
-🔒 Plafond verrouillé : ${euro(lockedMaxBid)}
-</div>`
-:"";
-
-box.innerHTML=`
-
-<div class="result">
-
-<div class="result-main">
-
-<div class="result-label">
-PRIX MAXIMUM À ENCHÉRIR
-</div>
-
-<div class="maxbid">
-${euro(result.maxBid)}
-</div>
-
-${lockedText}
-
-</div>
-
-
-<div class="result-grid">
-
-<div class="metric">
-<div class="metric-label">COÛT TOTAL RÉEL</div>
-<div class="metric-value">${euro(result.total)}</div>
-</div>
-
-<div class="metric">
-<div class="metric-label">REVENTE RÉALISTE</div>
-<div class="metric-value">${euro(result.resale)}</div>
-</div>
-
-<div class="metric">
-<div class="metric-label">TOTAL FRAIS REVENTE</div>
-<div class="metric-value">${euro(result.totalSaleFees)}</div>
-</div>
-
-<div class="metric">
-<div class="metric-label">MARGE ESTIMÉE</div>
-<div class="metric-value">${euro(result.profit)}</div>
-</div>
-
-<div class="metric">
-<div class="metric-label">MARGE / REVENTE</div>
-<div class="metric-value">${result.margin.toFixed(1)} %</div>
-</div>
-
-<div class="metric">
-<div class="metric-label">ROI</div>
-<div class="metric-value">${result.roi.toFixed(1)} %</div>
-</div>
-
-</div>
-
-
-<div class="decision ${decisionClass}">
-${decisionText}
-</div>
-
-
-<div class="explanation">
-
-<strong>🔎 Détail du calcul</strong><br><br>
-
-Prix maximum théorique :
-<strong>${euro(result.theoreticalMaxBid)}</strong>
-
-<br><br>
-
-TVA sur achat :
-<strong>${euro(result.purchaseVatAmount)}</strong>
-
-<br>
-
-Commission acheteur :
-<strong>${euro(result.buyerCommissionAmount)}</strong>
-
-<br>
-
-TVA sur commission :
-<strong>${euro(result.buyerCommissionVatAmount)}</strong>
-
-<br>
-
-Frais fixes + logistique :
-<strong>${euro(result.fixedPurchaseCosts)}</strong>
-
-<br><br>
-
-Frais de revente :
-<strong>${euro(result.totalSaleFees)}</strong>
-
-<br><br>
-
-Contrainte principale :
-<strong>${result.constraint}</strong>
-
-</div>
-
-
-<div class="warning">
-
-⚠️ Les taux de TVA doivent être renseignés selon les conditions
-réelles du lot et de la revente. Le moteur ne considère jamais
-une estimation comme une certitude.
-
-</div>
-
-
-<button class="primary" onclick="saveFavorite()">
-⭐ AJOUTER AUX FAVORIS
-</button>
-
-</div>
-
-`;
+  renderResult(lastResult);
 
 }
 
 
-/* =========================
+/* -------------------------
+   AFFICHAGE
+------------------------- */
+
+function renderResult(r){
+
+  document.getElementById("result")
+    .classList.remove("hidden");
+
+  document.getElementById("maxBid")
+    .textContent=money(r.maxBid);
+
+  document.getElementById("totalCost")
+    .textContent=money(r.total);
+
+  document.getElementById("resaleDisplay")
+    .textContent=money(r.resale);
+
+  document.getElementById("profit")
+    .textContent=money(r.profit);
+
+  document.getElementById("marginDisplay")
+    .textContent=r.margin.toFixed(2)+" %";
+
+  document.getElementById("roiDisplay")
+    .textContent=r.roi.toFixed(2)+" %";
+
+  document.getElementById("theoretical")
+    .textContent=money(r.theoreticalMaxBid);
+
+  document.getElementById("buyerFee")
+    .textContent=money(r.buyerCommissionAmount);
+
+  document.getElementById("buyerVat")
+    .textContent=money(r.buyerCommissionVatAmount);
+
+  document.getElementById("purchaseVatAmount")
+    .textContent=money(r.purchaseVatAmount);
+
+  document.getElementById("fixedCosts")
+    .textContent=money(r.fixedPurchaseCosts);
+
+  document.getElementById("saleFees")
+    .textContent=money(r.totalSaleFees);
+
+  document.getElementById("constraint")
+    .textContent=r.constraint;
+
+  document.getElementById("safetyDisplay")
+    .textContent=money(r.safety);
+
+
+  const decision=document.getElementById("decision");
+
+  decision.className="decision";
+
+  if(r.decision==="GO"){
+
+    decision.classList.add("go");
+    decision.textContent="🟢 GO";
+
+  }
+  else if(r.decision==="SURVEILLANCE"){
+
+    decision.classList.add("watch");
+    decision.textContent="🟠 SURVEILLANCE";
+
+  }
+  else{
+
+    decision.classList.add("stop");
+    decision.textContent="🔴 STOP";
+
+  }
+
+
+  let explanation="";
+
+  if(r.decision==="GO"){
+
+    explanation=
+      "Le prix maximum respecte simultanément "+
+      "le budget, la marge minimum et le ROI minimum. "+
+      "La contrainte principale est : "+
+      "<strong>"+r.constraint+"</strong>.";
+
+  }
+
+  else if(r.decision==="SURVEILLANCE"){
+
+    explanation=
+      "Une marge positive existe, mais toutes les "+
+      "conditions V80 ne sont pas simultanément respectées. "+
+      "La contrainte principale est : "+
+      "<strong>"+r.constraint+"</strong>.";
+
+  }
+
+  else{
+
+    explanation=
+      "Le calcul ne permet pas actuellement de proposer "+
+      "un achat respectant les règles V80. "+
+      "La contrainte principale est : "+
+      "<strong>"+r.constraint+"</strong>.";
+
+  }
+
+  document.getElementById("explanation")
+    .innerHTML=explanation;
+
+
+  updateLockDisplay();
+
+}
+
+
+/* -------------------------
    VERROUILLAGE
-========================= */
+------------------------- */
 
 function toggleLock(){
 
-const checkbox=document.getElementById("lockCheckbox");
+  if(!lastResult){
 
-if(checkbox.checked){
+    alert(
+      "Calcule d'abord une affaire."
+    );
 
-const result=
-calculateEngine(getFormData());
+    return;
+  }
 
-if(result.theoreticalMaxBid<=0){
+  if(lockedMaxBid===null){
 
-checkbox.checked=false;
+    const value=lastResult.theoreticalMaxBid;
 
-alert(
-"Impossible de verrouiller : le prix maximum est nul."
-);
+    const confirmLock=confirm(
+      "Verrouiller le plafond V80 à "+
+      money(value)+" ?\n\n"+
+      "Aucune automatisation ou IA ne pourra "+
+      "augmenter ce montant."
+    );
 
-return;
-}
+    if(!confirmLock)return;
 
-const confirmation=confirm(
-"Verrouiller le plafond à "+
-euro(result.theoreticalMaxBid)+
-" ?\n\nAucune automatisation ou IA ne pourra augmenter ce montant."
-);
+    lockedMaxBid=value;
 
-if(!confirmation){
+    localStorage.setItem(
+      "v80_lockedMaxBid",
+      value
+    );
 
-checkbox.checked=false;
-return;
-}
+  }
+  else{
 
-lockedMaxBid=result.theoreticalMaxBid;
+    const confirmUnlock=confirm(
+      "Déverrouiller le plafond V80 ?"
+    );
 
-localStorage.setItem(
-"v80LockedMaxBid",
-lockedMaxBid
-);
+    if(!confirmUnlock)return;
 
-}
-else{
+    lockedMaxBid=null;
 
-const confirmation=
-confirm("Déverrouiller le plafond maximum ?");
+    localStorage.removeItem(
+      "v80_lockedMaxBid"
+    );
 
-if(!confirmation){
+  }
 
-checkbox.checked=true;
-return;
-}
+  if(lastResult){
 
-lockedMaxBid=null;
+    renderResult(lastResult);
 
-localStorage.removeItem(
-"v80LockedMaxBid"
-);
-
-}
-
-calculate();
+  }
 
 }
 
 
-/* =========================
-   FAVORIS
-========================= */
+function updateLockDisplay(){
 
-function saveFavorite(){
+  const text=
+    document.getElementById("lockText");
 
-const data=getFormData();
+  const button=
+    document.getElementById("lockButton");
 
-const result=calculateEngine(data);
+  if(lockedMaxBid!==null){
 
-const favorites=
-JSON.parse(localStorage.getItem("v80Favorites"))||[];
+    text.innerHTML=
+      "<strong>🔒 PLAFOND VERROUILLÉ : "+
+      money(lockedMaxBid)+
+      "</strong><br>"+
+      "Ce plafond ne peut pas être augmenté automatiquement.";
 
-favorites.unshift({
+    button.textContent=
+      "🔓 Déverrouiller";
 
-id:Date.now(),
+  }
+  else{
 
-title:data.title||"Affaire sans nom",
+    text.textContent=
+      "Aucun plafond verrouillé.";
 
-url:data.url,
+    button.textContent=
+      "🔒 Verrouiller ce plafond";
 
-maxBid:result.maxBid,
-
-total:result.total,
-
-resale:result.resale,
-
-profit:result.profit,
-
-roi:result.roi,
-
-decision:result.decision,
-
-date:new Date().toLocaleString("fr-FR")
-
-});
-
-localStorage.setItem(
-"v80Favorites",
-JSON.stringify(favorites)
-);
-
-alert("Affaire ajoutée aux favoris.");
+  }
 
 }
 
 
-function renderFavorites(){
-
-const box=document.getElementById("favoritesList");
-
-const favorites=
-JSON.parse(localStorage.getItem("v80Favorites"))||[];
-
-if(!favorites.length){
-
-box.innerHTML=
-`<div class="empty">Aucun favori pour le moment.</div>`;
-
-return;
-}
-
-box.innerHTML=favorites.map(item=>`
-
-<div class="favorite">
-
-<strong>${escapeHtml(item.title)}</strong>
-
-<div class="small">${item.date}</div>
-
-<br>
-
-<div>
-<strong>Max enchère :</strong>
-${euro(item.maxBid)}
-</div>
-
-<div>
-Coût total :
-${euro(item.total)}
-</div>
-
-<div>
-Revente :
-${euro(item.resale)}
-</div>
-
-<div>
-Marge :
-${euro(item.profit)}
-</div>
-
-<div>
-ROI :
-${item.roi.toFixed(1)} %
-</div>
-
-<br>
-
-<strong>${item.decision}</strong>
-
-</div>
-
-`).join("");
-
-}
-
-
-/* =========================
+/* -------------------------
    REGLAGES
-========================= */
+------------------------- */
 
 function loadSettings(){
 
-document.getElementById("settingBudget").value=
-settings.budget;
+  document.getElementById("settingBudget")
+    .value=settings.budget;
 
-document.getElementById("settingRadius").value=
-settings.radius;
+  document.getElementById("settingMargin")
+    .value=settings.margin;
 
-document.getElementById("settingMargin").value=
-settings.margin;
+  document.getElementById("settingROI")
+    .value=settings.roi;
 
-document.getElementById("settingROI").value=
-settings.roi;
-
-updateHome();
+  document.getElementById("settingRadius")
+    .value=settings.radius;
 
 }
 
 
 function saveSettings(){
 
-settings={
+  settings={
 
-budget:Math.max(
-0,
-Number(document.getElementById("settingBudget").value)||0
-),
+    budget:Math.max(
+      0,
+      Number(
+        document.getElementById("settingBudget").value
+      )||0
+    ),
 
-radius:Math.max(
-0,
-Number(document.getElementById("settingRadius").value)||0
-),
+    margin:Math.max(
+      0,
+      Number(
+        document.getElementById("settingMargin").value
+      )||0
+    ),
 
-margin:Math.max(
-0,
-Number(document.getElementById("settingMargin").value)||0
-),
+    roi:Math.max(
+      0,
+      Number(
+        document.getElementById("settingROI").value
+      )||0
+    ),
 
-roi:Math.max(
-0,
-Number(document.getElementById("settingROI").value)||0
-)
+    radius:Math.max(
+      0,
+      Number(
+        document.getElementById("settingRadius").value
+      )||0
+    )
 
-};
+  };
 
-localStorage.setItem(
-"v80Settings",
-JSON.stringify(settings)
-);
+  localStorage.setItem(
+    "v80_settings",
+    JSON.stringify(settings)
+  );
 
-updateHome();
+  updateHome();
 
-alert("Réglages V80 enregistrés.");
+  alert(
+    "Réglages V80 enregistrés."
+  );
 
 }
 
 
+/* -------------------------
+   ACCUEIL
+------------------------- */
+
 function updateHome(){
 
-document.getElementById("home-budget").textContent=
-euro(settings.budget);
+  document.getElementById("homeBudget")
+    .textContent=money(settings.budget);
 
-document.getElementById("home-margin").textContent=
-settings.margin+" %";
+  document.getElementById("homeMargin")
+    .textContent=settings.margin+" %";
 
-document.getElementById("home-roi").textContent=
-settings.roi+" %";
+  document.getElementById("homeROI")
+    .textContent=settings.roi+" %";
 
-document.getElementById("home-radius").textContent=
-settings.radius+" km";
+  document.getElementById("homeRadius")
+    .textContent=settings.radius+" km";
+
+}
+
+
+/* -------------------------
+   FAVORIS
+------------------------- */
+
+function saveFavorite(){
+
+  if(!lastResult)return;
+
+  const favorites=
+    JSON.parse(
+      localStorage.getItem("v80_favorites")
+      ||"[]"
+    );
+
+  favorites.push({
+
+    title:
+      document.getElementById("listingTitle").value
+      ||"Affaire V80",
+
+    url:
+      document.getElementById("listingUrl").value
+      ||"",
+
+    maxBid:lastResult.maxBid,
+
+    total:lastResult.total,
+
+    resale:lastResult.resale,
+
+    profit:lastResult.profit,
+
+    roi:lastResult.roi,
+
+    decision:lastResult.decision,
+
+    date:new Date().toISOString()
+
+  });
+
+  localStorage.setItem(
+    "v80_favorites",
+    JSON.stringify(favorites)
+  );
+
+  loadFavorites();
+
+}
+
+
+function loadFavorites(){
+
+  const container=
+    document.getElementById("favoritesList");
+
+  const favorites=
+    JSON.parse(
+      localStorage.getItem("v80_favorites")
+      ||"[]"
+    );
+
+  if(!favorites.length){
+
+    container.textContent=
+      "Aucune affaire enregistrée.";
+
+    return;
+
+  }
+
+  container.innerHTML=
+    favorites.map((f,i)=>`
+
+      <div class="card">
+
+        <strong>${escapeHtml(f.title)}</strong>
+
+        <div class="detail">
+          <span>Prix max</span>
+          <strong>${money(f.maxBid)}</strong>
+        </div>
+
+        <div class="detail">
+          <span>Coût réel</span>
+          <strong>${money(f.total)}</strong>
+        </div>
+
+        <div class="detail">
+          <span>Revente</span>
+          <strong>${money(f.resale)}</strong>
+        </div>
+
+        <div class="detail">
+          <span>Marge</span>
+          <strong>${money(f.profit)}</strong>
+        </div>
+
+        <div class="detail">
+          <span>ROI</span>
+          <strong>${f.roi.toFixed(2)} %</strong>
+        </div>
+
+        <div class="decision ${
+          f.decision==="GO"
+          ?"go"
+          :f.decision==="SURVEILLANCE"
+          ?"watch"
+          :"stop"
+        }">
+          ${
+            f.decision==="GO"
+            ?"🟢 GO"
+            :f.decision==="SURVEILLANCE"
+            ?"🟠 SURVEILLANCE"
+            :"🔴 STOP"
+          }
+        </div>
+
+        <button
+          class="secondary danger"
+          onclick="deleteFavorite(${i})"
+          style="margin-top:10px"
+        >
+          Supprimer
+        </button>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function deleteFavorite(index){
+
+  const favorites=
+    JSON.parse(
+      localStorage.getItem("v80_favorites")
+      ||"[]"
+    );
+
+  favorites.splice(index,1);
+
+  localStorage.setItem(
+    "v80_favorites",
+    JSON.stringify(favorites)
+  );
+
+  loadFavorites();
 
 }
 
 
 function escapeHtml(value){
 
-return String(value)
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 
 }
 
 
-/* =========================
-   DEMARRAGE
-========================= */
+/* -------------------------
+   INITIALISATION
+------------------------- */
 
-loadSettings();
-showPage("home");
+function init(){
+
+  updateHome();
+
+  loadSettings();
+
+  updateLockDisplay();
+
+}
+
+init();
+
+
+/* -------------------------
+   SERVICE WORKER
+------------------------- */
 
 if("serviceWorker" in navigator){
 
-window.addEventListener("load",()=>{
-
-navigator.serviceWorker
-.register("./service-worker.js")
-.catch(error=>console.log(
-"Service Worker:",error
-));
-
-});
+  window.addEventListener(
+    "load",
+    ()=>{
+      navigator.serviceWorker.register(
+        "./service-worker.js"
+      ).catch(
+        ()=>{}
+      );
+    }
+  );
 
 }
 

@@ -285,7 +285,16 @@ button {
 <button onclick="calculateV80()">
 🧮 CALCULER V80
 </button>
+<div class="lock-box">
+    <label>
+        <input type="checkbox" id="lockMaxBid" onchange="toggleMaxBidLock()">
+        🔒 PLAFOND MAX À ENCHÉRIR VERROUILLÉ
+    </label>
 
+    <div id="lockedMaxBid" class="locked-value">
+        Aucun plafond verrouillé
+    </div>
+</div>
 </section>
 
 <section class="card">
@@ -343,7 +352,7 @@ PRIX MAX À ENCHÉRIR
 </div>
 
 <script>
-
+let lockedMaxBid = null;
 function calculateV80() {
 
     const resale = Number(document.getElementById("resale").value) || 0;
@@ -493,7 +502,35 @@ function calculateV80() {
     decisionBox.className =
         "decision " + className;
 }
+function toggleMaxBidLock() {
 
+    const checkbox =
+        document.getElementById("lockMaxBid");
+
+    const display =
+        document.getElementById("lockedMaxBid");
+
+    if (checkbox.checked) {
+
+        const maxBidElement =
+            document.getElementById("maxBid");
+
+        const value =
+            maxBidElement.textContent;
+
+        lockedMaxBid = value;
+
+        display.textContent =
+            "🔒 Plafond verrouillé : " + value;
+
+    } else {
+
+        lockedMaxBid = null;
+
+        display.textContent =
+            "Aucun plafond verrouillé";
+    }
+}
 function euro(value) {
 
     return new Intl.NumberFormat(

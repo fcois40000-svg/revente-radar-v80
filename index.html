@@ -5,201 +5,344 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#111827">
 <link rel="manifest" href="./manifest.json">
-<title>Revente Radar V80.6.1</title>
+<title>Revente Radar V80</title>
 
 <style>
 :root{
---bg:#f5f5f7;
---card:#fff;
---text:#111827;
---muted:#6b7280;
---border:#e5e7eb;
---blue:#2563eb;
---green:#16a34a;
---orange:#d97706;
---red:#dc2626;
---dark:#111827
+  --bg:#f5f5f7;
+  --card:#ffffff;
+  --text:#111827;
+  --muted:#6b7280;
+  --line:#e5e7eb;
+  --blue:#2563eb;
+  --green:#16a34a;
+  --orange:#d97706;
+  --red:#dc2626;
+  --dark:#111827;
+  --shadow:0 8px 30px rgba(0,0,0,.07);
 }
 *{box-sizing:border-box}
 body{
-margin:0;background:var(--bg);color:var(--text);
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
 header{
-position:sticky;top:0;z-index:20;
-background:rgba(245,245,247,.94);
-backdrop-filter:blur(15px);
-border-bottom:1px solid var(--border)
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(245,245,247,.94);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--line);
 }
 .header-inner{
-max-width:1100px;margin:auto;padding:16px;
-display:flex;justify-content:space-between;align-items:center
+  max-width:1200px;
+  margin:auto;
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
-.logo{font-size:20px;font-weight:800}
-.version{font-size:12px;color:var(--muted);margin-top:2px}
-main{max-width:1100px;margin:auto;padding:20px 16px 100px}
-.nav{
-display:flex;gap:8px;overflow-x:auto;padding:10px 0 18px
+.brand{
+  font-size:19px;
+  font-weight:800;
 }
-.nav button{
-border:0;background:#fff;color:var(--text);border-radius:12px;
-padding:10px 14px;white-space:nowrap;font-weight:600;
-box-shadow:0 1px 4px rgba(0,0,0,.06)
+.version{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:2px;
 }
-.nav button.active{background:var(--dark);color:#fff}
+nav{
+  max-width:1200px;
+  margin:auto;
+  padding:0 12px 10px;
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+}
+nav button{
+  border:0;
+  background:transparent;
+  padding:9px 12px;
+  border-radius:12px;
+  font-weight:700;
+  white-space:nowrap;
+  color:var(--muted);
+}
+nav button.active{
+  background:#111827;
+  color:white;
+}
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:20px 16px 80px;
+}
 .page{display:none}
 .page.active{display:block}
-.card{
-background:var(--card);border:1px solid var(--border);
-border-radius:20px;padding:20px;margin-bottom:16px;
-box-shadow:0 4px 20px rgba(0,0,0,.04)
+h1{
+  font-size:30px;
+  margin:8px 0 6px;
 }
-h1{margin:0 0 8px;font-size:30px}
-h2{margin:0 0 14px;font-size:20px}
-h3{margin:0 0 8px}
-p{color:var(--muted)}
+h2{
+  font-size:21px;
+  margin:0 0 14px;
+}
+h3{
+  font-size:16px;
+  margin:0 0 10px;
+}
+.subtitle{
+  color:var(--muted);
+  margin-bottom:20px;
+}
 .grid{
-display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
 }
-.field{display:flex;flex-direction:column;gap:7px}
-.field.full{grid-column:1/-1}
-label{font-size:13px;font-weight:700}
-input,select,textarea{
-width:100%;border:1px solid var(--border);border-radius:12px;
-padding:12px;font-size:15px;background:#fff;color:var(--text)
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
 }
-textarea{min-height:100px;resize:vertical}
-button.primary{
-border:0;background:var(--dark);color:#fff;border-radius:13px;
-padding:14px 18px;font-size:15px;font-weight:800;cursor:pointer
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:18px;
+  box-shadow:var(--shadow);
+  margin-bottom:16px;
 }
-button.secondary{
-border:1px solid var(--border);background:#fff;color:var(--text);
-border-radius:13px;padding:12px 16px;font-weight:700;cursor:pointer
-}
-button.danger{
-border:0;background:#fee2e2;color:#991b1b;
-border-radius:12px;padding:11px 14px;font-weight:700
-}
-button:disabled{opacity:.55;cursor:not-allowed}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .hero{
-background:var(--dark);color:#fff;border-radius:24px;
-padding:24px;margin-bottom:18px
+  background:#111827;
+  color:white;
+  border-radius:28px;
+  padding:26px;
+  margin-bottom:18px;
 }
-.hero .small{color:#cbd5e1}
-.hero-value{font-size:42px;font-weight:900;margin:8px 0}
-.stats{
-display:grid;grid-template-columns:repeat(4,1fr);gap:12px
+.hero-label{
+  font-size:13px;
+  opacity:.7;
+  text-transform:uppercase;
+  letter-spacing:.08em;
 }
-.stat{
-background:#fff;border:1px solid var(--border);
-border-radius:16px;padding:16px
+.hero-value{
+  font-size:46px;
+  line-height:1;
+  font-weight:900;
+  margin:8px 0;
 }
-.stat-label{font-size:12px;color:var(--muted);font-weight:700}
-.stat-value{font-size:24px;font-weight:900;margin-top:5px}
-.result-grid{
-display:grid;grid-template-columns:repeat(2,1fr);gap:12px
+.metric{
+  font-size:28px;
+  font-weight:850;
 }
-.result{background:#f8fafc;border-radius:15px;padding:15px}
-.result strong{display:block;font-size:22px;margin-top:4px}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+label{
+  display:block;
+  font-size:13px;
+  font-weight:750;
+  margin:0 0 6px;
+}
+input,select,textarea{
+  width:100%;
+  border:1px solid #d1d5db;
+  background:white;
+  color:var(--text);
+  border-radius:13px;
+  padding:12px 13px;
+  font-size:15px;
+  outline:none;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(37,99,235,.10);
+}
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+.field{margin-bottom:13px}
+button{
+  cursor:pointer;
+}
+.btn{
+  border:0;
+  border-radius:13px;
+  padding:12px 15px;
+  font-weight:800;
+  font-size:14px;
+}
+.btn-primary{
+  background:var(--blue);
+  color:white;
+}
+.btn-dark{
+  background:#111827;
+  color:white;
+}
+.btn-light{
+  background:#f3f4f6;
+  color:#111827;
+}
+.btn-danger{
+  background:#fee2e2;
+  color:#991b1b;
+}
+.btn-green{
+  background:#dcfce7;
+  color:#166534;
+}
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:12px;
+}
 .badge{
-display:inline-flex;align-items:center;padding:7px 11px;
-border-radius:999px;font-size:12px;font-weight:900
+  display:inline-flex;
+  align-items:center;
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:12px;
+  font-weight:800;
 }
-.badge.go{background:#dcfce7;color:#166534}
-.badge.watch{background:#fef3c7;color:#92400e}
-.badge.stop{background:#fee2e2;color:#991b1b}
-.badge.hot{background:#111827;color:#fff}
-.lock{
-display:flex;align-items:center;gap:10px;background:#f3f4f6;
-padding:14px;border-radius:14px;margin-top:15px
+.badge-go{background:#dcfce7;color:#166534}
+.badge-watch{background:#fef3c7;color:#92400e}
+.badge-stop{background:#fee2e2;color:#991b1b}
+.badge-blue{background:#dbeafe;color:#1d4ed8}
+.badge-gray{background:#f3f4f6;color:#4b5563}
+.notice{
+  padding:13px 15px;
+  border-radius:14px;
+  margin:12px 0;
+  font-size:13px;
+  line-height:1.45;
 }
-.lock input{width:auto}
-.explain{
-background:#f8fafc;border-left:4px solid var(--blue);
-padding:14px;border-radius:10px;margin-top:15px
+.notice-info{background:#eff6ff;color:#1e40af}
+.notice-warning{background:#fffbeb;color:#92400e}
+.notice-success{background:#f0fdf4;color:#166534}
+.notice-danger{background:#fef2f2;color:#991b1b}
+.import-source{
+  font-size:15px;
+  font-weight:800;
+  margin-top:8px;
+}
+.import-source span{
+  color:var(--blue);
+}
+.status-line{
+  min-height:20px;
+  font-size:13px;
+  color:var(--muted);
+}
+.kv{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  padding:9px 0;
+  border-bottom:1px solid var(--line);
+}
+.kv:last-child{border-bottom:0}
+.kv strong{text-align:right}
+.result-box{
+  border-radius:18px;
+  background:#f9fafb;
+  padding:15px;
+  margin-top:14px;
+}
+.result-max{
+  font-size:34px;
+  font-weight:900;
+}
+.locked{
+  display:inline-flex;
+  gap:6px;
+  align-items:center;
+  background:#111827;
+  color:white;
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:12px;
+  font-weight:800;
 }
 .filters{
-display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
-gap:10px;margin-bottom:12px
-}
-.filters2{
-display:grid;grid-template-columns:repeat(4,1fr);
-gap:10px;margin-bottom:16px
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
 }
 .opportunity{
-background:#fff;border:1px solid var(--border);
-border-radius:20px;padding:18px;margin-bottom:12px
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:15px;
+  margin-top:12px;
+  background:white;
 }
-.op-top{
-display:flex;justify-content:space-between;
-gap:12px;align-items:flex-start
+.opportunity-title{
+  font-weight:850;
+  font-size:16px;
 }
-.op-title{font-size:18px;font-weight:850}
-.op-source{font-size:12px;color:var(--muted);margin-top:4px}
-.op-values{
-display:grid;grid-template-columns:repeat(5,1fr);
-gap:10px;margin-top:16px
+.opportunity-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:12px;
 }
-.op-value{
-background:#f8fafc;padding:12px;border-radius:13px
+.opportunity-metric{
+  background:#f9fafb;
+  border-radius:12px;
+  padding:9px;
 }
-.op-value span{
-display:block;font-size:11px;color:var(--muted);font-weight:700
+.opportunity-metric span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
 }
-.op-value strong{display:block;font-size:17px;margin-top:4px}
-.remaining{
-margin-top:12px;padding:13px;border-radius:13px;
-background:#eff6ff;border:1px solid #bfdbfe
+.opportunity-metric strong{
+  display:block;
+  margin-top:3px;
 }
-.remaining strong{font-size:20px}
-.hot-box{
-margin-top:12px;padding:12px;border-radius:13px;
-background:#f3f4f6;font-weight:800
+.photo-preview{
+  width:100%;
+  max-height:230px;
+  object-fit:cover;
+  border-radius:16px;
+  margin-top:10px;
+  display:none;
 }
-.empty{text-align:center;padding:35px 15px;color:var(--muted)}
-.notice{
-background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;
-padding:13px;border-radius:12px;margin-bottom:16px;font-size:14px
+.empty{
+  text-align:center;
+  padding:35px 15px;
+  color:var(--muted);
 }
-.detected{
-background:#ecfdf5;border:1px solid #bbf7d0;color:#166534;
-padding:13px;border-radius:12px;margin-top:12px;font-weight:700
+hr{
+  border:0;
+  border-top:1px solid var(--line);
+  margin:18px 0;
 }
-.import-box{
-background:#f8fafc;border:2px dashed #cbd5e1;
-border-radius:18px;padding:20px
+
+@media(max-width:760px){
+  .grid,.grid3{
+    grid-template-columns:1fr;
+  }
+  .filters{
+    grid-template-columns:1fr 1fr;
+  }
+  .opportunity-grid{
+    grid-template-columns:1fr 1fr;
+  }
+  h1{font-size:27px}
+  .hero-value{font-size:39px}
 }
-.import-status{
-margin-top:14px;padding:14px;border-radius:13px;
-background:#f3f4f6;font-weight:700
-}
-.import-status.ok{
-background:#ecfdf5;border:1px solid #bbf7d0;color:#166534
-}
-.import-status.error{
-background:#fef2f2;border:1px solid #fecaca;color:#991b1b
-}
-.import-status.loading{
-background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af
-}
-.extracted{
-margin-top:15px;padding:15px;background:#f8fafc;
-border-radius:14px;border:1px solid var(--border)
-}
-.small-note{
-font-size:12px;color:var(--muted);line-height:1.5
-}
-@media(max-width:700px){
-.grid,.result-grid{grid-template-columns:1fr}
-.stats{grid-template-columns:repeat(2,1fr)}
-.filters{grid-template-columns:1fr 1fr}
-.filters input{grid-column:1/-1}
-.filters2{grid-template-columns:1fr 1fr}
-.op-values{grid-template-columns:repeat(2,1fr)}
-h1{font-size:26px}
-.hero-value{font-size:34px}
+@media(max-width:460px){
+  .filters{
+    grid-template-columns:1fr;
+  }
+  .opportunity-grid{
+    grid-template-columns:1fr 1fr;
+  }
 }
 </style>
 </head>
@@ -207,2541 +350,2304 @@ h1{font-size:26px}
 <body>
 
 <header>
-<div class="header-inner">
-<div>
-<div class="logo">🚀 Revente Radar</div>
-<div class="version">V80 CORE • V80.6.1 IMPORT INTELLIGENT</div>
-</div>
-</div>
+  <div class="header-inner">
+    <div>
+      <div class="brand">🚀 Revente Radar</div>
+      <div class="version">V80 CORE • V80.6 IMPORT INTELLIGENT</div>
+    </div>
+  </div>
+
+  <nav>
+    <button data-page="home" class="active">Accueil</button>
+    <button data-page="radar">Radar</button>
+    <button data-page="import">🔗 Importer</button>
+    <button data-page="add">Ajouter</button>
+    <button data-page="favorites">Favoris</button>
+    <button data-page="settings">Réglages</button>
+  </nav>
 </header>
 
 <main>
 
-<div class="nav">
-<button class="active" onclick="showPage('home',this)">Accueil</button>
-<button onclick="showPage('radar',this)">🎯 Radar</button>
-<button onclick="showPage('import',this)">🔗 Importer</button>
-<button onclick="showPage('add',this)">➕ Ajouter</button>
-<button onclick="showPage('favorites',this)">⭐ Favoris</button>
-<button onclick="showPage('settings',this)">⚙️ Réglages</button>
-</div>
-
-
+<!-- ACCUEIL -->
 <section id="home" class="page active">
+  <h1>Ton radar d'achat-revente</h1>
+  <div class="subtitle">
+    Le moteur V80 calcule ton plafond maximum sans laisser l'IA ou une automatisation l'augmenter.
+  </div>
 
-<div class="hero">
-<div class="small">MACHINE DE GUERRE • V80 CORE</div>
-<h1>Ton radar d'achat-revente</h1>
-<p style="color:#cbd5e1">
-Le moteur V80 calcule le plafond financier avant toute décision.
-</p>
-<div class="hero-value" id="homeMaxBid">—</div>
-<div class="small">PRIX MAX À ENCHÉRIR</div>
-</div>
+  <div class="hero">
+    <div class="hero-label">Prix maximum à enchérir</div>
+    <div class="hero-value" id="homeMaxBid">—</div>
+    <div id="homeLockText" class="small">Aucun plafond verrouillé</div>
+  </div>
 
-<div class="stats">
+  <div class="grid3">
+    <div class="card">
+      <div class="muted small">Opportunités</div>
+      <div class="metric" id="homeOpportunities">0</div>
+    </div>
+    <div class="card">
+      <div class="muted small">GO</div>
+      <div class="metric" id="homeGo">0</div>
+    </div>
+    <div class="card">
+      <div class="muted small">🔥 Opportunités</div>
+      <div class="metric" id="homeHot">0</div>
+    </div>
+  </div>
 
-<div class="stat">
-<div class="stat-label">OPPORTUNITÉS</div>
-<div class="stat-value" id="statOpportunities">0</div>
-</div>
-
-<div class="stat">
-<div class="stat-label">GO</div>
-<div class="stat-value" id="statGo">0</div>
-</div>
-
-<div class="stat">
-<div class="stat-label">SURVEILLANCE</div>
-<div class="stat-value" id="statWatch">0</div>
-</div>
-
-<div class="stat">
-<div class="stat-label">🔥 OPPORTUNITÉS</div>
-<div class="stat-value" id="statHot">0</div>
-</div>
-
-</div>
-
-<div class="card">
-<h2>🧠 V80.6.1</h2>
-
-<div class="notice">
-Le prix actuel ne peut jamais augmenter le plafond V80.
-</div>
-
-<p><strong>Prix actuel</strong> → situation de l'annonce</p>
-<p><strong>Prix maximum V80</strong> → plafond financier calculé</p>
-<p><strong>Coût total réel</strong> → montant réellement dépensé</p>
-<p><strong>Revente</strong> → estimation utilisée par le moteur</p>
-
-<button class="primary" onclick="showPageByName('import')">
-🔗 Importer une annonce
-</button>
-</div>
-
+  <div class="card">
+    <h2>V80 CORE</h2>
+    <div class="kv"><span>Budget</span><strong id="homeBudget">—</strong></div>
+    <div class="kv"><span>Marge minimum</span><strong id="homeMargin">—</strong></div>
+    <div class="kv"><span>ROI minimum</span><strong id="homeROI">—</strong></div>
+    <div class="kv"><span>Rayon</span><strong id="homeRadius">—</strong></div>
+  </div>
 </section>
 
 
+<!-- IMPORT -->
 <section id="import" class="page">
+  <h1>🔗 Importer une annonce</h1>
+  <div class="subtitle">
+    Colle simplement le lien de l'annonce. V80 identifie la source et tente de récupérer automatiquement les informations disponibles.
+  </div>
 
-<div class="card">
+  <div class="card">
+    <h2>1. Lien de l'annonce</h2>
 
-<h1>🔗 Import intelligent</h1>
+    <div class="field">
+      <label>URL</label>
+      <input id="importUrl" type="url"
+             placeholder="https://www.interencheres.com/..."
+             autocomplete="off">
+    </div>
 
-<p>
-Colle le lien de l'annonce. V80 va d'abord identifier la source,
-puis tenter de récupérer les informations publiques accessibles.
-</p>
+    <div class="import-source">
+      Source détectée :
+      <span id="detectedSource">—</span>
+    </div>
 
-<div class="import-box">
+    <div class="actions">
+      <button class="btn btn-primary" id="importButton">
+        🔎 IMPORTER / ANALYSER
+      </button>
+      <button class="btn btn-light" id="clearImportButton">
+        Effacer
+      </button>
+    </div>
 
-<div class="field">
+    <div id="importStatus" class="status-line"></div>
+  </div>
 
-<label>Lien de l'annonce</label>
+  <div id="importResultCard" class="card" style="display:none">
+    <h2>2. Résultat de récupération</h2>
 
-<input
-id="importUrl"
-type="url"
-placeholder="https://www.interencheres.com/...">
+    <div id="importResult"></div>
 
-</div>
+    <div class="actions">
+      <button class="btn btn-green" id="fillFormButton">
+        ➡️ Remplir le formulaire V80
+      </button>
+      <button class="btn btn-light" id="goAddButton">
+        Ouvrir Ajouter
+      </button>
+    </div>
+  </div>
 
-<div id="detectedSource"></div>
-
-<div class="actions">
-
-<button class="primary" id="detectButton"
-onclick="importListing()">
-🔎 RÉCUPÉRER LES DONNÉES
-</button>
-
-</div>
-
-<div class="small-note" style="margin-top:12px">
-Aucune donnée financière ne sera inventée. Si la plateforme bloque
-l'accès automatique, V80 te le signalera et tu pourras compléter
-les champs manuellement.
-</div>
-
-</div>
-
-</div>
-
-<div id="importDetails"></div>
-
+  <div class="notice notice-info">
+    <strong>Important :</strong> V80 ne considère jamais une donnée non récupérée comme certaine.
+    Si une plateforme bloque la lecture automatique, l'application conserve le lien et la source
+    et te laisse compléter les informations manuellement.
+  </div>
 </section>
 
 
-<section id="radar" class="page">
-
-<div class="card">
-
-<h1>🎯 Radar intelligent</h1>
-
-<p>
-Le Radar classe les affaires selon leur potentiel réel.
-</p>
-
-<div class="filters">
-
-<input id="radarSearch"
-placeholder="🔎 Rechercher..."
-oninput="renderRadar()">
-
-<select id="radarSource" onchange="renderRadar()">
-<option value="">Toutes les sources</option>
-<option>Interencheres</option>
-<option>Leboncoin</option>
-<option>eBay</option>
-<option>Liquidation</option>
-<option>Déstockage</option>
-<option>Don</option>
-<option>Autre</option>
-</select>
-
-<select id="radarDecision" onchange="renderRadar()">
-<option value="">Tous les statuts</option>
-<option value="GO">🟢 GO</option>
-<option value="SURVEILLANCE">🟠 SURVEILLANCE</option>
-<option value="STOP">🔴 STOP</option>
-</select>
-
-<select id="radarSort" onchange="renderRadar()">
-<option value="hot">🔥 Opportunité</option>
-<option value="date">Plus récentes</option>
-<option value="maxBid">Prix max ↓</option>
-<option value="profit">Marge ↓</option>
-<option value="roi">ROI ↓</option>
-<option value="confidence">Confiance ↓</option>
-<option value="remaining">Écart disponible ↓</option>
-</select>
-
-</div>
-
-<div class="filters2">
-
-<input id="radarMaxCurrent"
-type="number"
-min="0"
-placeholder="Prix actuel max €"
-oninput="renderRadar()">
-
-<input id="radarMinProfit"
-type="number"
-min="0"
-placeholder="Marge min €"
-oninput="renderRadar()">
-
-<input id="radarMinRoi"
-type="number"
-min="0"
-placeholder="ROI min %"
-oninput="renderRadar()">
-
-<select id="radarDistance" onchange="renderRadar()">
-<option value="">Toutes distances</option>
-<option value="inside">Dans mon rayon</option>
-<option value="outside">Hors rayon</option>
-</select>
-
-</div>
-
-</div>
-
-<div id="radarList"></div>
-
-</section>
-
-
+<!-- AJOUTER -->
 <section id="add" class="page">
+  <h1>Ajouter une opportunité</h1>
+  <div class="subtitle">
+    Données de l'annonce + paramètres financiers V80.
+  </div>
 
-<div class="card">
+  <div class="card">
+    <h2>Annonce</h2>
 
-<h1>➕ Ajouter une affaire</h1>
+    <div class="grid">
+      <div class="field">
+        <label>Titre</label>
+        <input id="title" placeholder="Ex : Four professionnel inox">
+      </div>
 
-<p>
-Entre les informations disponibles. Les données inconnues peuvent
-rester à zéro.
-</p>
+      <div class="field">
+        <label>Source</label>
+        <select id="source">
+          <option>Interencheres</option>
+          <option>Leboncoin</option>
+          <option>eBay</option>
+          <option>Liquidation</option>
+          <option>Déstockage</option>
+          <option>Don</option>
+          <option>Autre</option>
+        </select>
+      </div>
 
-<div class="grid">
+      <div class="field">
+        <label>Prix actuel / enchère actuelle (€)</label>
+        <input id="currentPrice" type="number" min="0" step="0.01">
+      </div>
 
-<div class="field full">
-<label>Titre de l'annonce</label>
-<input id="title" placeholder="Ex : Four professionnel inox">
-</div>
+      <div class="field">
+        <label>Distance (km)</label>
+        <input id="distance" type="number" min="0" step="1">
+      </div>
 
-<div class="field">
-<label>Source</label>
-<select id="source">
-<option>Interencheres</option>
-<option>Leboncoin</option>
-<option>eBay</option>
-<option>Liquidation</option>
-<option>Déstockage</option>
-<option>Don</option>
-<option>Autre</option>
-</select>
-</div>
+      <div class="field">
+        <label>Date de l'enchère</label>
+        <input id="auctionDate" type="datetime-local">
+      </div>
 
-<div class="field">
-<label>Prix actuel / enchère (€)</label>
-<input id="currentPrice" type="number" min="0" value="0">
-</div>
+      <div class="field">
+        <label>Lien de l'annonce</label>
+        <input id="url" type="url" placeholder="https://...">
+      </div>
+    </div>
 
-<div class="field full">
-<label>Lien de l'annonce</label>
-<input id="url" placeholder="https://...">
-</div>
+    <div class="field">
+      <label>Description</label>
+      <textarea id="description"></textarea>
+    </div>
 
-<div class="field full">
-<label>Description</label>
-<textarea id="description"></textarea>
-</div>
+    <div class="grid">
+      <div class="field">
+        <label>État</label>
+        <input id="condition" placeholder="Neuf, bon état, à réparer...">
+      </div>
 
-<div class="field">
-<label>État</label>
-<select id="condition">
-<option value="">Non précisé</option>
-<option>Neuf</option>
-<option>Très bon état</option>
-<option>Bon état</option>
-<option>État moyen</option>
-<option>À réparer</option>
-<option>Non testé</option>
-</select>
-</div>
+      <div class="field">
+        <label>URL de la photo</label>
+        <input id="photoUrl" type="url" placeholder="https://...">
+        <img id="photoPreview" class="photo-preview">
+      </div>
+    </div>
+  </div>
 
-<div class="field">
-<label>Distance (km)</label>
-<input id="distance" type="number" min="0" value="0">
-</div>
 
-<div class="field">
-<label>Revente réaliste (€)</label>
-<input id="resale" type="number" min="0" value="1500">
-</div>
+  <div class="card">
+    <h2>Valorisation</h2>
 
-<div class="field">
-<label>Commission acheteur (%)</label>
-<input id="buyerCommission" type="number" min="0" value="14">
-</div>
+    <div class="grid">
+      <div class="field">
+        <label>Revente réaliste (€)</label>
+        <input id="resale" type="number" min="0" step="0.01">
+      </div>
+    </div>
 
-<div class="field">
-<label>TVA sur commission (%)</label>
-<input id="commissionVat" type="number" min="0" value="20">
-</div>
+    <div class="notice notice-warning">
+      La revente réaliste doit rester une estimation prudente. V80 ne transforme pas automatiquement le prix de l'annonce en prix de revente.
+    </div>
+  </div>
 
-<div class="field">
-<label>TVA sur prix d'achat (%)</label>
-<input id="purchaseVat" type="number" min="0" value="0">
-</div>
 
-<div class="field">
-<label>Frais fixes (€)</label>
-<input id="fixed" type="number" min="0" value="0">
-</div>
+  <div class="card">
+    <h2>Frais d'achat</h2>
 
-<div class="field">
-<label>Frais de dossier (€)</label>
-<input id="dossier" type="number" min="0" value="0">
-</div>
+    <div class="grid3">
+      <div class="field">
+        <label>Commission acheteur (%)</label>
+        <input id="buyerCommission" type="number" min="0" step="0.01" value="0">
+      </div>
 
-<div class="field">
-<label>Transport (€)</label>
-<input id="transport" type="number" min="0" value="0">
-</div>
+      <div class="field">
+        <label>TVA commission (%)</label>
+        <input id="commissionVat" type="number" min="0" step="0.01" value="0">
+      </div>
 
-<div class="field">
-<label>Déplacement (€)</label>
-<input id="travel" type="number" min="0" value="0">
-</div>
+      <div class="field">
+        <label>TVA achat (%)</label>
+        <input id="purchaseVat" type="number" min="0" step="0.01" value="0">
+      </div>
 
-<div class="field">
-<label>Contrôle / expertise (€)</label>
-<input id="inspection" type="number" min="0" value="0">
-</div>
+      <div class="field">
+        <label>Frais fixes (€)</label>
+        <input id="fixed" type="number" min="0" step="0.01" value="0">
+      </div>
 
-<div class="field">
-<label>Réparations (€)</label>
-<input id="repairs" type="number" min="0" value="0">
-</div>
+      <div class="field">
+        <label>Frais dossier (€)</label>
+        <input id="dossier" type="number" min="0" step="0.01" value="0">
+      </div>
 
-<div class="field">
-<label>Remise en état (€)</label>
-<input id="refurbishment" type="number" min="0" value="0">
-</div>
+      <div class="field">
+        <label>Transport (€)</label>
+        <input id="transport" type="number" min="0" step="0.01" value="0">
+      </div>
 
-<div class="field">
-<label>Autres frais (€)</label>
-<input id="other" type="number" min="0" value="0">
-</div>
+      <div class="field">
+        <label>Déplacement (€)</label>
+        <input id="travel" type="number" min="0" step="0.01" value="0">
+      </div>
 
-<div class="field">
-<label>Commission de vente (%)</label>
-<input id="sellerCommission" type="number" min="0" value="0">
-</div>
+      <div class="field">
+        <label>Contrôle / expertise (€)</label>
+        <input id="inspection" type="number" min="0" step="0.01" value="0">
+      </div>
 
-<div class="field">
-<label>TVA commission de vente (%)</label>
-<input id="saleCommissionVat" type="number" min="0" value="0">
-</div>
+      <div class="field">
+        <label>Réparations (€)</label>
+        <input id="repairs" type="number" min="0" step="0.01" value="0">
+      </div>
 
-<div class="field">
-<label>TVA sur revente (%)</label>
-<input id="saleVat" type="number" min="0" value="0">
-</div>
+      <div class="field">
+        <label>Remise en état (€)</label>
+        <input id="refurbishment" type="number" min="0" step="0.01" value="0">
+      </div>
 
-<div class="field">
-<label>Frais fixes de vente (€)</label>
-<input id="saleFixed" type="number" min="0" value="0">
-</div>
+      <div class="field">
+        <label>Autres frais (€)</label>
+        <input id="other" type="number" min="0" step="0.01" value="0">
+      </div>
+    </div>
+  </div>
 
-</div>
 
-<div class="actions">
-<button class="primary" onclick="calculateAndDisplay()">
-🧮 CALCULER V80
-</button>
-</div>
+  <div class="card">
+    <h2>Frais de revente</h2>
 
-</div>
+    <div class="grid">
+      <div class="field">
+        <label>Commission vendeur (%)</label>
+        <input id="sellerCommission" type="number" min="0" step="0.01" value="0">
+      </div>
 
-<div id="analysisResult"></div>
+      <div class="field">
+        <label>TVA commission vendeur (%)</label>
+        <input id="saleCommissionVat" type="number" min="0" step="0.01" value="0">
+      </div>
 
+      <div class="field">
+        <label>TVA / fiscalité de revente (%)</label>
+        <input id="saleVat" type="number" min="0" step="0.01" value="0">
+      </div>
+
+      <div class="field">
+        <label>Frais fixes de revente (€)</label>
+        <input id="saleFixed" type="number" min="0" step="0.01" value="0">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>Calcul V80</h2>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="calculateButton">
+        🧮 CALCULER V80
+      </button>
+      <button class="btn btn-green" id="saveOpportunityButton">
+        💾 Enregistrer dans Radar
+      </button>
+      <button class="btn btn-light" id="favoriteButton">
+        ⭐ Favori
+      </button>
+    </div>
+
+    <div id="calculationResult"></div>
+  </div>
 </section>
 
 
+<!-- RADAR -->
+<section id="radar" class="page">
+  <h1>Radar</h1>
+  <div class="subtitle">
+    Toutes tes opportunités enregistrées, triées et filtrables.
+  </div>
+
+  <div class="card">
+    <div class="filters">
+      <input id="radarSearch" placeholder="Rechercher...">
+
+      <select id="radarSource">
+        <option value="">Toutes les sources</option>
+        <option>Interencheres</option>
+        <option>Leboncoin</option>
+        <option>eBay</option>
+        <option>Liquidation</option>
+        <option>Déstockage</option>
+        <option>Don</option>
+        <option>Autre</option>
+      </select>
+
+      <select id="radarStatus">
+        <option value="">Tous les statuts</option>
+        <option>GO</option>
+        <option>SURVEILLANCE</option>
+        <option>STOP</option>
+      </select>
+
+      <select id="radarSort">
+        <option value="opportunity">🔥 Opportunité</option>
+        <option value="date">Date</option>
+        <option value="maxBid">Prix max</option>
+        <option value="profit">Marge</option>
+        <option value="roi">ROI</option>
+        <option value="confidence">Confiance</option>
+        <option value="room">Marge d'enchère</option>
+      </select>
+
+      <input id="radarPriceMax" type="number" min="0" placeholder="Prix actuel max">
+
+      <input id="radarProfitMin" type="number" min="0" placeholder="Profit minimum">
+
+      <input id="radarRoiMin" type="number" min="0" placeholder="ROI minimum %">
+
+      <select id="radarDistance">
+        <option value="">Toutes distances</option>
+        <option value="inside">Dans mon rayon</option>
+        <option value="outside">Hors rayon</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="radarMetrics" class="grid3"></div>
+  <div id="radarList"></div>
+</section>
+
+
+<!-- FAVORIS -->
 <section id="favorites" class="page">
-
-<div class="card">
-<h1>⭐ Favoris</h1>
-<p>Les affaires conservées.</p>
-</div>
-
-<div id="favoritesList"></div>
-
+  <h1>⭐ Favoris</h1>
+  <div class="subtitle">Tes annonces sauvegardées.</div>
+  <div id="favoritesList"></div>
 </section>
 
 
+<!-- REGLAGES -->
 <section id="settings" class="page">
+  <h1>Réglages</h1>
+  <div class="subtitle">
+    Les paramètres centraux du moteur V80.
+  </div>
 
-<div class="card">
+  <div class="card">
+    <h2>Paramètres financiers</h2>
 
-<h1>⚙️ Réglages V80</h1>
+    <div class="grid">
+      <div class="field">
+        <label>Budget maximum (€)</label>
+        <input id="settingBudget" type="number" min="0" step="0.01">
+      </div>
 
-<div class="grid">
+      <div class="field">
+        <label>Marge minimum (%)</label>
+        <input id="settingMargin" type="number" min="0" step="0.1">
+      </div>
 
-<div class="field">
-<label>Budget maximum (€)</label>
-<input id="settingBudget" type="number" min="0">
-</div>
+      <div class="field">
+        <label>ROI minimum (%)</label>
+        <input id="settingROI" type="number" min="0" step="0.1">
+      </div>
 
-<div class="field">
-<label>Marge minimum (%)</label>
-<input id="settingMargin" type="number" min="0">
-</div>
+      <div class="field">
+        <label>Marge de sécurité (€)</label>
+        <input id="settingSafety" type="number" min="0" step="0.01">
+      </div>
 
-<div class="field">
-<label>ROI minimum (%)</label>
-<input id="settingRoi" type="number" min="0">
-</div>
+      <div class="field">
+        <label>Rayon maximum (km)</label>
+        <input id="settingRadius" type="number" min="0" step="1">
+      </div>
+    </div>
 
-<div class="field">
-<label>Marge de sécurité (€)</label>
-<input id="settingSafety" type="number" min="0">
-</div>
+    <button class="btn btn-primary" id="saveSettingsButton">
+      💾 Enregistrer les réglages
+    </button>
+  </div>
 
-<div class="field">
-<label>Rayon maximum (km)</label>
-<input id="settingRadius" type="number" min="0">
-</div>
 
-</div>
+  <div class="card">
+    <h2>🔒 Plafond maximum</h2>
 
-<div class="actions">
-<button class="primary" onclick="saveSettings()">
-💾 ENREGISTRER
-</button>
-</div>
+    <div id="lockStatus"></div>
 
-</div>
+    <div class="actions">
+      <button class="btn btn-dark" id="lockButton">
+        🔒 Verrouiller le plafond
+      </button>
 
-<div class="card">
+      <button class="btn btn-danger" id="unlockButton">
+        🔓 Déverrouiller
+      </button>
+    </div>
 
-<h2>🔒 Plafond d'enchère</h2>
-
-<div id="lockStatus"></div>
-
-<div class="actions">
-<button class="secondary" onclick="unlockCeiling()">
-Déverrouiller
-</button>
-</div>
-
-</div>
-
+    <div class="notice notice-info">
+      Une fois verrouillé, le plafond ne peut pas être augmenté automatiquement.
+      Une validation explicite est nécessaire pour le modifier.
+    </div>
+  </div>
 </section>
 
 </main>
 
 
 <script>
+/* =========================================================
+   V80.6 — CORE
+========================================================= */
 
-let settings=
-JSON.parse(localStorage.getItem("v80Settings"))||
-{
-budget:300,
-margin:50,
-roi:50,
-safety:0,
-radius:80
+const DEFAULT_SETTINGS = {
+  budget:300,
+  margin:50,
+  roi:50,
+  safety:0,
+  radius:80
 };
 
-let lockedMaxBid=
-localStorage.getItem("v80LockedMaxBid")!==null
-?Number(localStorage.getItem("v80LockedMaxBid"))
-:null;
+let settings = JSON.parse(
+  localStorage.getItem("v80Settings") || "null"
+) || DEFAULT_SETTINGS;
+
+let opportunities = JSON.parse(
+  localStorage.getItem("v80Opportunities") || "[]"
+);
+
+let favorites = JSON.parse(
+  localStorage.getItem("v80Favorites") || "[]"
+);
+
+let lockedMaxBid = localStorage.getItem("v80LockedMaxBid");
+
+lockedMaxBid =
+  lockedMaxBid !== null ? Number(lockedMaxBid) : null;
+
+let lastImportedData = null;
+let lastCalculation = null;
 
 
-/* =========================
+/* =========================================================
    UTILITAIRES
-========================= */
-
-function money(value){
-
-return new Intl.NumberFormat(
-"fr-FR",
-{
-style:"currency",
-currency:"EUR",
-maximumFractionDigits:2
-}
-).format(Number(value)||0);
-
-}
-
-function showPage(id,button){
-
-document.querySelectorAll(".page")
-.forEach(p=>p.classList.remove("active"));
-
-document.getElementById(id)
-.classList.add("active");
-
-document.querySelectorAll(".nav button")
-.forEach(b=>b.classList.remove("active"));
-
-if(button)button.classList.add("active");
-
-if(id==="radar")renderRadar();
-if(id==="favorites")renderFavorites();
-if(id==="settings")loadSettings();
-
-}
-
-function showPageByName(id){
-
-const buttons=
-document.querySelectorAll(".nav button");
-
-const index={
-home:0,
-radar:1,
-import:2,
-add:3,
-favorites:4,
-settings:5
-}[id];
-
-showPage(id,buttons[index]);
-
-}
+========================================================= */
 
 function val(id){
+  const el=document.getElementById(id);
+  if(!el) return 0;
+  return Number(el.value)||0;
+}
 
-return Math.max(
-0,
-Number(document.getElementById(id)?.value)||0
-);
+function money(n){
+  return new Intl.NumberFormat("fr-FR",{
+    style:"currency",
+    currency:"EUR"
+  }).format(Number(n)||0);
+}
 
+function number(n){
+  return new Intl.NumberFormat("fr-FR",{
+    maximumFractionDigits:2
+  }).format(Number(n)||0);
+}
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 }
 
 
-/* =========================
-   DÉTECTION SOURCE
-========================= */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
-function detectSourceName(url){
+function showPage(page){
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.toggle("active",p.id===page);
+  });
 
-try{
+  document.querySelectorAll("nav button").forEach(b=>{
+    b.classList.toggle("active",b.dataset.page===page);
+  });
 
-const host=
-new URL(url).hostname.toLowerCase();
-
-if(host.includes("interencheres"))
-return"Interencheres";
-
-if(host.includes("leboncoin"))
-return"Leboncoin";
-
-if(
-host==="ebay.fr"||
-host.endsWith(".ebay.fr")||
-host.includes("ebay")
-)
-return"eBay";
-
-if(host.includes("liquidation"))
-return"Liquidation";
-
-if(
-host.includes("destockage")||
-host.includes("déstockage")
-)
-return"Déstockage";
-
-if(
-host.includes("don")||
-host.includes("donnons")
-)
-return"Don";
-
-return"Autre";
-
-}catch(e){
-
-return"";
-
+  if(page==="radar") renderRadar();
+  if(page==="favorites") renderFavorites();
+  if(page==="home") updateDashboard();
+  if(page==="settings") renderSettings();
 }
 
-}
-
-
-/* =========================
-   IMPORT INTELLIGENT
-========================= */
-
-async function importListing(){
-
-const input=
-document.getElementById("importUrl");
-
-const url=input.value.trim();
-
-const sourceBox=
-document.getElementById("detectedSource");
-
-const details=
-document.getElementById("importDetails");
-
-const button=
-document.getElementById("detectButton");
-
-if(!url){
-
-sourceBox.innerHTML=
-`<div class="notice">
-Colle d'abord le lien de l'annonce.
-</div>`;
-
-return;
-
-}
-
-let parsed;
-
-try{
-
-parsed=new URL(url);
-
-}catch(e){
-
-sourceBox.innerHTML=
-`<div class="import-status error">
-❌ Le lien n'est pas valide.
-</div>`;
-
-return;
-
-}
-
-const source=
-detectSourceName(url);
-
-sourceBox.innerHTML=`
-<div class="detected">
-✅ SOURCE IDENTIFIÉE : ${escapeHtml(source)}
-</div>
-`;
-
-button.disabled=true;
-button.textContent="⏳ RÉCUPÉRATION...";
-
-details.innerHTML=`
-<div class="card">
-<div class="import-status loading">
-🔎 Tentative de récupération des données publiques...
-</div>
-</div>
-`;
-
-try{
-
-const controller=
-new AbortController();
-
-const timeout=
-setTimeout(
-()=>controller.abort(),
-10000
-);
-
-const response=
-await fetch(url,{
-method:"GET",
-mode:"cors",
-cache:"no-store",
-signal:controller.signal
+document.querySelectorAll("nav button").forEach(button=>{
+  button.addEventListener("click",()=>{
+    showPage(button.dataset.page);
+  });
 });
 
-clearTimeout(timeout);
 
-if(!response.ok)
-throw new Error("HTTP "+response.status);
-
-const html=
-await response.text();
-
-const extracted=
-extractPageData(html,url);
-
-showExtractedImport(
-url,
-source,
-extracted,
-true
-);
-
-}catch(error){
-
-showExtractedImport(
-url,
-source,
-{},
-false,
-error
-);
-
-}
-
-button.disabled=false;
-button.textContent="🔎 RÉCUPÉRER LES DONNÉES";
-
-}
-
-
-/* =========================
-   EXTRACTION HTML
-========================= */
-
-function extractPageData(html,url){
-
-const parser=
-new DOMParser();
-
-const doc=
-parser.parseFromString(html,"text/html");
-
-let title="";
-let description="";
-let image="";
-
-const ogTitle=
-doc.querySelector(
-'meta[property="og:title"]'
-);
-
-const metaDescription=
-doc.querySelector(
-'meta[name="description"]'
-);
-
-const ogDescription=
-doc.querySelector(
-'meta[property="og:description"]'
-);
-
-const ogImage=
-doc.querySelector(
-'meta[property="og:image"]'
-);
-
-if(ogTitle)
-title=ogTitle.content.trim();
-
-if(!title)
-title=
-doc.querySelector("title")?.textContent.trim()||"";
-
-if(metaDescription)
-description=
-metaDescription.content.trim();
-
-if(!description&&ogDescription)
-description=
-ogDescription.content.trim();
-
-if(ogImage)
-image=ogImage.content.trim();
-
-
-let price=extractPrice(
-html,
-doc
-);
-
-return{
-title,
-description,
-price,
-image,
-url
-};
-
-}
-
-
-function extractPrice(html,doc){
-
-const selectors=[
-
-'[itemprop="price"]',
-'[property="product:price:amount"]',
-'meta[property="product:price:amount"]',
-'[data-price]',
-'.price',
-'.product-price',
-'.price-current'
-
-];
-
-for(const selector of selectors){
-
-const elements=
-doc.querySelectorAll(selector);
-
-for(const element of elements){
-
-const raw=
-element.getAttribute("content")||
-element.getAttribute("data-price")||
-element.textContent||
-"";
-
-const value=
-parseFrenchPrice(raw);
-
-if(value>0)
-return value;
-
-}
-
-}
-
-
-/* recherche prudente dans les données structurées */
-
-const scripts=
-doc.querySelectorAll(
-'script[type="application/ld+json"]'
-);
-
-for(const script of scripts){
-
-try{
-
-const json=
-JSON.parse(script.textContent);
-
-const objects=
-Array.isArray(json)
-?json
-:[json];
-
-for(const obj of objects){
-
-if(
-obj?.offers?.price
-){
-
-const value=
-Number(
-String(obj.offers.price)
-.replace(",",".")
-);
-
-if(value>0)
-return value;
-
-}
-
-}
-
-}catch(e){}
-
-}
-
-return 0;
-
-}
-
-
-function parseFrenchPrice(text){
-
-if(!text)return 0;
-
-let s=
-String(text)
-.replace(/\s/g,"")
-.replace(/€/g,"")
-.trim();
-
-if(!s)return 0;
-
-if(
-s.includes(",")&&
-s.includes(".")
-){
-
-if(s.lastIndexOf(",")>
-s.lastIndexOf("."))
-s=s.replace(/\./g,"").replace(",",".");
-else
-s=s.replace(/,/g,"");
-
-}else if(s.includes(",")){
-
-s=s.replace(",",".");
-}
-
-const match=
-s.match(/[0-9]+(?:\.[0-9]+)?/);
-
-if(!match)return 0;
-
-const value=
-Number(match[0]);
-
-return Number.isFinite(value)
-?value
-:0;
-
-}
-
-
-/* =========================
-   AFFICHAGE IMPORT
-========================= */
-
-function showExtractedImport(
-url,
-source,
-data,
-success,
-error
-){
-
-const details=
-document.getElementById("importDetails");
-
-if(!success){
-
-details.innerHTML=`
-
-<div class="card">
-
-<div class="import-status error">
-
-⚠️ RÉCUPÉRATION AUTOMATIQUE BLOQUÉE
-
-</div>
-
-<p>
-La source <strong>${escapeHtml(source)}</strong>
-a bien été reconnue, mais le navigateur n'a pas pu lire
-directement cette page.
-</p>
-
-<p class="small-note">
-C'est fréquent avec certaines plateformes qui utilisent
-des protections anti-robots, des restrictions CORS ou
-un chargement dynamique.
-</p>
-
-<div class="actions">
-
-<button class="primary"
-onclick="showManualImport('${escapeAttribute(url)}','${escapeAttribute(source)}')">
-✏️ CONTINUER MANUELLEMENT
-</button>
-
-<button class="secondary"
-onclick="openExternal('${escapeAttribute(url)}')">
-🔗 OUVRIR L'ANNONCE
-</button>
-
-</div>
-
-</div>
-`;
-
-return;
-
-}
-
-
-/* données récupérées */
-
-details.innerHTML=`
-
-<div class="card">
-
-<div class="import-status ok">
-✅ DONNÉES RÉCUPÉRÉES
-</div>
-
-<div class="extracted">
-
-<strong>Source :</strong>
-${escapeHtml(source)}
-
-<br><br>
-
-<strong>Titre :</strong>
-${escapeHtml(data.title)||"Non trouvé"}
-
-<br><br>
-
-<strong>Prix détecté :</strong>
-${data.price>0?money(data.price):"Non trouvé"}
-
-<br><br>
-
-<strong>Description :</strong>
-${escapeHtml(data.description)||"Non trouvée"}
-
-</div>
-
-<div class="notice" style="margin-top:15px">
-
-Les données récupérées sont proposées pour vérification.
-Le moteur V80 ne considère pas une estimation comme une certitude.
-
-</div>
-
-<div class="actions">
-
-<button class="primary"
-onclick='useImportedData(${JSON.stringify({
-url:url,
-source:source,
-title:data.title||"",
-description:data.description||"",
-price:data.price||0
-})})'>
-🧮 ANALYSER AVEC V80
-</button>
-
-<button class="secondary"
-onclick="openExternal('${escapeAttribute(url)}')">
-🔗 OUVRIR L'ANNONCE
-</button>
-
-</div>
-
-</div>
-`;
-
-}
-
-
-function showManualImport(url,source){
-
-document.getElementById("importDetails").innerHTML=`
-
-<div class="card">
-
-<h2>✏️ Import assisté</h2>
-
-<div class="notice">
-
-La page externe bloque la récupération automatique.
-Renseigne uniquement les informations que tu peux vérifier
-sur l'annonce.
-
-</div>
-
-<div class="grid">
-
-<div class="field full">
-<label>Titre</label>
-<input id="manualTitle">
-</div>
-
-<div class="field">
-<label>Prix actuel / enchère (€)</label>
-<input id="manualPrice" type="number" min="0" value="0">
-</div>
-
-<div class="field">
-<label>Distance (km)</label>
-<input id="manualDistance" type="number" min="0" value="0">
-</div>
-
-<div class="field full">
-<label>Description</label>
-<textarea id="manualDescription"></textarea>
-</div>
-
-<div class="field">
-<label>État</label>
-<select id="manualCondition">
-<option value="">Non précisé</option>
-<option>Neuf</option>
-<option>Très bon état</option>
-<option>Bon état</option>
-<option>État moyen</option>
-<option>À réparer</option>
-<option>Non testé</option>
-</select>
-</div>
-
-<div class="field">
-<label>Revente réaliste (€)</label>
-<input id="manualResale" type="number" min="0" value="1500">
-</div>
-
-</div>
-
-<div class="actions">
-
-<button class="primary"
-onclick='useManualImport(${JSON.stringify({
-url:url,
-source:source
-})})'>
-🧮 ANALYSER AVEC V80
-</button>
-
-</div>
-
-</div>
-`;
-
-}
-
-
-function useImportedData(data){
-
-document.getElementById("title").value=data.title||"";
-document.getElementById("source").value=data.source||"Autre";
-document.getElementById("currentPrice").value=data.price||0;
-document.getElementById("url").value=data.url||"";
-document.getElementById("description").value=data.description||"";
-
-showPageByName("add");
-
-calculateAndDisplay();
-
-}
-
-
-function useManualImport(data){
-
-document.getElementById("title").value=
-document.getElementById("manualTitle").value.trim();
-
-document.getElementById("source").value=data.source;
-
-document.getElementById("currentPrice").value=
-Number(document.getElementById("manualPrice").value)||0;
-
-document.getElementById("url").value=data.url;
-
-document.getElementById("description").value=
-document.getElementById("manualDescription").value.trim();
-
-document.getElementById("condition").value=
-document.getElementById("manualCondition").value;
-
-document.getElementById("distance").value=
-Number(document.getElementById("manualDistance").value)||0;
-
-document.getElementById("resale").value=
-Number(document.getElementById("manualResale").value)||0;
-
-showPageByName("add");
-
-calculateAndDisplay();
-
-}
-
-
-function openExternal(url){
-
-window.open(
-url,
-"_blank",
-"noopener"
-);
-
-}
-
-
-/* =========================
-   MOTEUR V80
-========================= */
+/* =========================================================
+   MOTEUR V80 DETERMINISTE
+========================================================= */
 
 function calculateEngine(data){
 
-const resale=Math.max(0,data.resale);
+  const resale=Math.max(0,data.resale);
 
-const buyerCommission=
-Math.max(0,data.buyerCommission)/100;
+  const buyerCommission=
+    Math.max(0,data.buyerCommission)/100;
 
-const commissionVat=
-Math.max(0,data.commissionVat)/100;
+  const commissionVat=
+    Math.max(0,data.commissionVat)/100;
 
-const purchaseVat=
-Math.max(0,data.purchaseVat)/100;
+  const purchaseVat=
+    Math.max(0,data.purchaseVat)/100;
 
-const sellerCommission=
-Math.max(0,data.sellerCommission)/100;
+  const sellerCommission=
+    Math.max(0,data.sellerCommission)/100;
 
-const saleCommissionVat=
-Math.max(0,data.saleCommissionVat)/100;
+  const saleCommissionVat=
+    Math.max(0,data.saleCommissionVat)/100;
 
-const saleVat=
-Math.max(0,data.saleVat)/100;
+  const saleVat=
+    Math.max(0,data.saleVat)/100;
 
-const fixedPurchaseCosts=
-Math.max(0,data.fixed)+
-Math.max(0,data.dossier)+
-Math.max(0,data.transport)+
-Math.max(0,data.travel)+
-Math.max(0,data.inspection)+
-Math.max(0,data.repairs)+
-Math.max(0,data.refurbishment)+
-Math.max(0,data.other);
+  const fixedPurchaseCosts=
+    Math.max(0,data.fixed)+
+    Math.max(0,data.dossier)+
+    Math.max(0,data.transport)+
+    Math.max(0,data.travel)+
+    Math.max(0,data.inspection)+
+    Math.max(0,data.repairs)+
+    Math.max(0,data.refurbishment)+
+    Math.max(0,data.other);
 
-const saleCommissionAmount=
-resale*sellerCommission;
+  const saleCommissionAmount=
+    resale*sellerCommission;
 
-const saleCommissionVatAmount=
-saleCommissionAmount*saleCommissionVat;
+  const saleCommissionVatAmount=
+    saleCommissionAmount*saleCommissionVat;
 
-const saleTaxAmount=
-resale*saleVat;
+  const saleTaxAmount=
+    resale*saleVat;
 
-const saleFixed=
-Math.max(0,data.saleFixed);
+  const saleFixed=
+    Math.max(0,data.saleFixed);
 
-const totalSaleFees=
-saleCommissionAmount+
-saleCommissionVatAmount+
-saleTaxAmount+
-saleFixed;
+  const totalSaleFees=
+    saleCommissionAmount+
+    saleCommissionVatAmount+
+    saleTaxAmount+
+    saleFixed;
 
-const resaleNet=
-Math.max(0,resale-totalSaleFees);
+  const resaleNet=
+    Math.max(0,resale-totalSaleFees);
 
-const marginRate=
-Math.max(0,settings.margin)/100;
+  const marginRate=
+    Math.max(0,settings.margin)/100;
 
-const roiRate=
-Math.max(0,settings.roi)/100;
+  const roiRate=
+    Math.max(0,settings.roi)/100;
 
-const budget=
-Math.max(0,settings.budget);
+  const budget=
+    Math.max(0,settings.budget);
 
-const safety=
-Math.max(0,settings.safety);
+  const safety=
+    Math.max(0,settings.safety);
 
-const maxTotalByMargin=
-resaleNet*(1-marginRate);
+  const maxTotalByMargin=
+    resaleNet*(1-marginRate);
 
-const maxTotalByROI=
-resaleNet/(1+roiRate);
+  const maxTotalByROI=
+    resaleNet/(1+roiRate);
 
-const maxTotalByBudget=
-Math.max(0,budget-safety);
+  const maxTotalByBudget=
+    Math.max(0,budget-safety);
 
-const maxRealCost=
-Math.max(
-0,
-Math.min(
-maxTotalByMargin,
-maxTotalByROI,
-maxTotalByBudget
-)
-);
+  const maxRealCost=
+    Math.max(
+      0,
+      Math.min(
+        maxTotalByMargin,
+        maxTotalByROI,
+        maxTotalByBudget
+      )
+    );
 
-let theoreticalMaxBid=0;
+  let theoreticalMaxBid=0;
 
-const purchaseVariableFactor=
-1+
-purchaseVat+
-buyerCommission*(1+commissionVat);
+  const purchaseVariableFactor=
+    1+
+    purchaseVat+
+    buyerCommission*(1+commissionVat);
 
-if(maxRealCost>fixedPurchaseCosts){
+  if(maxRealCost>fixedPurchaseCosts){
+    theoreticalMaxBid=
+      (maxRealCost-fixedPurchaseCosts)/
+      purchaseVariableFactor;
+  }
 
-theoreticalMaxBid=
-(maxRealCost-fixedPurchaseCosts)/
-purchaseVariableFactor;
+  theoreticalMaxBid=
+    Math.max(0,theoreticalMaxBid);
 
+  let maxBid=theoreticalMaxBid;
+
+  if(lockedMaxBid!==null){
+    maxBid=Math.min(
+      theoreticalMaxBid,
+      lockedMaxBid
+    );
+  }
+
+  const purchaseVatAmount=
+    maxBid*purchaseVat;
+
+  const buyerCommissionAmount=
+    maxBid*buyerCommission;
+
+  const buyerCommissionVatAmount=
+    buyerCommissionAmount*commissionVat;
+
+  const total=
+    maxBid+
+    purchaseVatAmount+
+    buyerCommissionAmount+
+    buyerCommissionVatAmount+
+    fixedPurchaseCosts;
+
+  const profit=
+    resale-
+    totalSaleFees-
+    total;
+
+  const roi=
+    total>0
+      ?(profit/total)*100
+      :0;
+
+  const margin=
+    resale>0
+      ?(profit/resale)*100
+      :0;
+
+  const limits=[
+    {
+      name:"Marge minimum",
+      value:maxTotalByMargin
+    },
+    {
+      name:"ROI minimum",
+      value:maxTotalByROI
+    },
+    {
+      name:"Budget maximum",
+      value:maxTotalByBudget
+    }
+  ];
+
+  const smallest=
+    Math.min(...limits.map(x=>x.value));
+
+  const active=
+    limits.find(
+      x=>Math.abs(x.value-smallest)<0.01
+    );
+
+  const constraint=
+    active
+      ?active.name
+      :"Aucune";
+
+  let decision="STOP";
+
+  if(
+    maxBid>0 &&
+    profit>=0 &&
+    roi>=settings.roi &&
+    margin>=settings.margin
+  ){
+    decision="GO";
+  }
+  else if(
+    maxBid>0 &&
+    profit>0
+  ){
+    decision="SURVEILLANCE";
+  }
+
+  return {
+    resale,
+    resaleNet,
+    buyerCommission,
+    commissionVat,
+    purchaseVat,
+    sellerCommission,
+    saleCommissionVat,
+    saleVat,
+    fixedPurchaseCosts,
+    saleFixed,
+    purchaseVatAmount,
+    buyerCommissionAmount,
+    buyerCommissionVatAmount,
+    saleCommissionAmount,
+    saleCommissionVatAmount,
+    saleTaxAmount,
+    totalSaleFees,
+    theoreticalMaxBid,
+    maxBid,
+    total,
+    profit,
+    roi,
+    margin,
+    decision,
+    constraint
+  };
 }
 
-theoreticalMaxBid=
-Math.max(0,theoreticalMaxBid);
 
-let maxBid=theoreticalMaxBid;
-
-if(lockedMaxBid!==null){
-
-maxBid=
-Math.min(
-theoreticalMaxBid,
-lockedMaxBid
-);
-
-}
-
-const purchaseVatAmount=
-maxBid*purchaseVat;
-
-const buyerCommissionAmount=
-maxBid*buyerCommission;
-
-const buyerCommissionVatAmount=
-buyerCommissionAmount*commissionVat;
-
-const total=
-maxBid+
-purchaseVatAmount+
-buyerCommissionAmount+
-buyerCommissionVatAmount+
-fixedPurchaseCosts;
-
-const profit=
-resale-
-totalSaleFees-
-total;
-
-const roi=
-total>0
-?(profit/total)*100
-:0;
-
-const margin=
-resale>0
-?(profit/resale)*100
-:0;
-
-const limits=[
-{name:"Marge minimum",value:maxTotalByMargin},
-{name:"ROI minimum",value:maxTotalByROI},
-{name:"Budget maximum",value:maxTotalByBudget}
-];
-
-const smallest=
-Math.min(...limits.map(x=>x.value));
-
-const active=
-limits.find(
-x=>Math.abs(x.value-smallest)<0.01
-);
-
-const constraint=
-active?active.name:"Aucune";
-
-let decision="STOP";
-
-if(
-maxBid>0 &&
-profit>=0 &&
-roi>=settings.roi &&
-margin>=settings.margin
-){
-
-decision="GO";
-
-}
-else if(
-maxBid>0 &&
-profit>0
-){
-
-decision="SURVEILLANCE";
-
-}
-
-return{
-resale,
-resaleNet,
-buyerCommission,
-commissionVat,
-purchaseVat,
-sellerCommission,
-saleCommissionVat,
-saleVat,
-fixedPurchaseCosts,
-saleFixed,
-purchaseVatAmount,
-buyerCommissionAmount,
-buyerCommissionVatAmount,
-saleCommissionAmount,
-saleCommissionVatAmount,
-saleTaxAmount,
-totalSaleFees,
-theoreticalMaxBid,
-maxBid,
-total,
-profit,
-roi,
-margin,
-decision,
-constraint
-};
-
-}
-
+/* =========================================================
+   DONNEES FORMULAIRE
+========================================================= */
 
 function collectFormData(){
 
-return{
+  return {
+    title:document.getElementById("title").value.trim(),
+    source:document.getElementById("source").value,
+    currentPrice:val("currentPrice"),
+    url:document.getElementById("url").value.trim(),
+    description:document.getElementById("description").value.trim(),
+    condition:document.getElementById("condition").value.trim(),
+    distance:val("distance"),
+    auctionDate:document.getElementById("auctionDate").value,
+    photoUrl:document.getElementById("photoUrl").value.trim(),
 
-title:
-document.getElementById("title").value.trim(),
+    resale:val("resale"),
 
-source:
-document.getElementById("source").value,
+    buyerCommission:val("buyerCommission"),
+    commissionVat:val("commissionVat"),
+    purchaseVat:val("purchaseVat"),
 
-currentPrice:
-val("currentPrice"),
+    fixed:val("fixed"),
+    dossier:val("dossier"),
+    transport:val("transport"),
+    travel:val("travel"),
+    inspection:val("inspection"),
+    repairs:val("repairs"),
+    refurbishment:val("refurbishment"),
+    other:val("other"),
 
-url:
-document.getElementById("url").value.trim(),
-
-description:
-document.getElementById("description").value.trim(),
-
-condition:
-document.getElementById("condition").value,
-
-distance:
-val("distance"),
-
-resale:
-val("resale"),
-
-buyerCommission:
-val("buyerCommission"),
-
-commissionVat:
-val("commissionVat"),
-
-purchaseVat:
-val("purchaseVat"),
-
-fixed:
-val("fixed"),
-
-dossier:
-val("dossier"),
-
-transport:
-val("transport"),
-
-travel:
-val("travel"),
-
-inspection:
-val("inspection"),
-
-repairs:
-val("repairs"),
-
-refurbishment:
-val("refurbishment"),
-
-other:
-val("other"),
-
-sellerCommission:
-val("sellerCommission"),
-
-saleCommissionVat:
-val("saleCommissionVat"),
-
-saleVat:
-val("saleVat"),
-
-saleFixed:
-val("saleFixed")
-
-};
-
+    sellerCommission:val("sellerCommission"),
+    saleCommissionVat:val("saleCommissionVat"),
+    saleVat:val("saleVat"),
+    saleFixed:val("saleFixed")
+  };
 }
 
+
+/* =========================================================
+   CONFIANCE
+========================================================= */
 
 function calculateConfidence(data){
 
-let score=0;
+  let score=0;
 
-if(data.title)score+=20;
-if(data.description)score+=15;
-if(data.url)score+=15;
-if(data.resale>0)score+=20;
-if(data.condition)score+=10;
-if(data.currentPrice>0)score+=5;
-if(data.distance>0)score+=5;
+  if(data.title) score+=20;
+  if(data.description) score+=15;
+  if(data.url) score+=15;
+  if(data.resale>0) score+=20;
+  if(data.condition) score+=10;
+  if(data.currentPrice>0) score+=5;
+  if(data.distance>0) score+=5;
+  if(data.photoUrl) score+=5;
+  if(data.source) score+=5;
 
-return Math.min(100,score);
-
+  return Math.min(100,score);
 }
 
+
+/* =========================================================
+   CALCUL + AFFICHAGE
+========================================================= */
 
 function calculateAndDisplay(){
 
-const data=
-collectFormData();
+  const data=collectFormData();
 
-const result=
-calculateEngine(data);
+  const result=calculateEngine(data);
 
-const confidence=
-calculateConfidence(data);
+  const confidence=
+    calculateConfidence(data);
 
-document.getElementById("analysisResult").innerHTML=`
+  lastCalculation={
+    data,
+    result,
+    confidence
+  };
 
-<div class="card">
+  const decisionClass=
+    result.decision==="GO"
+      ?"badge-go"
+      :result.decision==="SURVEILLANCE"
+        ?"badge-watch"
+        :"badge-stop";
 
-<div class="hero">
+  document.getElementById("calculationResult").innerHTML=`
 
-<div class="small">
-PLAFOND V80
-</div>
+    <div class="result-box">
 
-<div class="hero-value">
-${money(result.maxBid)}
-</div>
+      <div class="muted small">
+        PRIX MAXIMUM À ENCHÉRIR
+      </div>
 
-<div class="small">
-PRIX MAX À ENCHÉRIR
-</div>
+      <div class="result-max">
+        ${money(result.maxBid)}
+      </div>
 
-</div>
+      ${
+        lockedMaxBid!==null
+        ?`<div class="locked">🔒 Plafond verrouillé</div>`
+        :""
+      }
 
-<div class="result-grid">
+      <hr>
 
-<div class="result">
-COÛT TOTAL RÉEL
-<strong>${money(result.total)}</strong>
-</div>
+      <div class="kv">
+        <span>Coût total réel</span>
+        <strong>${money(result.total)}</strong>
+      </div>
 
-<div class="result">
-REVENTE RÉALISTE
-<strong>${money(result.resale)}</strong>
-</div>
+      <div class="kv">
+        <span>Revente réaliste</span>
+        <strong>${money(result.resale)}</strong>
+      </div>
 
-<div class="result">
-MARGE ESTIMÉE
-<strong>${money(result.profit)}</strong>
-</div>
+      <div class="kv">
+        <span>Marge estimée</span>
+        <strong>${money(result.profit)}</strong>
+      </div>
 
-<div class="result">
-ROI
-<strong>${result.roi.toFixed(1)} %</strong>
-</div>
+      <div class="kv">
+        <span>Marge / revente</span>
+        <strong>${number(result.margin)} %</strong>
+      </div>
 
-<div class="result">
-MARGE / REVENTE
-<strong>${result.margin.toFixed(1)} %</strong>
-</div>
+      <div class="kv">
+        <span>ROI</span>
+        <strong>${number(result.roi)} %</strong>
+      </div>
 
-<div class="result">
-CONFIANCE
-<strong>${confidence} %</strong>
-</div>
+      <div class="kv">
+        <span>Contrainte active</span>
+        <strong>${escapeHtml(result.constraint)}</strong>
+      </div>
 
-</div>
+      <div class="kv">
+        <span>Confiance données</span>
+        <strong>${confidence} %</strong>
+      </div>
 
-<div style="margin-top:16px">
+      <div style="margin-top:14px">
+        <span class="badge ${decisionClass}">
+          ${result.decision}
+        </span>
+      </div>
 
-<span class="badge ${
-result.decision==="GO"
-?"go"
-:result.decision==="SURVEILLANCE"
-?"watch"
-:"stop"
-}">
+      <div class="notice ${
+        result.decision==="GO"
+          ?"notice-success"
+          :result.decision==="SURVEILLANCE"
+            ?"notice-warning"
+            :"notice-danger"
+      }">
 
-${
-result.decision==="GO"
-?"🟢 GO"
-:result.decision==="SURVEILLANCE"
-?"🟠 SURVEILLANCE"
-:"🔴 STOP"
-}
+        <strong>Pourquoi ?</strong><br>
 
-</span>
+        ${
+          result.decision==="GO"
+          ?`Le plafond respecte simultanément la marge minimum,
+             le ROI minimum et le budget configuré.`
+          :result.decision==="SURVEILLANCE"
+            ?`Le calcul permet encore une opération positive,
+             mais au moins un objectif configuré n'est pas totalement respecté.`
+            :`Le plafond calculé ne permet pas de respecter les conditions
+             financières configurées.`
+        }
 
-</div>
+      </div>
 
-<div class="explain">
+      <div class="small muted">
+        Le calcul financier est déterministe.
+        La confiance mesure uniquement la complétude des données,
+        elle n'augmente jamais le prix maximum.
+      </div>
 
-<strong>Pourquoi ?</strong>
-
-<br><br>
-
-Contrainte principale :
-<strong>${result.constraint}</strong>
-
-<br><br>
-
-Prix maximum théorique :
-<strong>${money(result.theoreticalMaxBid)}</strong>
-
-<br><br>
-
-Commission acheteur :
-${money(result.buyerCommissionAmount)}
-
-<br>
-
-TVA sur commission :
-${money(result.buyerCommissionVatAmount)}
-
-<br>
-
-TVA sur achat :
-${money(result.purchaseVatAmount)}
-
-<br>
-
-Frais fixes + logistique :
-${money(result.fixedPurchaseCosts)}
-
-<br><br>
-
-Frais de revente :
-${money(result.totalSaleFees)}
-
-</div>
-
-<div class="lock">
-
-<input
-type="checkbox"
-id="lockCheckbox"
-${lockedMaxBid!==null?"checked":""}
-onchange="toggleLock(${result.theoreticalMaxBid})">
-
-<label for="lockCheckbox">
-🔒 PLAFOND VERROUILLÉ
-</label>
-
-</div>
-
-<div class="actions">
-
-<button
-class="primary"
-onclick='saveOpportunity(${JSON.stringify(data)},${JSON.stringify(result)},${confidence})'>
-💾 Enregistrer
-</button>
-
-<button
-class="secondary"
-onclick='saveFavorite(${JSON.stringify(data)},${JSON.stringify(result)},${confidence})'>
-⭐ Favori
-</button>
-
-</div>
-
-</div>
-`;
-
-document.getElementById("homeMaxBid")
-.textContent=money(result.maxBid);
-
+    </div>
+  `;
 }
 
 
-function toggleLock(value){
+/* =========================================================
+   SAUVEGARDE
+========================================================= */
 
-const checkbox=
-document.getElementById("lockCheckbox");
+function saveOpportunity(){
 
-if(checkbox.checked){
+  if(!lastCalculation){
+    calculateAndDisplay();
+  }
 
-const ok=
-confirm(
-"Verrouiller le plafond à "+
-money(value)+" ?"
-);
+  if(!lastCalculation) return;
 
-if(!ok){
+  const {
+    data,
+    result,
+    confidence
+  }=lastCalculation;
 
-checkbox.checked=false;
-return;
+  const opportunity={
+    id:Date.now(),
+    createdAt:new Date().toISOString(),
+    ...data,
+    ...result,
+    confidence
+  };
 
-}
+  opportunities.unshift(opportunity);
 
-lockedMaxBid=value;
+  localStorage.setItem(
+    "v80Opportunities",
+    JSON.stringify(opportunities)
+  );
 
-localStorage.setItem(
-"v80LockedMaxBid",
-value
-);
+  updateDashboard();
+  renderRadar();
 
-}
-else{
-
-const ok=
-confirm(
-"Déverrouiller le plafond maximum ?"
-);
-
-if(!ok){
-
-checkbox.checked=true;
-return;
-
-}
-
-lockedMaxBid=null;
-
-localStorage.removeItem(
-"v80LockedMaxBid"
-);
-
-}
-
-updateLockStatus();
-
+  alert("Opportunité enregistrée dans le Radar.");
 }
 
 
-function unlockCeiling(){
+function toggleFavorite(){
 
-if(lockedMaxBid===null){
+  const data=collectFormData();
 
-alert("Aucun plafond n'est verrouillé.");
-return;
+  const existing=
+    favorites.findIndex(
+      x=>x.url===data.url && data.url
+    );
 
-}
+  if(existing>=0){
+    favorites.splice(existing,1);
+    alert("Retiré des favoris.");
+  }else{
+    favorites.unshift({
+      id:Date.now(),
+      ...data
+    });
+    alert("Ajouté aux favoris.");
+  }
 
-const ok=
-confirm(
-"Déverrouiller le plafond de "+
-money(lockedMaxBid)+" ?"
-);
+  localStorage.setItem(
+    "v80Favorites",
+    JSON.stringify(favorites)
+  );
 
-if(!ok)return;
-
-lockedMaxBid=null;
-
-localStorage.removeItem(
-"v80LockedMaxBid"
-);
-
-updateLockStatus();
-
-}
-
-
-function updateLockStatus(){
-
-const el=
-document.getElementById("lockStatus");
-
-if(!el)return;
-
-if(lockedMaxBid!==null){
-
-el.innerHTML=`
-<div class="notice">
-🔒 Plafond verrouillé à
-<strong>${money(lockedMaxBid)}</strong>.
-<br>
-Aucune IA ou automatisation ne pourra augmenter ce montant.
-</div>
-`;
-
-}
-else{
-
-el.innerHTML=`
-<div class="notice">
-🔓 Aucun plafond spécifique n'est verrouillé.
-</div>
-`;
-
-}
-
+  renderFavorites();
 }
 
 
-/* =========================
+/* =========================================================
    RADAR
-========================= */
+========================================================= */
 
-function getOpportunities(){
+function radarFiltered(){
 
-return JSON.parse(
-localStorage.getItem("v80Opportunities")||"[]"
-);
+  const search=
+    document.getElementById("radarSearch").value
+      .toLowerCase()
+      .trim();
 
-}
+  const source=
+    document.getElementById("radarSource").value;
 
+  const status=
+    document.getElementById("radarStatus").value;
 
-function saveOpportunity(
-data,
-result,
-confidence
-){
+  const sort=
+    document.getElementById("radarSort").value;
 
-const list=
-getOpportunities();
+  const priceMax=
+    val("radarPriceMax");
 
-list.unshift({
+  const profitMin=
+    val("radarProfitMin");
 
-id:Date.now(),
+  const roiMin=
+    val("radarRoiMin");
 
-title:data.title||"Affaire sans titre",
+  const distance=
+    document.getElementById("radarDistance").value;
 
-url:data.url,
+  let list=opportunities.filter(o=>{
 
-source:data.source,
+    if(search){
 
-description:data.description,
+      const haystack=
+        `${o.title||""} ${o.description||""} ${o.source||""}`
+        .toLowerCase();
 
-condition:data.condition,
+      if(!haystack.includes(search))
+        return false;
+    }
 
-currentPrice:data.currentPrice,
+    if(source && o.source!==source)
+      return false;
 
-distance:data.distance,
+    if(status && o.decision!==status)
+      return false;
 
-resale:data.resale,
+    if(priceMax && o.currentPrice>priceMax)
+      return false;
 
-maxBid:result.maxBid,
+    if(profitMin && o.profit<profitMin)
+      return false;
 
-totalCost:result.total,
+    if(roiMin && o.roi<roiMin)
+      return false;
 
-profit:result.profit,
+    if(distance==="inside" &&
+       o.distance>settings.radius)
+      return false;
 
-margin:result.margin,
+    if(distance==="outside" &&
+       o.distance<=settings.radius)
+      return false;
 
-roi:result.roi,
+    return true;
+  });
 
-confidence,
+  list.sort((a,b)=>{
 
-decision:result.decision,
+    if(sort==="date")
+      return new Date(b.createdAt)-new Date(a.createdAt);
 
-createdAt:new Date().toISOString()
+    if(sort==="maxBid")
+      return b.maxBid-a.maxBid;
 
-});
+    if(sort==="profit")
+      return b.profit-a.profit;
 
-localStorage.setItem(
-"v80Opportunities",
-JSON.stringify(list)
-);
+    if(sort==="roi")
+      return b.roi-a.roi;
 
-updateDashboard();
+    if(sort==="confidence")
+      return b.confidence-a.confidence;
 
-alert(
-"✅ Opportunité enregistrée dans le Radar."
-);
+    if(sort==="room")
+      return (
+        Math.max(0,b.maxBid-b.currentPrice)-
+        Math.max(0,a.maxBid-a.currentPrice)
+      );
 
-}
+    const hotA=
+      a.decision==="GO" &&
+      a.currentPrice>0 &&
+      a.currentPrice<=a.maxBid &&
+      a.currentPrice/a.maxBid<=.75;
 
+    const hotB=
+      b.decision==="GO" &&
+      b.currentPrice>0 &&
+      b.currentPrice<=b.maxBid &&
+      b.currentPrice/b.maxBid<=.75;
 
-function getFavorites(){
+    if(hotA!==hotB)
+      return hotA?-1:1;
 
-return JSON.parse(
-localStorage.getItem("v80Favorites")||"[]"
-);
+    return b.profit-a.profit;
+  });
 
-}
-
-
-function saveFavorite(
-data,
-result,
-confidence
-){
-
-const list=
-getFavorites();
-
-list.unshift({
-
-id:Date.now(),
-
-title:data.title||"Affaire sans titre",
-
-url:data.url,
-
-source:data.source,
-
-currentPrice:data.currentPrice,
-
-distance:data.distance,
-
-resale:data.resale,
-
-maxBid:result.maxBid,
-
-totalCost:result.total,
-
-profit:result.profit,
-
-margin:result.margin,
-
-roi:result.roi,
-
-confidence,
-
-decision:result.decision,
-
-createdAt:new Date().toISOString()
-
-});
-
-localStorage.setItem(
-"v80Favorites",
-JSON.stringify(list)
-);
-
-updateDashboard();
-
-alert("⭐ Ajouté aux favoris.");
-
-}
-
-
-function calculateRadarMetrics(item){
-
-const current=
-Number(item.currentPrice)||0;
-
-const max=
-Number(item.maxBid)||0;
-
-const remaining=
-max>0
-?Math.max(0,max-current)
-:0;
-
-const ratio=
-max>0
-?current/max
-:999;
-
-const hot=
-item.decision==="GO"&&
-current>0&&
-current<=max&&
-ratio<=.75;
-
-return{
-current,
-max,
-remaining,
-ratio,
-hot
-};
-
+  return list;
 }
 
 
 function renderRadar(){
 
-const container=
-document.getElementById("radarList");
+  const list=radarFiltered();
+
+  const total=opportunities.length;
+
+  const go=
+    opportunities.filter(x=>x.decision==="GO").length;
+
+  const watch=
+    opportunities.filter(
+      x=>x.decision==="SURVEILLANCE"
+    ).length;
+
+  const hot=
+    opportunities.filter(x=>{
+      return (
+        x.decision==="GO" &&
+        x.currentPrice>0 &&
+        x.currentPrice<=x.maxBid &&
+        x.currentPrice/x.maxBid<=.75
+      );
+    }).length;
+
+  document.getElementById("radarMetrics").innerHTML=`
+    <div class="card">
+      <div class="muted small">Total</div>
+      <div class="metric">${total}</div>
+    </div>
+
+    <div class="card">
+      <div class="muted small">GO</div>
+      <div class="metric">${go}</div>
+    </div>
+
+    <div class="card">
+      <div class="muted small">🔥 Opportunités</div>
+      <div class="metric">${hot}</div>
+    </div>
+  `;
+
+  const container=
+    document.getElementById("radarList");
+
+  if(!list.length){
+    container.innerHTML=`
+      <div class="card empty">
+        Aucune opportunité ne correspond aux filtres.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML=list.map(o=>{
+
+    const room=
+      Math.max(0,o.maxBid-o.currentPrice);
+
+    const hot=
+      o.decision==="GO" &&
+      o.currentPrice>0 &&
+      o.currentPrice<=o.maxBid &&
+      o.currentPrice/o.maxBid<=.75;
+
+    const distanceOk=
+      o.distance<=settings.radius;
+
+    const badge=
+      o.decision==="GO"
+        ?"badge-go"
+        :o.decision==="SURVEILLANCE"
+          ?"badge-watch"
+          :"badge-stop";
+
+    return `
+
+      <div class="opportunity">
+
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:start">
+
+          <div>
+            <div class="opportunity-title">
+              ${escapeHtml(o.title||"Annonce sans titre")}
+            </div>
+
+            <div class="small muted">
+              ${escapeHtml(o.source||"Autre")}
+              ${o.distance>0
+                ?` • ${number(o.distance)} km`
+                :""
+              }
+            </div>
+          </div>
+
+          <div>
+            <span class="badge ${badge}">
+              ${o.decision}
+            </span>
+            ${
+              hot
+              ?`<span class="badge badge-blue">🔥</span>`
+              :""
+            }
+          </div>
 
-if(!container)return;
+        </div>
 
-let list=
-getOpportunities();
 
-const search=
-(document.getElementById("radarSearch")?.value||"")
-.toLowerCase();
+        <div class="opportunity-grid">
 
-const source=
-document.getElementById("radarSource")?.value||"";
+          <div class="opportunity-metric">
+            <span>Prix actuel</span>
+            <strong>${money(o.currentPrice)}</strong>
+          </div>
 
-const decision=
-document.getElementById("radarDecision")?.value||"";
+          <div class="opportunity-metric">
+            <span>Prix max</span>
+            <strong>${money(o.maxBid)}</strong>
+          </div>
 
-const sort=
-document.getElementById("radarSort")?.value||"hot";
+          <div class="opportunity-metric">
+            <span>Marge</span>
+            <strong>${money(o.profit)}</strong>
+          </div>
 
-const maxCurrent=
-Number(document.getElementById("radarMaxCurrent")?.value)||0;
+          <div class="opportunity-metric">
+            <span>ROI</span>
+            <strong>${number(o.roi)} %</strong>
+          </div>
 
-const minProfit=
-Number(document.getElementById("radarMinProfit")?.value)||0;
+        </div>
 
-const minRoi=
-Number(document.getElementById("radarMinRoi")?.value)||0;
 
-const distanceFilter=
-document.getElementById("radarDistance")?.value||"";
+        <div class="small muted" style="margin-top:10px">
+          Marge d'enchère restante :
+          <strong>${money(room)}</strong>
+          • Confiance ${o.confidence||0} %
+          • ${distanceOk?"Dans le rayon":"Hors rayon"}
+        </div>
 
 
-list=list.filter(item=>{
+        <div class="actions">
 
-const m=
-calculateRadarMetrics(item);
+          ${
+            o.url
+            ?`<a
+                class="btn btn-light"
+                href="${escapeHtml(o.url)}"
+                target="_blank"
+                rel="noopener noreferrer">
+                🔗 Ouvrir l'annonce
+              </a>`
+            :""
+          }
 
-const searchOk=
-!search||
-(
-item.title+
-" "+
-(item.description||"")+
-" "+
-item.source
-)
-.toLowerCase()
-.includes(search);
+          <button
+            class="btn btn-danger"
+            onclick="deleteOpportunity(${o.id})">
+            Supprimer
+          </button>
 
-const sourceOk=
-!source||item.source===source;
+        </div>
 
-const decisionOk=
-!decision||item.decision===decision;
-
-const currentOk=
-!maxCurrent||m.current<=maxCurrent;
-
-const profitOk=
-!minProfit||item.profit>=minProfit;
-
-const roiOk=
-!minRoi||item.roi>=minRoi;
-
-let distanceOk=true;
-
-if(distanceFilter==="inside"){
-
-distanceOk=
-(Number(item.distance)||0)
-<=
-Number(settings.radius)||0;
-
-}
-
-if(distanceFilter==="outside"){
-
-distanceOk=
-(Number(item.distance)||0)
->
-Number(settings.radius)||0;
-
-}
-
-return(
-searchOk&&
-sourceOk&&
-decisionOk&&
-currentOk&&
-profitOk&&
-roiOk&&
-distanceOk
-);
-
-});
-
-
-list.sort((a,b)=>{
-
-const A=
-calculateRadarMetrics(a);
-
-const B=
-calculateRadarMetrics(b);
-
-if(sort==="hot")
-return Number(B.hot)-Number(A.hot)||
-B.remaining-A.remaining;
-
-if(sort==="maxBid")
-return b.maxBid-a.maxBid;
-
-if(sort==="profit")
-return b.profit-a.profit;
-
-if(sort==="roi")
-return b.roi-a.roi;
-
-if(sort==="confidence")
-return b.confidence-a.confidence;
-
-if(sort==="remaining")
-return b.remaining-a.remaining;
-
-return b.id-a.id;
-
-});
-
-
-if(!list.length){
-
-container.innerHTML=`
-
-<div class="card empty">
-
-<div style="font-size:35px">🎯</div>
-
-<h3>Aucune opportunité</h3>
-
-<p>
-Importe ou ajoute une affaire pour alimenter le Radar.
-</p>
-
-</div>
-`;
-
-return;
-
-}
-
-
-container.innerHTML=
-list.map(item=>{
-
-const m=
-calculateRadarMetrics(item);
-
-const distance=
-Number(item.distance)||0;
-
-const inside=
-distance<=Number(settings.radius);
-
-return`
-
-<div class="opportunity">
-
-<div class="op-top">
-
-<div>
-
-<div class="op-title">
-${escapeHtml(item.title)}
-</div>
-
-<div class="op-source">
-
-${escapeHtml(item.source)}
-
-${distance
-?" • "+distance+" km"
-:""}
-
-${distance
-?
-inside
-?` • <span style="color:#166534;font-weight:800">Dans le rayon</span>`
-:` • <span style="color:#991b1b;font-weight:800">Hors rayon</span>`
-:""}
-
-</div>
-
-</div>
-
-<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
-
-${m.hot
-?`<span class="badge hot">🔥 OPPORTUNITÉ</span>`
-:""}
-
-<span class="badge ${
-item.decision==="GO"
-?"go"
-:item.decision==="SURVEILLANCE"
-?"watch"
-:"stop"
-}">
-
-${
-item.decision==="GO"
-?"🟢 GO"
-:item.decision==="SURVEILLANCE"
-?"🟠 SURVEILLANCE"
-:"🔴 STOP"
-}
-
-</span>
-
-</div>
-
-</div>
-
-<div class="op-values">
-
-<div class="op-value">
-<span>PRIX ACTUEL</span>
-<strong>${money(m.current)}</strong>
-</div>
-
-<div class="op-value">
-<span>PRIX MAX V80</span>
-<strong>${money(m.max)}</strong>
-</div>
-
-<div class="op-value">
-<span>ÉCART DISPONIBLE</span>
-<strong>${money(m.remaining)}</strong>
-</div>
-
-<div class="op-value">
-<span>MARGE</span>
-<strong>${money(item.profit)}</strong>
-</div>
-
-<div class="op-value">
-<span>ROI</span>
-<strong>${Number(item.roi).toFixed(1)} %</strong>
-</div>
-
-</div>
-
-${m.current>0&&m.max>0
-?`
-<div class="remaining">
-
-Prix actuel :
-<strong>${money(m.current)}</strong>
-
-&nbsp;→&nbsp;
-
-Plafond V80 :
-<strong>${money(m.max)}</strong>
-
-<br><br>
-
-Il reste
-<strong>${money(m.remaining)}</strong>
-avant d'atteindre le plafond.
-
-</div>
-`
-:""}
-
-${m.current>m.max&&m.max>0
-?`
-<div class="hot-box">
-⛔ Prix actuel déjà supérieur au plafond V80.
-</div>
-`
-:""}
-
-<div class="actions">
-
-${item.url
-?`
-<a
-href="${escapeAttribute(item.url)}"
-target="_blank"
-rel="noopener"
-class="secondary"
-style="text-decoration:none">
-🔗 Ouvrir l'annonce
-</a>
-`
-:""}
-
-<button
-class="danger"
-onclick="deleteOpportunity(${item.id})">
-Supprimer
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}).join("");
-
-}
-
-
-/* =========================
-   FAVORIS
-========================= */
-
-function renderFavorites(){
-
-const container=
-document.getElementById("favoritesList");
-
-if(!container)return;
-
-const list=
-getFavorites();
-
-if(!list.length){
-
-container.innerHTML=`
-
-<div class="card empty">
-
-<div style="font-size:30px">⭐</div>
-
-<h3>Aucun favori</h3>
-
-<p>
-Les affaires ajoutées aux favoris apparaîtront ici.
-</p>
-
-</div>
-
-`;
-
-return;
-
-}
-
-container.innerHTML=
-list.map(item=>`
-
-<div class="opportunity">
-
-<div class="op-top">
-
-<div>
-
-<div class="op-title">
-${escapeHtml(item.title)}
-</div>
-
-<div class="op-source">
-${escapeHtml(item.source)}
-</div>
-
-</div>
-
-<span class="badge ${
-item.decision==="GO"
-?"go"
-:item.decision==="SURVEILLANCE"
-?"watch"
-:"stop"
-}">
-${item.decision}
-</span>
-
-</div>
-
-<div class="op-values">
-
-<div class="op-value">
-<span>PRIX MAX</span>
-<strong>${money(item.maxBid)}</strong>
-</div>
-
-<div class="op-value">
-<span>COÛT TOTAL</span>
-<strong>${money(item.totalCost)}</strong>
-</div>
-
-<div class="op-value">
-<span>MARGE</span>
-<strong>${money(item.profit)}</strong>
-</div>
-
-<div class="op-value">
-<span>ROI</span>
-<strong>${Number(item.roi).toFixed(1)} %</strong>
-</div>
-
-</div>
-
-${item.url
-?`
-<div class="actions">
-
-<a
-href="${escapeAttribute(item.url)}"
-target="_blank"
-rel="noopener"
-class="secondary"
-style="text-decoration:none">
-🔗 Ouvrir
-</a>
-
-</div>
-`
-:""}
-
-</div>
-
-`).join("");
-
+      </div>
+    `;
+  }).join("");
 }
 
 
 function deleteOpportunity(id){
 
-if(!confirm(
-"Supprimer cette opportunité du Radar ?"
-))
-return;
+  if(!confirm("Supprimer cette opportunité ?"))
+    return;
 
-const list=
-getOpportunities()
-.filter(x=>x.id!==id);
+  opportunities=
+    opportunities.filter(x=>x.id!==id);
 
-localStorage.setItem(
-"v80Opportunities",
-JSON.stringify(list)
-);
+  localStorage.setItem(
+    "v80Opportunities",
+    JSON.stringify(opportunities)
+  );
 
-renderRadar();
-updateDashboard();
-
+  renderRadar();
+  updateDashboard();
 }
 
 
-/* =========================
+/* =========================================================
+   FAVORIS
+========================================================= */
+
+function renderFavorites(){
+
+  const container=
+    document.getElementById("favoritesList");
+
+  if(!favorites.length){
+    container.innerHTML=`
+      <div class="card empty">
+        Aucun favori pour le moment.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML=
+    favorites.map(f=>`
+
+      <div class="card">
+
+        <h3>
+          ${escapeHtml(f.title||"Sans titre")}
+        </h3>
+
+        <div class="small muted">
+          ${escapeHtml(f.source||"Autre")}
+        </div>
+
+        <div class="kv">
+          <span>Prix actuel</span>
+          <strong>${money(f.currentPrice)}</strong>
+        </div>
+
+        <div class="kv">
+          <span>Revente</span>
+          <strong>${money(f.resale)}</strong>
+        </div>
+
+        <div class="actions">
+
+          ${
+            f.url
+            ?`<a
+                class="btn btn-light"
+                href="${escapeHtml(f.url)}"
+                target="_blank"
+                rel="noopener noreferrer">
+                🔗 Ouvrir
+              </a>`
+            :""
+          }
+
+          <button
+            class="btn btn-danger"
+            onclick="deleteFavorite(${f.id})">
+            Supprimer
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+}
+
+
+function deleteFavorite(id){
+
+  favorites=
+    favorites.filter(x=>x.id!==id);
+
+  localStorage.setItem(
+    "v80Favorites",
+    JSON.stringify(favorites)
+  );
+
+  renderFavorites();
+}
+
+
+/* =========================================================
    REGLAGES
-========================= */
+========================================================= */
 
-function loadSettings(){
+function renderSettings(){
 
-document.getElementById("settingBudget").value=
-settings.budget;
+  document.getElementById("settingBudget").value=
+    settings.budget;
 
-document.getElementById("settingMargin").value=
-settings.margin;
+  document.getElementById("settingMargin").value=
+    settings.margin;
 
-document.getElementById("settingRoi").value=
-settings.roi;
+  document.getElementById("settingROI").value=
+    settings.roi;
 
-document.getElementById("settingSafety").value=
-settings.safety;
+  document.getElementById("settingSafety").value=
+    settings.safety;
 
-document.getElementById("settingRadius").value=
-settings.radius;
+  document.getElementById("settingRadius").value=
+    settings.radius;
 
-updateLockStatus();
-
+  document.getElementById("lockStatus").innerHTML=
+    lockedMaxBid!==null
+      ?`
+        <div class="notice notice-success">
+          🔒 Plafond verrouillé à
+          <strong>${money(lockedMaxBid)}</strong>
+        </div>
+      `
+      :`
+        <div class="notice notice-warning">
+          Aucun plafond verrouillé.
+        </div>
+      `;
 }
 
 
-function saveSettings(){
+document.getElementById("saveSettingsButton")
+.addEventListener("click",()=>{
 
-settings={
-budget:val("settingBudget"),
-margin:val("settingMargin"),
-roi:val("settingRoi"),
-safety:val("settingSafety"),
-radius:val("settingRadius")
-};
+  settings={
+    budget:val("settingBudget"),
+    margin:val("settingMargin"),
+    roi:val("settingROI"),
+    safety:val("settingSafety"),
+    radius:val("settingRadius")
+  };
 
-localStorage.setItem(
-"v80Settings",
-JSON.stringify(settings)
-);
+  localStorage.setItem(
+    "v80Settings",
+    JSON.stringify(settings)
+  );
 
-alert(
-"✅ Réglages V80 enregistrés."
-);
+  updateDashboard();
+  alert("Réglages enregistrés.");
+});
 
-updateDashboard();
-renderRadar();
 
+/* =========================================================
+   VERROUILLAGE
+========================================================= */
+
+document.getElementById("lockButton")
+.addEventListener("click",()=>{
+
+  if(!lastCalculation){
+    alert("Effectue d'abord un calcul V80.");
+    showPage("add");
+    return;
+  }
+
+  const theoretical=
+    lastCalculation.result.theoreticalMaxBid;
+
+  if(theoretical<=0){
+    alert("Le plafond calculé est nul.");
+    return;
+  }
+
+  if(!confirm(
+    `Verrouiller définitivement le plafond à ${money(theoretical)} ?`
+  )){
+    return;
+  }
+
+  lockedMaxBid=theoretical;
+
+  localStorage.setItem(
+    "v80LockedMaxBid",
+    String(lockedMaxBid)
+  );
+
+  calculateAndDisplay();
+  renderSettings();
+  updateDashboard();
+});
+
+
+document.getElementById("unlockButton")
+.addEventListener("click",()=>{
+
+  if(lockedMaxBid===null){
+    alert("Aucun plafond n'est verrouillé.");
+    return;
+  }
+
+  if(!confirm(
+    "Déverrouiller le plafond maximum ?"
+  )){
+    return;
+  }
+
+  lockedMaxBid=null;
+
+  localStorage.removeItem(
+    "v80LockedMaxBid"
+  );
+
+  renderSettings();
+  updateDashboard();
+
+  if(lastCalculation)
+    calculateAndDisplay();
+});
+
+
+/* =========================================================
+   IMPORT INTELLIGENT
+========================================================= */
+
+function detectSource(url){
+
+  try{
+
+    const host=
+      new URL(url).hostname
+        .toLowerCase()
+        .replace(/^www\./,"");
+
+    if(host.includes("interencheres"))
+      return "Interencheres";
+
+    if(host.includes("leboncoin"))
+      return "Leboncoin";
+
+    if(
+      host==="ebay.fr" ||
+      host.endsWith(".ebay.fr") ||
+      host==="ebay.com" ||
+      host.endsWith(".ebay.com")
+    )
+      return "eBay";
+
+    if(
+      host.includes("liquidation") ||
+      host.includes("liquid")
+    )
+      return "Liquidation";
+
+    if(
+      host.includes("destockage") ||
+      host.includes("déstockage")
+    )
+      return "Déstockage";
+
+    if(
+      host.includes("don") ||
+      host.includes("donation")
+    )
+      return "Don";
+
+    return "Autre";
+
+  }catch(e){
+    return "—";
+  }
 }
 
+
+function parsePrice(value){
+
+  if(value===null || value===undefined)
+    return null;
+
+  let s=String(value)
+    .replace(/\u00a0/g," ")
+    .replace(/€/g,"")
+    .trim();
+
+  if(!s)
+    return null;
+
+  s=s.replace(/[^\d,.\- ]/g,"");
+
+  s=s.replace(/\s/g,"");
+
+  if(s.includes(",") && s.includes(".")){
+
+    if(s.lastIndexOf(",")>s.lastIndexOf(".")){
+      s=s.replace(/\./g,"");
+      s=s.replace(",",".");
+    }else{
+      s=s.replace(/,/g,"");
+    }
+
+  }else if(s.includes(",")){
+
+    s=s.replace(",",".");
+  }
+
+  const n=Number(s);
+
+  return Number.isFinite(n) ? n : null;
+}
+
+
+function getMeta(doc,name,property){
+
+  const a=
+    doc.querySelector(`meta[name="${name}"]`);
+
+  if(a?.content)
+    return a.content.trim();
+
+  const b=
+    doc.querySelector(`meta[property="${property}"]`);
+
+  if(b?.content)
+    return b.content.trim();
+
+  return "";
+}
+
+
+function cleanText(value){
+
+  return String(value||"")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+
+function extractJsonLd(doc){
+
+  const scripts=
+    [...doc.querySelectorAll(
+      'script[type="application/ld+json"]'
+    )];
+
+  const products=[];
+
+  for(const script of scripts){
+
+    try{
+
+      let data=
+        JSON.parse(script.textContent);
+
+      const arr=
+        Array.isArray(data)
+          ?data
+          :data["@graph"]
+            ?data["@graph"]
+            :[data];
+
+      for(const item of arr){
+
+        if(
+          item &&
+          (
+            item["@type"]==="Product" ||
+            item["@type"]==="Offer" ||
+            item["@type"]?.includes?.("Product")
+          )
+        ){
+          products.push(item);
+        }
+
+      }
+
+    }catch(e){}
+  }
+
+  return products;
+}
+
+
+function extractImportedData(doc,url,source){
+
+  const jsonProducts=
+    extractJsonLd(doc);
+
+  const product=
+    jsonProducts.find(
+      x=>x["@type"]==="Product"
+    ) ||
+    jsonProducts[0] ||
+    null;
+
+  let title=
+    getMeta(doc,"title","og:title") ||
+    product?.name ||
+    cleanText(doc.title);
+
+  let description=
+    getMeta(doc,"description","og:description") ||
+    product?.description ||
+    "";
+
+  let photoUrl=
+    getMeta(doc,"","og:image") ||
+    "";
+
+  if(!photoUrl && product?.image){
+
+    if(Array.isArray(product.image))
+      photoUrl=product.image[0];
+
+    else if(typeof product.image==="string")
+      photoUrl=product.image;
+
+    else if(product.image?.url)
+      photoUrl=product.image.url;
+  }
+
+  let price=null;
+
+  const metaPrice=
+    getMeta(
+      doc,
+      "",
+      "product:price:amount"
+    );
+
+  if(metaPrice)
+    price=parsePrice(metaPrice);
+
+  if(price===null && product){
+
+    const offer=
+      Array.isArray(product.offers)
+        ?product.offers[0]
+        :product.offers;
+
+    if(offer){
+
+      price=
+        parsePrice(offer.price) ??
+        parsePrice(offer.lowPrice);
+    }
+
+    if(price===null)
+      price=parsePrice(product.price);
+  }
+
+  return {
+    url,
+    source,
+    title:cleanText(title),
+    description:cleanText(description),
+    currentPrice:price,
+    photoUrl:cleanText(photoUrl),
+    fetched:true
+  };
+}
+
+
+async function tryFetchListing(url,source){
+
+  const response=
+    await fetch(url,{
+      method:"GET",
+      mode:"cors",
+      credentials:"omit",
+      redirect:"follow"
+    });
+
+  if(!response.ok){
+    throw new Error(
+      `HTTP ${response.status}`
+    );
+  }
+
+  const html=
+    await response.text();
+
+  if(!html || html.length<100)
+    throw new Error("Page vide");
+
+  const parser=
+    new DOMParser();
+
+  const doc=
+    parser.parseFromString(
+      html,
+      "text/html"
+    );
+
+  return extractImportedData(
+    doc,
+    url,
+    source
+  );
+}
+
+
+function showImportResult(data,blocked=false){
+
+  lastImportedData=data;
+
+  const fields=[];
+
+  if(data.title)
+    fields.push("Titre");
+
+  if(data.description)
+    fields.push("Description");
+
+  if(data.currentPrice!==null &&
+     data.currentPrice!==undefined)
+    fields.push("Prix");
+
+  if(data.photoUrl)
+    fields.push("Photo");
+
+  document.getElementById(
+    "importResultCard"
+  ).style.display="block";
+
+  document.getElementById(
+    "importResult"
+  ).innerHTML=`
+
+    ${
+      blocked
+      ?`
+        <div class="notice notice-warning">
+          <strong>Lecture automatique bloquée.</strong><br>
+          La plateforme empêche le navigateur de lire directement sa page.
+          Je ne vais pas inventer les informations.
+          L'URL et la source restent néanmoins disponibles.
+        </div>
+      `
+      :`
+        <div class="notice notice-success">
+          <strong>Lecture automatique réussie.</strong><br>
+          Informations récupérées :
+          ${fields.length
+            ?escapeHtml(fields.join(", "))
+            :"aucune donnée exploitable"
+          }.
+        </div>
+      `
+    }
+
+    <div class="result-box">
+
+      <div class="kv">
+        <span>Source</span>
+        <strong>${escapeHtml(data.source)}</strong>
+      </div>
+
+      <div class="kv">
+        <span>Titre</span>
+        <strong>
+          ${escapeHtml(data.title||"Non récupéré")}
+        </strong>
+      </div>
+
+      <div class="kv">
+        <span>Prix actuel</span>
+        <strong>
+          ${
+            data.currentPrice!==null &&
+            data.currentPrice!==undefined
+              ?money(data.currentPrice)
+              :"Non récupéré"
+          }
+        </strong>
+      </div>
+
+      <div class="kv">
+        <span>Description</span>
+        <strong>
+          ${
+            data.description
+              ?"Récupérée"
+              :"Non récupérée"
+          }
+        </strong>
+      </div>
+
+      <div class="kv">
+        <span>Photo</span>
+        <strong>
+          ${
+            data.photoUrl
+              ?"Récupérée"
+              :"Non récupérée"
+          }
+        </strong>
+      </div>
+
+    </div>
+  `;
+}
+
+
+async function importListing(){
+
+  const url=
+    document.getElementById("importUrl")
+      .value.trim();
+
+  const status=
+    document.getElementById("importStatus");
+
+  if(!url){
+
+    status.textContent=
+      "Colle d'abord le lien de l'annonce.";
+
+    return;
+  }
+
+  let parsed;
+
+  try{
+    parsed=new URL(url);
+  }catch(e){
+
+    status.textContent=
+      "Le lien n'est pas valide.";
+
+    return;
+  }
+
+  if(
+    parsed.protocol!=="http:" &&
+    parsed.protocol!=="https:"
+  ){
+
+    status.textContent=
+      "Le lien doit commencer par http:// ou https://";
+
+    return;
+  }
+
+  const source=
+    detectSource(url);
+
+  document.getElementById(
+    "detectedSource"
+  ).textContent=source;
+
+  status.textContent=
+    "⏳ Tentative de récupération automatique...";
+
+  document.getElementById(
+    "importResultCard"
+  ).style.display="none";
+
+  /* Même si la lecture externe est bloquée,
+     ces deux données sont toujours fiables
+     car elles viennent directement de l'URL. */
+
+  const baseData={
+    url,
+    source,
+    title:"",
+    description:"",
+    currentPrice:null,
+    photoUrl:"",
+    fetched:false
+  };
+
+  try{
+
+    const data=
+      await tryFetchListing(
+        url,
+        source
+      );
+
+    status.textContent=
+      "✅ Informations récupérées depuis la page.";
+
+    showImportResult(data,false);
+
+  }catch(error){
+
+    console.warn(
+      "Import externe bloqué :",
+      error
+    );
+
+    status.textContent=
+      "⚠️ Récupération automatique bloquée par la plateforme.";
+
+    showImportResult(
+      baseData,
+      true
+    );
+  }
+}
+
+
+document.getElementById("importButton")
+.addEventListener(
+  "click",
+  importListing
+);
+
+
+/* Détection immédiate de la source */
+
+document.getElementById("importUrl")
+.addEventListener(
+  "input",
+  e=>{
+    const source=
+      detectSource(e.target.value.trim());
+
+    document.getElementById(
+      "detectedSource"
+    ).textContent=source;
+  }
+);
+
+
+/* =========================================================
+   REMPLISSAGE FORMULAIRE DEPUIS IMPORT
+========================================================= */
+
+function fillFormFromImport(){
+
+  if(!lastImportedData)
+    return;
+
+  const d=lastImportedData;
+
+  document.getElementById("url").value=
+    d.url||"";
+
+  document.getElementById("source").value=
+    d.source||"Autre";
+
+  if(d.title)
+    document.getElementById("title").value=
+      d.title;
+
+  if(d.description)
+    document.getElementById("description").value=
+      d.description;
+
+  if(
+    d.currentPrice!==null &&
+    d.currentPrice!==undefined
+  ){
+    document.getElementById(
+      "currentPrice"
+    ).value=d.currentPrice;
+  }
+
+  if(d.photoUrl)
+    document.getElementById("photoUrl").value=
+      d.photoUrl;
+
+  updatePhotoPreview();
+
+  showPage("add");
+
+  document.getElementById("calculationResult").innerHTML=`
+    <div class="notice notice-success">
+      ✅ Données importées dans le formulaire.
+      Complète maintenant la <strong>revente réaliste</strong>
+      et les frais pour lancer le calcul V80.
+    </div>
+  `;
+}
+
+
+document.getElementById("fillFormButton")
+.addEventListener(
+  "click",
+  fillFormFromImport
+);
+
+document.getElementById("goAddButton")
+.addEventListener(
+  "click",
+  fillFormFromImport
+);
+
+
+document.getElementById("clearImportButton")
+.addEventListener(
+  "click",
+  ()=>{
+
+    document.getElementById("importUrl").value="";
+    document.getElementById("detectedSource").textContent="—";
+    document.getElementById("importStatus").textContent="";
+    document.getElementById("importResultCard").style.display="none";
+
+    lastImportedData=null;
+  }
+);
+
+
+/* =========================================================
+   PHOTO PREVIEW
+========================================================= */
+
+function updatePhotoPreview(){
+
+  const input=
+    document.getElementById("photoUrl");
+
+  const img=
+    document.getElementById("photoPreview");
+
+  const url=
+    input.value.trim();
+
+  if(!url){
+
+    img.style.display="none";
+    img.removeAttribute("src");
+
+    return;
+  }
+
+  img.src=url;
+  img.style.display="block";
+
+  img.onerror=()=>{
+    img.style.display="none";
+  };
+}
+
+document.getElementById("photoUrl")
+.addEventListener(
+  "input",
+  updatePhotoPreview
+);
+
+
+/* =========================================================
+   BOUTONS
+========================================================= */
+
+document.getElementById("calculateButton")
+.addEventListener(
+  "click",
+  calculateAndDisplay
+);
+
+document.getElementById("saveOpportunityButton")
+.addEventListener(
+  "click",
+  saveOpportunity
+);
+
+document.getElementById("favoriteButton")
+.addEventListener(
+  "click",
+  toggleFavorite
+);
+
+
+/* =========================================================
+   FILTRES RADAR
+========================================================= */
+
+[
+  "radarSearch",
+  "radarSource",
+  "radarStatus",
+  "radarSort",
+  "radarPriceMax",
+  "radarProfitMin",
+  "radarRoiMin",
+  "radarDistance"
+].forEach(id=>{
+
+  const el=document.getElementById(id);
+
+  el.addEventListener(
+    "input",
+    renderRadar
+  );
+
+  el.addEventListener(
+    "change",
+    renderRadar
+  );
+});
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
 
 function updateDashboard(){
 
-const opportunities=
-getOpportunities();
+  const opportunitiesCount=
+    opportunities.length;
 
-const go=
-opportunities.filter(
-x=>x.decision==="GO"
-).length;
+  const goCount=
+    opportunities.filter(
+      x=>x.decision==="GO"
+    ).length;
 
-const watch=
-opportunities.filter(
-x=>x.decision==="SURVEILLANCE"
-).length;
+  const hotCount=
+    opportunities.filter(x=>{
+      return (
+        x.decision==="GO" &&
+        x.currentPrice>0 &&
+        x.currentPrice<=x.maxBid &&
+        x.currentPrice/x.maxBid<=.75
+      );
+    }).length;
 
-const hot=
-opportunities.filter(
-x=>calculateRadarMetrics(x).hot
-).length;
+  document.getElementById(
+    "homeOpportunities"
+  ).textContent=opportunitiesCount;
 
-document.getElementById(
-"statOpportunities"
-).textContent=
-opportunities.length;
+  document.getElementById(
+    "homeGo"
+  ).textContent=goCount;
 
-document.getElementById(
-"statGo"
-).textContent=
-go;
+  document.getElementById(
+    "homeHot"
+  ).textContent=hotCount;
 
-document.getElementById(
-"statWatch"
-).textContent=
-watch;
+  document.getElementById(
+    "homeBudget"
+  ).textContent=money(settings.budget);
 
-document.getElementById(
-"statHot"
-).textContent=
-hot;
+  document.getElementById(
+    "homeMargin"
+  ).textContent=
+    number(settings.margin)+" %";
 
-if(lockedMaxBid!==null){
+  document.getElementById(
+    "homeROI"
+  ).textContent=
+    number(settings.roi)+" %";
 
-document.getElementById(
-"homeMaxBid"
-).textContent=
-money(lockedMaxBid);
+  document.getElementById(
+    "homeRadius"
+  ).textContent=
+    number(settings.radius)+" km";
 
-}
+  if(lockedMaxBid!==null){
 
-}
+    document.getElementById(
+      "homeMaxBid"
+    ).textContent=
+      money(lockedMaxBid);
 
+    document.getElementById(
+      "homeLockText"
+    ).textContent=
+      "🔒 Plafond verrouillé";
+  }
+  else{
 
-/* =========================
-   SECURITE HTML
-========================= */
+    document.getElementById(
+      "homeMaxBid"
+    ).textContent="—";
 
-function escapeHtml(value){
-
-return String(value||"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
-}
-
-function escapeAttribute(value){
-
-return String(value||"")
-.replace(/"/g,"%22")
-.replace(/</g,"%3C")
-.replace(/>/g,"%3E");
-
-}
-
-
-/* =========================
-   SERVICE WORKER
-========================= */
-
-if("serviceWorker" in navigator){
-
-window.addEventListener(
-"load",
-()=>{
-
-navigator.serviceWorker
-.register("./service-worker.js")
-.catch(
-err=>console.log(
-"Service Worker:",
-err
-)
-);
-
-}
-);
-
+    document.getElementById(
+      "homeLockText"
+    ).textContent=
+      "Aucun plafond verrouillé";
+  }
 }
 
 
-/* =========================
+/* =========================================================
    INITIALISATION
-========================= */
+========================================================= */
 
-loadSettings();
-updateDashboard();
-renderRadar();
+function init(){
+
+  renderSettings();
+  updateDashboard();
+  renderRadar();
+  renderFavorites();
+
+  if("serviceWorker" in navigator){
+
+    navigator.serviceWorker
+      .register("./service-worker.js")
+      .catch(
+        error=>console.warn(
+          "Service Worker:",
+          error
+        )
+      );
+  }
+}
+
+init();
 
 </script>
 

@@ -353,7 +353,7 @@ hr{
   <div class="header-inner">
     <div>
       <div class="brand">🚀 Revente Radar</div>
-      <div class="version">V80 CORE • V80.8 IMPORT ASSISTÉ</div>
+      <div class="version">V80 CORE • V80.9 INTERENCHERES AUTO</div>
     </div>
   </div>
 
@@ -375,7 +375,7 @@ hr{
 
   <div class="subtitle">
     Le moteur V80 calcule ton plafond maximum.
-    La récupération des annonces passe désormais par le collecteur serveur V80.7.
+    La récupération des annonces passe désormais par le collecteur serveur V80.9.
   </div>
 
   <div class="hero">
@@ -438,7 +438,7 @@ hr{
 
   <div class="subtitle">
     Colle simplement le lien d'une annonce.
-    V80.8 détecte la source, tente la récupération automatique,
+    V80.9 détecte la source, récupère automatiquement les données disponibles,
     puis te laisse compléter uniquement les informations manquantes.
   </div>
 
@@ -512,7 +512,7 @@ hr{
 
   <div class="notice notice-info">
 
-    <strong>V80.7 :</strong>
+    <strong>V80.9 :</strong>
     le collecteur serveur ne fabrique jamais de données.
     Si une plateforme bloque également le serveur,
     l'annonce est signalée comme non récupérée et tu peux compléter
@@ -1079,7 +1079,7 @@ hr{
 
   <div class="card">
 
-    <h2>☁️ Collecteur V80.7</h2>
+    <h2>☁️ Collecteur V80.9</h2>
 
     <div class="kv">
       <span>Serveur</span>
@@ -1109,7 +1109,7 @@ hr{
 <script>
 
 /* =========================================================
-   V80.7 — CONFIGURATION COLLECTEUR SUPABASE
+   V80.9 — CONFIGURATION COLLECTEUR SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
@@ -1120,7 +1120,7 @@ const SUPABASE_FUNCTION_URL =
 
 
 /*
-  Clé Publishable Supabase fournie pour V80.7.
+  Clé Publishable Supabase utilisée par le frontend V80.
   Elle est utilisée uniquement pour appeler
   la fonction publique du collecteur.
 */
@@ -3608,12 +3608,58 @@ async function importViaSupabase(
 
     message:
       data.message ||
-      ""
+      "",
+
+    collector:
+      data.collector || "",
+
+    fields:
+      data.fields || {}
 
   };
 
 }
 
+
+/* =========================================================
+   V80.9 — DONNÉES INTERENCHERES NORMALISÉES
+========================================================= */
+
+function importedFields(data){
+  return data?.fields || {};
+}
+
+function formatAuctionDate(value){
+  if(!value) return "Non détectée";
+  const d = new Date(value);
+  if(Number.isNaN(d.getTime())) return value;
+  return new Intl.DateTimeFormat("fr-FR",{
+    dateStyle:"medium",
+    timeStyle:"short"
+  }).format(d);
+}
+
+function toDatetimeLocal(value){
+  if(!value) return "";
+  const d = new Date(value);
+  if(Number.isNaN(d.getTime())) return "";
+  const pad=n=>String(n).padStart(2,"0");
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function detectBuyerFeesPercent(data){
+  /*
+    Règle déterministe V80.9 :
+    on ne retient un pourcentage que s'il est explicitement associé
+    au mot "FRAIS" dans le texte de l'annonce.
+    Exemple : "FRAIS 22 %" -> 22.
+  */
+  const text = String(data?.description || "");
+  const match = text.match(/\bfrais\s*:?\s*(\d+(?:[.,]\d+)?)\s*%/i);
+  if(!match) return null;
+  const n = Number(match[1].replace(",","."));
+  return Number.isFinite(n) && n >= 0 && n <= 100 ? n : null;
+}
 
 /* =========================================================
    AFFICHAGE RESULTAT IMPORT
@@ -3711,7 +3757,7 @@ function showImportResult(
         <div class="notice notice-success">
 
           <strong>
-            ✅ Collecteur serveur V80.7
+            ✅ Collecteur serveur V80.9
           </strong>
 
           <br>
@@ -3815,6 +3861,60 @@ function showImportResult(
 
     </div>
 
+
+    ${
+      data.source==="Interencheres" && data.fields
+        ?`
+          <div class="result-box">
+            <h3>Informations de la vente</h3>
+
+            <div class="kv">
+              <span>Lot</span>
+              <strong>${data.fields.lotNumber ?? "Non détecté"}</strong>
+            </div>
+
+            <div class="kv">
+              <span>Estimation</span>
+              <strong>${
+                data.fields.estimateMin!=null || data.fields.estimateMax!=null
+                  ?`${data.fields.estimateMin!=null ? money(data.fields.estimateMin) : "—"} – ${data.fields.estimateMax!=null ? money(data.fields.estimateMax) : "—"}`
+                  :"Non détectée"
+              }</strong>
+            </div>
+
+            <div class="kv">
+              <span>Vente</span>
+              <strong>${escapeHtml(formatAuctionDate(data.fields.saleDatetime))}</strong>
+            </div>
+
+            <div class="kv">
+              <span>Ville</span>
+              <strong>${escapeHtml(data.fields.saleCity || "Non détectée")}</strong>
+            </div>
+
+            <div class="kv">
+              <span>Maison de vente</span>
+              <strong>${escapeHtml(data.fields.organizationName || "Non détectée")}</strong>
+            </div>
+
+            <div class="kv">
+              <span>Frais acheteur détectés</span>
+              <strong>${
+                detectBuyerFeesPercent(data)!==null
+                  ?`${number(detectBuyerFeesPercent(data))} %`
+                  :"Non détectés"
+              }</strong>
+            </div>
+          </div>
+
+          <div class="notice notice-warning">
+            <strong>Important :</strong>
+            l'estimation de vente n'est ni le prix actuel ni une estimation de revente V80.
+            Les frais détectés sont préremplis uniquement lorsqu'ils sont écrits explicitement dans l'annonce.
+          </div>
+        `
+        :""
+    }
 
     ${
       data.description
@@ -3974,13 +4074,15 @@ async function importListing(){
 
     fetched:false,
 
-    serverFetched:false
+    serverFetched:false,
+
+    fields:{}
 
   };
 
 
   status.textContent =
-    "⏳ Collecteur serveur V80.7 en cours...";
+    "⏳ Collecteur serveur V80.9 en cours...";
 
 
   try{
@@ -3996,7 +4098,7 @@ async function importListing(){
 
 
     status.textContent =
-      "✅ Annonce récupérée par le collecteur serveur V80.7.";
+      "✅ Annonce récupérée par le collecteur serveur V80.9.";
 
 
     showImportResult(
@@ -4010,7 +4112,7 @@ async function importListing(){
   }catch(serverError){
 
     console.warn(
-      "Collecteur Supabase V80.7 :",
+      "Collecteur Supabase V80.9 :",
       serverError
     );
 
@@ -4051,7 +4153,7 @@ async function importListing(){
     }catch(browserError){
 
       console.warn(
-        "Import navigateur V80.7 :",
+        "Import navigateur V80.9 :",
         browserError
       );
 
@@ -4161,6 +4263,42 @@ function fillFormFromImport(
   );
 
 
+  const fields =
+    importedFields(data);
+
+
+  setValue(
+    "auctionDate",
+    toDatetimeLocal(
+      fields.saleDatetime
+    )
+  );
+
+
+  const detectedBuyerFees =
+    detectBuyerFeesPercent(data);
+
+
+  if(detectedBuyerFees!==null){
+
+    /*
+      "FRAIS 22 %" est traité comme le taux total annoncé.
+      TVA commission reste à 0 pour éviter de rajouter une TVA
+      une seconde fois sans preuve explicite.
+    */
+    setValue(
+      "buyerCommission",
+      detectedBuyerFees
+    );
+
+    setValue(
+      "commissionVat",
+      0
+    );
+
+  }
+
+
   /*
     IMPORTANT :
 
@@ -4181,7 +4319,9 @@ function fillFormFromImport(
   if(status){
 
     status.textContent =
-      "✅ Données importées. Vérifie-les puis complète les coûts avant de calculer.";
+      detectedBuyerFees!==null
+        ?"✅ Données importées. Les frais explicitement détectés ont été préremplis : vérifie-les avant calcul."
+        :"✅ Données importées. Vérifie-les puis complète les coûts avant de calculer.";
 
   }
 

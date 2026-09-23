@@ -1,28 +1,4545 @@
-🚀 Revente Radar
-V80 CORE • V80.8 IMPORT ASSISTÉ
-Accueil
-Radar
-🔗 Importer
-Ajouter
-Favoris
-Réglages
-Ton radar d'achat-revente
-Le moteur V80 calcule ton plafond maximum. La récupération des annonces passe désormais par le collecteur serveur V80.7.
-Prix maximum à enchérir
-—
-Aucun plafond verrouillé
-Opportunités
-0
-GO
-0
-🔥 Opportunités
-0
-V80 CORE
-Budget
-300,00 €
-Marge minimum
-50 %
-ROI minimum
-50 %
-Rayon
-80 km
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#111827">
+<link rel="manifest" href="./manifest.json">
+<title>Revente Radar V80</title>
+
+<style>
+:root{
+  --bg:#f5f5f7;
+  --card:#ffffff;
+  --text:#111827;
+  --muted:#6b7280;
+  --line:#e5e7eb;
+  --blue:#2563eb;
+  --green:#16a34a;
+  --orange:#d97706;
+  --red:#dc2626;
+  --dark:#111827;
+  --shadow:0 8px 30px rgba(0,0,0,.07);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(245,245,247,.94);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.brand{
+  font-size:19px;
+  font-weight:800;
+}
+.version{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:2px;
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  padding:0 12px 10px;
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+}
+nav button{
+  border:0;
+  background:transparent;
+  padding:9px 12px;
+  border-radius:12px;
+  font-weight:700;
+  white-space:nowrap;
+  color:var(--muted);
+}
+nav button.active{
+  background:#111827;
+  color:white;
+}
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:20px 16px 80px;
+}
+.page{display:none}
+.page.active{display:block}
+h1{
+  font-size:30px;
+  margin:8px 0 6px;
+}
+h2{
+  font-size:21px;
+  margin:0 0 14px;
+}
+h3{
+  font-size:16px;
+  margin:0 0 10px;
+}
+.subtitle{
+  color:var(--muted);
+  margin-bottom:20px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:18px;
+  box-shadow:var(--shadow);
+  margin-bottom:16px;
+}
+.hero{
+  background:#111827;
+  color:white;
+  border-radius:28px;
+  padding:26px;
+  margin-bottom:18px;
+}
+.hero-label{
+  font-size:13px;
+  opacity:.7;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.hero-value{
+  font-size:46px;
+  line-height:1;
+  font-weight:900;
+  margin:8px 0;
+}
+.metric{
+  font-size:28px;
+  font-weight:850;
+}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+label{
+  display:block;
+  font-size:13px;
+  font-weight:750;
+  margin:0 0 6px;
+}
+input,select,textarea{
+  width:100%;
+  border:1px solid #d1d5db;
+  background:white;
+  color:var(--text);
+  border-radius:13px;
+  padding:12px 13px;
+  font-size:15px;
+  outline:none;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(37,99,235,.10);
+}
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+.field{margin-bottom:13px}
+button{
+  cursor:pointer;
+}
+.btn{
+  border:0;
+  border-radius:13px;
+  padding:12px 15px;
+  font-weight:800;
+  font-size:14px;
+}
+.btn-primary{
+  background:var(--blue);
+  color:white;
+}
+.btn-dark{
+  background:#111827;
+  color:white;
+}
+.btn-light{
+  background:#f3f4f6;
+  color:#111827;
+}
+.btn-danger{
+  background:#fee2e2;
+  color:#991b1b;
+}
+.btn-green{
+  background:#dcfce7;
+  color:#166534;
+}
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:12px;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:12px;
+  font-weight:800;
+}
+.badge-go{background:#dcfce7;color:#166534}
+.badge-watch{background:#fef3c7;color:#92400e}
+.badge-stop{background:#fee2e2;color:#991b1b}
+.badge-blue{background:#dbeafe;color:#1d4ed8}
+.badge-gray{background:#f3f4f6;color:#4b5563}
+.notice{
+  padding:13px 15px;
+  border-radius:14px;
+  margin:12px 0;
+  font-size:13px;
+  line-height:1.45;
+}
+.notice-info{background:#eff6ff;color:#1e40af}
+.notice-warning{background:#fffbeb;color:#92400e}
+.notice-success{background:#f0fdf4;color:#166534}
+.notice-danger{background:#fef2f2;color:#991b1b}
+.import-source{
+  font-size:15px;
+  font-weight:800;
+  margin-top:8px;
+}
+.import-source span{
+  color:var(--blue);
+}
+.status-line{
+  min-height:20px;
+  font-size:13px;
+  color:var(--muted);
+}
+.kv{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  padding:9px 0;
+  border-bottom:1px solid var(--line);
+}
+.kv:last-child{border-bottom:0}
+.kv strong{text-align:right}
+.result-box{
+  border-radius:18px;
+  background:#f9fafb;
+  padding:15px;
+  margin-top:14px;
+}
+.result-max{
+  font-size:34px;
+  font-weight:900;
+}
+.locked{
+  display:inline-flex;
+  gap:6px;
+  align-items:center;
+  background:#111827;
+  color:white;
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:12px;
+  font-weight:800;
+}
+.filters{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+}
+.opportunity{
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:15px;
+  margin-top:12px;
+  background:white;
+}
+.opportunity-title{
+  font-weight:850;
+  font-size:16px;
+}
+.opportunity-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:12px;
+}
+.opportunity-metric{
+  background:#f9fafb;
+  border-radius:12px;
+  padding:9px;
+}
+.opportunity-metric span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+}
+.opportunity-metric strong{
+  display:block;
+  margin-top:3px;
+}
+.photo-preview{
+  width:100%;
+  max-height:230px;
+  object-fit:cover;
+  border-radius:16px;
+  margin-top:10px;
+  display:none;
+}
+.empty{
+  text-align:center;
+  padding:35px 15px;
+  color:var(--muted);
+}
+hr{
+  border:0;
+  border-top:1px solid var(--line);
+  margin:18px 0;
+}
+
+@media(max-width:760px){
+  .grid,.grid3{
+    grid-template-columns:1fr;
+  }
+  .filters{
+    grid-template-columns:1fr 1fr;
+  }
+  .opportunity-grid{
+    grid-template-columns:1fr 1fr;
+  }
+  h1{font-size:27px}
+  .hero-value{font-size:39px}
+}
+@media(max-width:460px){
+  .filters{
+    grid-template-columns:1fr;
+  }
+  .opportunity-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="brand">🚀 Revente Radar</div>
+      <div class="version">V80 CORE • V80.8 IMPORT ASSISTÉ</div>
+    </div>
+  </div>
+
+  <nav>
+    <button data-page="home" class="active">Accueil</button>
+    <button data-page="radar">Radar</button>
+    <button data-page="import">🔗 Importer</button>
+    <button data-page="add">Ajouter</button>
+    <button data-page="favorites">Favoris</button>
+    <button data-page="settings">Réglages</button>
+  </nav>
+</header>
+
+<main>
+
+<section id="home" class="page active">
+
+  <h1>Ton radar d'achat-revente</h1>
+
+  <div class="subtitle">
+    Le moteur V80 calcule ton plafond maximum.
+    La récupération des annonces passe désormais par le collecteur serveur V80.7.
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Prix maximum à enchérir</div>
+    <div class="hero-value" id="homeMaxBid">—</div>
+    <div id="homeLockText" class="small">
+      Aucun plafond verrouillé
+    </div>
+  </div>
+
+  <div class="grid3">
+
+    <div class="card">
+      <div class="muted small">Opportunités</div>
+      <div class="metric" id="homeOpportunities">0</div>
+    </div>
+
+    <div class="card">
+      <div class="muted small">GO</div>
+      <div class="metric" id="homeGo">0</div>
+    </div>
+
+    <div class="card">
+      <div class="muted small">🔥 Opportunités</div>
+      <div class="metric" id="homeHot">0</div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h2>V80 CORE</h2>
+
+    <div class="kv">
+      <span>Budget</span>
+      <strong id="homeBudget">—</strong>
+    </div>
+
+    <div class="kv">
+      <span>Marge minimum</span>
+      <strong id="homeMargin">—</strong>
+    </div>
+
+    <div class="kv">
+      <span>ROI minimum</span>
+      <strong id="homeROI">—</strong>
+    </div>
+
+    <div class="kv">
+      <span>Rayon</span>
+      <strong id="homeRadius">—</strong>
+    </div>
+  </div>
+
+</section>
+
+
+<section id="import" class="page">
+
+  <h1>🔗 Importer une annonce</h1>
+
+  <div class="subtitle">
+    Colle simplement le lien d'une annonce.
+    V80.8 détecte la source, tente la récupération automatique,
+    puis te laisse compléter uniquement les informations manquantes.
+  </div>
+
+  <div class="card">
+
+    <h2>1. Lien de l'annonce</h2>
+
+    <div class="field">
+      <label>URL</label>
+
+      <input
+        id="importUrl"
+        type="url"
+        placeholder="https://www.interencheres.com/..."
+        autocomplete="off">
+    </div>
+
+    <div class="import-source">
+      Source détectée :
+      <span id="detectedSource">—</span>
+    </div>
+
+    <div class="actions">
+
+      <button
+        class="btn btn-primary"
+        id="importButton">
+        🔎 IMPORTER / ANALYSER
+      </button>
+
+      <button
+        class="btn btn-light"
+        id="clearImportButton">
+        Effacer
+      </button>
+
+    </div>
+
+    <div id="importStatus" class="status-line"></div>
+
+  </div>
+
+
+  <div
+    id="importResultCard"
+    class="card"
+    style="display:none">
+
+    <h2>2. Résultat de récupération</h2>
+
+    <div id="importResult"></div>
+
+    <div class="actions">
+
+      <button
+        class="btn btn-green"
+        id="fillFormButton">
+        ➡️ Remplir le formulaire V80
+      </button>
+
+      <button
+        class="btn btn-light"
+        id="goAddButton">
+        Ouvrir Ajouter
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="notice notice-info">
+
+    <strong>V80.7 :</strong>
+    le collecteur serveur ne fabrique jamais de données.
+    Si une plateforme bloque également le serveur,
+    l'annonce est signalée comme non récupérée et tu peux compléter
+    les informations manuellement.
+
+  </div>
+
+</section>
+
+
+<section id="add" class="page">
+
+  <h1>Ajouter une opportunité</h1>
+
+  <div class="subtitle">
+    Données de l'annonce + paramètres financiers V80.
+  </div>
+
+  <div class="card">
+
+    <h2>Annonce</h2>
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Titre</label>
+        <input
+          id="title"
+          placeholder="Ex : Four professionnel inox">
+      </div>
+
+      <div class="field">
+        <label>Source</label>
+
+        <select id="source">
+          <option>Interencheres</option>
+          <option>Leboncoin</option>
+          <option>eBay</option>
+          <option>Liquidation</option>
+          <option>Déstockage</option>
+          <option>Don</option>
+          <option>Autre</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Prix actuel / enchère actuelle (€)</label>
+        <input
+          id="currentPrice"
+          type="number"
+          min="0"
+          step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Distance (km)</label>
+        <input
+          id="distance"
+          type="number"
+          min="0"
+          step="1">
+      </div>
+
+      <div class="field">
+        <label>Date de l'enchère</label>
+        <input
+          id="auctionDate"
+          type="datetime-local">
+      </div>
+
+      <div class="field">
+        <label>Lien de l'annonce</label>
+        <input
+          id="url"
+          type="url"
+          placeholder="https://...">
+      </div>
+
+    </div>
+
+    <div class="field">
+
+      <label>Description</label>
+
+      <textarea id="description"></textarea>
+
+    </div>
+
+    <div class="grid">
+
+      <div class="field">
+
+        <label>État</label>
+
+        <input
+          id="condition"
+          placeholder="Neuf, bon état, à réparer...">
+
+      </div>
+
+      <div class="field">
+
+        <label>URL de la photo</label>
+
+        <input
+          id="photoUrl"
+          type="url"
+          placeholder="https://...">
+
+        <img
+          id="photoPreview"
+          class="photo-preview">
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Valorisation</h2>
+
+    <div class="grid">
+
+      <div class="field">
+
+        <label>Revente réaliste (€)</label>
+
+        <input
+          id="resale"
+          type="number"
+          min="0"
+          step="0.01">
+
+      </div>
+
+    </div>
+
+    <div class="notice notice-warning">
+
+      La revente réaliste doit rester une estimation prudente.
+      V80 ne transforme pas automatiquement le prix de l'annonce
+      en prix de revente.
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Frais d'achat</h2>
+
+    <div class="grid3">
+
+      <div class="field">
+        <label>Commission acheteur (%)</label>
+        <input
+          id="buyerCommission"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label>TVA commission (%)</label>
+        <input
+          id="commissionVat"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label>TVA achat (%)</label>
+        <input
+          id="purchaseVat"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label>Frais fixes (€)</label>
+        <input
+          id="fixed"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label>Frais dossier (€)</label>
+        <input
+          id="dossier"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label>Transport (€)</label>
+        <input
+          id="transport"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label>Déplacement (€)</label>
+        <input
+          id="travel"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label>Contrôle / expertise (€)</label>
+        <input
+          id="inspection"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label>Réparations (€)</label>
+        <input
+          id="repairs"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label>Remise en état (€)</label>
+        <input
+          id="refurbishment"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label>Autres frais (€)</label>
+        <input
+          id="other"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Frais de revente</h2>
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Commission vendeur (%)</label>
+        <input
+          id="sellerCommission"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label>TVA commission vendeur (%)</label>
+        <input
+          id="saleCommissionVat"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label>TVA / fiscalité de revente (%)</label>
+        <input
+          id="saleVat"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label>Frais fixes de revente (€)</label>
+        <input
+          id="saleFixed"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Calcul V80</h2>
+
+    <div class="actions">
+
+      <button
+        class="btn btn-primary"
+        id="calculateButton">
+        🧮 CALCULER V80
+      </button>
+
+      <button
+        class="btn btn-green"
+        id="saveOpportunityButton">
+        💾 Enregistrer dans Radar
+      </button>
+
+      <button
+        class="btn btn-light"
+        id="favoriteButton">
+        ⭐ Favori
+      </button>
+
+    </div>
+
+    <div id="calculationResult"></div>
+
+  </div>
+
+</section>
+<section id="radar" class="page">
+
+  <h1>Radar</h1>
+
+  <div class="subtitle">
+    Toutes tes opportunités enregistrées, triées et filtrables.
+  </div>
+
+  <div class="card">
+
+    <div class="filters">
+
+      <input
+        id="radarSearch"
+        placeholder="Rechercher...">
+
+      <select id="radarSource">
+        <option value="">Toutes les sources</option>
+        <option>Interencheres</option>
+        <option>Leboncoin</option>
+        <option>eBay</option>
+        <option>Liquidation</option>
+        <option>Déstockage</option>
+        <option>Don</option>
+        <option>Autre</option>
+      </select>
+
+      <select id="radarStatus">
+        <option value="">Tous les statuts</option>
+        <option>GO</option>
+        <option>SURVEILLANCE</option>
+        <option>STOP</option>
+      </select>
+
+      <select id="radarSort">
+        <option value="opportunity">🔥 Opportunité</option>
+        <option value="date">Date</option>
+        <option value="maxBid">Prix max</option>
+        <option value="profit">Marge</option>
+        <option value="roi">ROI</option>
+        <option value="confidence">Confiance</option>
+        <option value="room">Marge d'enchère</option>
+      </select>
+
+      <input
+        id="radarPriceMax"
+        type="number"
+        min="0"
+        placeholder="Prix actuel max">
+
+      <input
+        id="radarProfitMin"
+        type="number"
+        min="0"
+        placeholder="Profit minimum">
+
+      <input
+        id="radarRoiMin"
+        type="number"
+        min="0"
+        placeholder="ROI minimum %">
+
+      <select id="radarDistance">
+        <option value="">Toutes distances</option>
+        <option value="inside">Dans mon rayon</option>
+        <option value="outside">Hors rayon</option>
+      </select>
+
+    </div>
+
+  </div>
+
+  <div id="radarMetrics" class="grid3"></div>
+
+  <div id="radarList"></div>
+
+</section>
+
+
+<section id="favorites" class="page">
+
+  <h1>⭐ Favoris</h1>
+
+  <div class="subtitle">
+    Tes annonces sauvegardées.
+  </div>
+
+  <div id="favoritesList"></div>
+
+</section>
+
+
+<section id="settings" class="page">
+
+  <h1>Réglages</h1>
+
+  <div class="subtitle">
+    Les paramètres centraux du moteur V80.
+  </div>
+
+
+  <div class="card">
+
+    <h2>Paramètres financiers</h2>
+
+    <div class="grid">
+
+      <div class="field">
+
+        <label>Budget maximum (€)</label>
+
+        <input
+          id="settingBudget"
+          type="number"
+          min="0"
+          step="0.01">
+
+      </div>
+
+      <div class="field">
+
+        <label>Marge minimum (%)</label>
+
+        <input
+          id="settingMargin"
+          type="number"
+          min="0"
+          step="0.1">
+
+      </div>
+
+      <div class="field">
+
+        <label>ROI minimum (%)</label>
+
+        <input
+          id="settingROI"
+          type="number"
+          min="0"
+          step="0.1">
+
+      </div>
+
+      <div class="field">
+
+        <label>Marge de sécurité (€)</label>
+
+        <input
+          id="settingSafety"
+          type="number"
+          min="0"
+          step="0.01">
+
+      </div>
+
+      <div class="field">
+
+        <label>Rayon maximum (km)</label>
+
+        <input
+          id="settingRadius"
+          type="number"
+          min="0"
+          step="1">
+
+      </div>
+
+    </div>
+
+    <button
+      class="btn btn-primary"
+      id="saveSettingsButton">
+      💾 Enregistrer les réglages
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>🔒 Plafond maximum</h2>
+
+    <div id="lockStatus"></div>
+
+    <div class="actions">
+
+      <button
+        class="btn btn-dark"
+        id="lockButton">
+        🔒 Verrouiller le plafond
+      </button>
+
+      <button
+        class="btn btn-danger"
+        id="unlockButton">
+        🔓 Déverrouiller
+      </button>
+
+    </div>
+
+    <div class="notice notice-info">
+
+      Une fois verrouillé, le plafond ne peut pas être augmenté automatiquement.
+      Une validation explicite est nécessaire pour le modifier.
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>☁️ Collecteur V80.7</h2>
+
+    <div class="kv">
+      <span>Serveur</span>
+      <strong>Supabase</strong>
+    </div>
+
+    <div class="kv">
+      <span>Fonction</span>
+      <strong>import-listing</strong>
+    </div>
+
+    <div class="notice notice-info">
+
+      Le collecteur sert uniquement à récupérer les informations
+      disponibles d'une annonce.
+      Il ne peut pas modifier ni augmenter le plafond financier V80.
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   V80.7 — CONFIGURATION COLLECTEUR SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+  "https://drwhkcjdelkxoqlrwsvf.supabase.co";
+
+const SUPABASE_FUNCTION_URL =
+  `${SUPABASE_URL}/functions/v1/import-listing`;
+
+
+/*
+  Clé Publishable Supabase fournie pour V80.7.
+  Elle est utilisée uniquement pour appeler
+  la fonction publique du collecteur.
+*/
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable__7viHgbKAlB4fU8jdQ2iTA_8jdR4T6I";
+
+
+/* =========================================================
+   V80 CORE
+========================================================= */
+
+const DEFAULT_SETTINGS = {
+  budget:300,
+  margin:50,
+  roi:50,
+  safety:0,
+  radius:80
+};
+
+
+let settings =
+  JSON.parse(
+    localStorage.getItem("v80Settings") || "null"
+  ) || DEFAULT_SETTINGS;
+
+
+let opportunities =
+  JSON.parse(
+    localStorage.getItem("v80Opportunities") || "[]"
+  );
+
+
+let favorites =
+  JSON.parse(
+    localStorage.getItem("v80Favorites") || "[]"
+  );
+
+
+let lockedMaxBid =
+  localStorage.getItem("v80LockedMaxBid");
+
+
+lockedMaxBid =
+  lockedMaxBid !== null
+    ? Number(lockedMaxBid)
+    : null;
+
+
+let lastImportedData = null;
+
+let lastCalculation = null;
+
+
+/* =========================================================
+   UTILITAIRES
+========================================================= */
+
+function val(id){
+
+  const el =
+    document.getElementById(id);
+
+  if(!el)
+    return 0;
+
+  return Number(el.value)||0;
+}
+
+
+function money(n){
+
+  return new Intl.NumberFormat(
+    "fr-FR",
+    {
+      style:"currency",
+      currency:"EUR"
+    }
+  ).format(Number(n)||0);
+}
+
+
+function number(n){
+
+  return new Intl.NumberFormat(
+    "fr-FR",
+    {
+      maximumFractionDigits:2
+    }
+  ).format(Number(n)||0);
+}
+
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showPage(page){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(p=>{
+      p.classList.toggle(
+        "active",
+        p.id===page
+      );
+    });
+
+
+  document
+    .querySelectorAll("nav button")
+    .forEach(b=>{
+      b.classList.toggle(
+        "active",
+        b.dataset.page===page
+      );
+    });
+
+
+  if(page==="radar")
+    renderRadar();
+
+  if(page==="favorites")
+    renderFavorites();
+
+  if(page==="home")
+    updateDashboard();
+
+  if(page==="settings")
+    renderSettings();
+}
+
+
+document
+  .querySelectorAll("nav button")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+        showPage(button.dataset.page);
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   MOTEUR V80 DETERMINISTE
+========================================================= */
+
+function calculateEngine(data){
+
+  const resale =
+    Math.max(0,data.resale);
+
+
+  const buyerCommission =
+    Math.max(
+      0,
+      data.buyerCommission
+    )/100;
+
+
+  const commissionVat =
+    Math.max(
+      0,
+      data.commissionVat
+    )/100;
+
+
+  const purchaseVat =
+    Math.max(
+      0,
+      data.purchaseVat
+    )/100;
+
+
+  const sellerCommission =
+    Math.max(
+      0,
+      data.sellerCommission
+    )/100;
+
+
+  const saleCommissionVat =
+    Math.max(
+      0,
+      data.saleCommissionVat
+    )/100;
+
+
+  const saleVat =
+    Math.max(
+      0,
+      data.saleVat
+    )/100;
+
+
+  const fixedPurchaseCosts =
+    Math.max(0,data.fixed)+
+    Math.max(0,data.dossier)+
+    Math.max(0,data.transport)+
+    Math.max(0,data.travel)+
+    Math.max(0,data.inspection)+
+    Math.max(0,data.repairs)+
+    Math.max(0,data.refurbishment)+
+    Math.max(0,data.other);
+
+
+  const saleCommissionAmount =
+    resale*sellerCommission;
+
+
+  const saleCommissionVatAmount =
+    saleCommissionAmount*
+    saleCommissionVat;
+
+
+  const saleTaxAmount =
+    resale*saleVat;
+
+
+  const saleFixed =
+    Math.max(
+      0,
+      data.saleFixed
+    );
+
+
+  const totalSaleFees =
+    saleCommissionAmount+
+    saleCommissionVatAmount+
+    saleTaxAmount+
+    saleFixed;
+
+
+  const resaleNet =
+    Math.max(
+      0,
+      resale-totalSaleFees
+    );
+
+
+  const marginRate =
+    Math.max(
+      0,
+      settings.margin
+    )/100;
+
+
+  const roiRate =
+    Math.max(
+      0,
+      settings.roi
+    )/100;
+
+
+  const budget =
+    Math.max(
+      0,
+      settings.budget
+    );
+
+
+  const safety =
+    Math.max(
+      0,
+      settings.safety
+    );
+
+
+  const maxTotalByMargin =
+    resaleNet*
+    (1-marginRate);
+
+
+  const maxTotalByROI =
+    resaleNet/
+    (1+roiRate);
+
+
+  const maxTotalByBudget =
+    Math.max(
+      0,
+      budget-safety
+    );
+
+
+  const maxRealCost =
+    Math.max(
+      0,
+      Math.min(
+        maxTotalByMargin,
+        maxTotalByROI,
+        maxTotalByBudget
+      )
+    );
+
+
+  let theoreticalMaxBid=0;
+
+
+  const purchaseVariableFactor =
+    1+
+    purchaseVat+
+    buyerCommission*
+    (1+commissionVat);
+
+
+  if(
+    maxRealCost>
+    fixedPurchaseCosts
+  ){
+
+    theoreticalMaxBid =
+      (
+        maxRealCost-
+        fixedPurchaseCosts
+      )/
+      purchaseVariableFactor;
+
+  }
+
+
+  theoreticalMaxBid =
+    Math.max(
+      0,
+      theoreticalMaxBid
+    );
+
+
+  let maxBid =
+    theoreticalMaxBid;
+
+
+  if(
+    lockedMaxBid!==null
+  ){
+
+    maxBid =
+      Math.min(
+        theoreticalMaxBid,
+        lockedMaxBid
+      );
+
+  }
+
+
+  const purchaseVatAmount =
+    maxBid*purchaseVat;
+
+
+  const buyerCommissionAmount =
+    maxBid*buyerCommission;
+
+
+  const buyerCommissionVatAmount =
+    buyerCommissionAmount*
+    commissionVat;
+
+
+  const total =
+    maxBid+
+    purchaseVatAmount+
+    buyerCommissionAmount+
+    buyerCommissionVatAmount+
+    fixedPurchaseCosts;
+
+
+  const profit =
+    resale-
+    totalSaleFees-
+    total;
+
+
+  const roi =
+    total>0
+      ?(profit/total)*100
+      :0;
+
+
+  const margin =
+    resale>0
+      ?(profit/resale)*100
+      :0;
+
+
+  const limits=[
+
+    {
+      name:"Marge minimum",
+      value:maxTotalByMargin
+    },
+
+    {
+      name:"ROI minimum",
+      value:maxTotalByROI
+    },
+
+    {
+      name:"Budget maximum",
+      value:maxTotalByBudget
+    }
+
+  ];
+
+
+  const smallest =
+    Math.min(
+      ...limits.map(
+        x=>x.value
+      )
+    );
+
+
+  const active =
+    limits.find(
+      x=>
+        Math.abs(
+          x.value-smallest
+        )<0.01
+    );
+
+
+  const constraint =
+    active
+      ?active.name
+      :"Aucune";
+
+
+  let decision="STOP";
+
+
+  if(
+    maxBid>0 &&
+    profit>=0 &&
+    roi>=settings.roi &&
+    margin>=settings.margin
+  ){
+
+    decision="GO";
+
+  }
+
+  else if(
+    maxBid>0 &&
+    profit>0
+  ){
+
+    decision="SURVEILLANCE";
+
+  }
+
+
+  return {
+
+    resale,
+    resaleNet,
+
+    buyerCommission,
+    commissionVat,
+    purchaseVat,
+
+    sellerCommission,
+    saleCommissionVat,
+    saleVat,
+
+    fixedPurchaseCosts,
+    saleFixed,
+
+    purchaseVatAmount,
+    buyerCommissionAmount,
+    buyerCommissionVatAmount,
+
+    saleCommissionAmount,
+    saleCommissionVatAmount,
+    saleTaxAmount,
+    totalSaleFees,
+
+    theoreticalMaxBid,
+    maxBid,
+
+    total,
+    profit,
+    roi,
+    margin,
+
+    decision,
+    constraint
+
+  };
+
+}
+
+
+/* =========================================================
+   DONNEES FORMULAIRE
+========================================================= */
+
+function collectFormData(){
+
+  return {
+
+    title:
+      document
+        .getElementById("title")
+        .value
+        .trim(),
+
+    source:
+      document
+        .getElementById("source")
+        .value,
+
+    currentPrice:
+      val("currentPrice"),
+
+    url:
+      document
+        .getElementById("url")
+        .value
+        .trim(),
+
+    description:
+      document
+        .getElementById("description")
+        .value
+        .trim(),
+
+    condition:
+      document
+        .getElementById("condition")
+        .value
+        .trim(),
+
+    distance:
+      val("distance"),
+
+    auctionDate:
+      document
+        .getElementById("auctionDate")
+        .value,
+
+    photoUrl:
+      document
+        .getElementById("photoUrl")
+        .value
+        .trim(),
+
+    resale:
+      val("resale"),
+
+    buyerCommission:
+      val("buyerCommission"),
+
+    commissionVat:
+      val("commissionVat"),
+
+    purchaseVat:
+      val("purchaseVat"),
+
+    fixed:
+      val("fixed"),
+
+    dossier:
+      val("dossier"),
+
+    transport:
+      val("transport"),
+
+    travel:
+      val("travel"),
+
+    inspection:
+      val("inspection"),
+
+    repairs:
+      val("repairs"),
+
+    refurbishment:
+      val("refurbishment"),
+
+    other:
+      val("other"),
+
+    sellerCommission:
+      val("sellerCommission"),
+
+    saleCommissionVat:
+      val("saleCommissionVat"),
+
+    saleVat:
+      val("saleVat"),
+
+    saleFixed:
+      val("saleFixed")
+
+  };
+
+}
+
+
+/* =========================================================
+   CONFIANCE
+========================================================= */
+
+function calculateConfidence(data){
+
+  let score=0;
+
+  if(data.title)
+    score+=20;
+
+  if(data.description)
+    score+=15;
+
+  if(data.url)
+    score+=15;
+
+  if(data.resale>0)
+    score+=20;
+
+  if(data.condition)
+    score+=10;
+
+  if(data.currentPrice>0)
+    score+=5;
+
+  if(data.distance>0)
+    score+=5;
+
+  if(data.photoUrl)
+    score+=5;
+
+  if(data.source)
+    score+=5;
+
+  return Math.min(
+    100,
+    score
+  );
+
+}
+
+
+/* =========================================================
+   CALCUL + AFFICHAGE
+========================================================= */
+
+function calculateAndDisplay(){
+
+  const data =
+    collectFormData();
+
+
+  const result =
+    calculateEngine(data);
+
+
+  const confidence =
+    calculateConfidence(data);
+
+
+  lastCalculation = {
+
+    data,
+    result,
+    confidence
+
+  };
+
+
+  const decisionClass =
+    result.decision==="GO"
+      ?"badge-go"
+      :result.decision==="SURVEILLANCE"
+        ?"badge-watch"
+        :"badge-stop";
+
+
+  document
+    .getElementById(
+      "calculationResult"
+    )
+    .innerHTML=`
+
+      <div class="result-box">
+
+        <div class="muted small">
+          PRIX MAXIMUM À ENCHÉRIR
+        </div>
+
+        <div class="result-max">
+          ${money(result.maxBid)}
+        </div>
+
+        ${
+          lockedMaxBid!==null
+            ?`
+              <div class="locked">
+                🔒 Plafond verrouillé
+              </div>
+            `
+            :""
+        }
+
+        <hr>
+
+        <div class="kv">
+          <span>Coût total réel</span>
+          <strong>
+            ${money(result.total)}
+          </strong>
+        </div>
+
+        <div class="kv">
+          <span>Revente réaliste</span>
+          <strong>
+            ${money(result.resale)}
+          </strong>
+        </div>
+
+        <div class="kv">
+          <span>Marge estimée</span>
+          <strong>
+            ${money(result.profit)}
+          </strong>
+        </div>
+
+        <div class="kv">
+          <span>Marge / revente</span>
+          <strong>
+            ${number(result.margin)} %
+          </strong>
+        </div>
+
+        <div class="kv">
+          <span>ROI</span>
+          <strong>
+            ${number(result.roi)} %
+          </strong>
+        </div>
+
+        <div class="kv">
+          <span>Contrainte active</span>
+          <strong>
+            ${escapeHtml(result.constraint)}
+          </strong>
+        </div>
+
+        <div class="kv">
+          <span>Confiance données</span>
+          <strong>
+            ${confidence} %
+          </strong>
+        </div>
+
+        <div style="margin-top:14px">
+
+          <span class="badge ${decisionClass}">
+            ${result.decision}
+          </span>
+
+        </div>
+
+        <div class="notice ${
+          result.decision==="GO"
+            ?"notice-success"
+            :result.decision==="SURVEILLANCE"
+              ?"notice-warning"
+              :"notice-danger"
+        }">
+
+          <strong>Pourquoi ?</strong><br>
+
+          ${
+            result.decision==="GO"
+
+              ?`
+                Le plafond respecte simultanément
+                la marge minimum, le ROI minimum
+                et le budget configuré.
+              `
+
+              :result.decision==="SURVEILLANCE"
+
+                ?`
+                  Le calcul permet encore une opération
+                  positive, mais au moins un objectif
+                  configuré n'est pas totalement respecté.
+                `
+
+                :`
+                  Le plafond calculé ne permet pas
+                  de respecter les conditions financières
+                  configurées.
+                `
+          }
+
+        </div>
+
+        <div class="small muted">
+
+          Le calcul financier est déterministe.
+          La confiance mesure uniquement la complétude
+          des données et n'augmente jamais le prix maximum.
+
+        </div>
+
+      </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   SAUVEGARDE
+========================================================= */
+
+function saveOpportunity(){
+
+  if(!lastCalculation)
+    calculateAndDisplay();
+
+
+  if(!lastCalculation)
+    return;
+
+
+  const {
+    data,
+    result,
+    confidence
+  } = lastCalculation;
+
+
+  const opportunity={
+
+    id:Date.now(),
+
+    createdAt:
+      new Date().toISOString(),
+
+    ...data,
+    ...result,
+
+    confidence
+
+  };
+
+
+  opportunities.unshift(
+    opportunity
+  );
+
+
+  localStorage.setItem(
+    "v80Opportunities",
+    JSON.stringify(
+      opportunities
+    )
+  );
+
+
+  updateDashboard();
+
+  renderRadar();
+
+
+  alert(
+    "Opportunité enregistrée dans le Radar."
+  );
+
+}
+
+
+function toggleFavorite(){
+
+  const data =
+    collectFormData();
+
+
+  const existing =
+    favorites.findIndex(
+      x=>
+        x.url===data.url &&
+        data.url
+    );
+
+
+  if(existing>=0){
+
+    favorites.splice(
+      existing,
+      1
+    );
+
+    alert(
+      "Retiré des favoris."
+    );
+
+  }
+
+  else{
+
+    favorites.unshift({
+
+      id:Date.now(),
+
+      ...data
+
+    });
+
+    alert(
+      "Ajouté aux favoris."
+    );
+
+  }
+
+
+  localStorage.setItem(
+    "v80Favorites",
+    JSON.stringify(
+      favorites
+    )
+  );
+
+
+  renderFavorites();
+
+}
+
+
+/* =========================================================
+   RADAR
+========================================================= */
+
+function radarFiltered(){
+
+  const search =
+    document
+      .getElementById("radarSearch")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const source =
+    document
+      .getElementById("radarSource")
+      .value;
+
+
+  const status =
+    document
+      .getElementById("radarStatus")
+      .value;
+
+
+  const sort =
+    document
+      .getElementById("radarSort")
+      .value;
+
+
+  const priceMax =
+    val("radarPriceMax");
+
+
+  const profitMin =
+    val("radarProfitMin");
+
+
+  const roiMin =
+    val("radarRoiMin");
+
+
+  const distance =
+    document
+      .getElementById("radarDistance")
+      .value;
+
+
+  let list =
+    opportunities.filter(o=>{
+
+      if(search){
+
+        const haystack =
+          `${o.title||""} ${o.description||""} ${o.source||""}`
+          .toLowerCase();
+
+        if(!haystack.includes(search))
+          return false;
+
+      }
+
+
+      if(
+        source &&
+        o.source!==source
+      )
+        return false;
+
+
+      if(
+        status &&
+        o.decision!==status
+      )
+        return false;
+
+
+      if(
+        priceMax &&
+        o.currentPrice>priceMax
+      )
+        return false;
+
+
+      if(
+        profitMin &&
+        o.profit<profitMin
+      )
+        return false;
+
+
+      if(
+        roiMin &&
+        o.roi<roiMin
+      )
+        return false;
+
+
+      if(
+        distance==="inside" &&
+        o.distance>settings.radius
+      )
+        return false;
+
+
+      if(
+        distance==="outside" &&
+        o.distance<=settings.radius
+      )
+        return false;
+
+
+      return true;
+
+    });
+
+
+  list.sort((a,b)=>{
+
+    if(sort==="date")
+      return new Date(b.createdAt)-
+             new Date(a.createdAt);
+
+
+    if(sort==="maxBid")
+      return b.maxBid-a.maxBid;
+
+
+    if(sort==="profit")
+      return b.profit-a.profit;
+
+
+    if(sort==="roi")
+      return b.roi-a.roi;
+
+
+    if(sort==="confidence")
+      return b.confidence-a.confidence;
+
+
+    if(sort==="room")
+      return (
+        Math.max(
+          0,
+          b.maxBid-b.currentPrice
+        )-
+        Math.max(
+          0,
+          a.maxBid-a.currentPrice
+        )
+      );
+
+
+    const hotA =
+      a.decision==="GO" &&
+      a.currentPrice>0 &&
+      a.currentPrice<=a.maxBid &&
+      a.currentPrice/a.maxBid<=.75;
+
+
+    const hotB =
+      b.decision==="GO" &&
+      b.currentPrice>0 &&
+      b.currentPrice<=b.maxBid &&
+      b.currentPrice/b.maxBid<=.75;
+
+
+    if(hotA!==hotB)
+      return hotA?-1:1;
+
+
+    return b.profit-a.profit;
+
+  });
+
+
+  return list;
+
+}
+
+
+/* =========================================================
+   RADAR AFFICHAGE
+========================================================= */
+
+function renderRadar(){
+
+  const list =
+    radarFiltered();
+
+
+  const total =
+    opportunities.length;
+
+
+  const go =
+    opportunities.filter(
+      x=>x.decision==="GO"
+    ).length;
+
+
+  const watch =
+    opportunities.filter(
+      x=>x.decision==="SURVEILLANCE"
+    ).length;
+
+
+  const hot =
+    opportunities.filter(x=>{
+
+      return (
+        x.decision==="GO" &&
+        x.currentPrice>0 &&
+        x.currentPrice<=x.maxBid &&
+        x.currentPrice/x.maxBid<=.75
+      );
+
+    }).length;
+
+
+  document
+    .getElementById(
+      "radarMetrics"
+    )
+    .innerHTML=`
+
+      <div class="card">
+
+        <div class="muted small">
+          Total
+        </div>
+
+        <div class="metric">
+          ${total}
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="muted small">
+          GO
+        </div>
+
+        <div class="metric">
+          ${go}
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="muted small">
+          🔥 Opportunités
+        </div>
+
+        <div class="metric">
+          ${hot}
+        </div>
+
+      </div>
+
+    `;
+
+
+  const container =
+    document.getElementById(
+      "radarList"
+    );
+
+
+  if(!list.length){
+
+    container.innerHTML=`
+
+      <div class="card empty">
+
+        Aucune opportunité
+        ne correspond aux filtres.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    list.map(o=>{
+
+      const room =
+        Math.max(
+          0,
+          o.maxBid-o.currentPrice
+        );
+
+
+      const hot =
+        o.decision==="GO" &&
+        o.currentPrice>0 &&
+        o.currentPrice<=o.maxBid &&
+        o.currentPrice/o.maxBid<=.75;
+
+
+      const distanceOk =
+        o.distance<=settings.radius;
+
+
+      const badge =
+        o.decision==="GO"
+          ?"badge-go"
+          :o.decision==="SURVEILLANCE"
+            ?"badge-watch"
+            :"badge-stop";
+
+
+      return `
+
+        <div class="opportunity">
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            gap:10px;
+            align-items:start">
+
+            <div>
+
+              <div class="opportunity-title">
+                ${escapeHtml(
+                  o.title||
+                  "Annonce sans titre"
+                )}
+              </div>
+
+              <div class="small muted">
+
+                ${escapeHtml(
+                  o.source||
+                  "Autre"
+                )}
+
+                ${
+                  o.distance>0
+                    ?` • ${number(o.distance)} km`
+                    :""
+                }
+
+              </div>
+
+            </div>
+
+            <div>
+
+              <span class="badge ${badge}">
+                ${o.decision}
+              </span>
+
+              ${
+                hot
+                  ?`
+                    <span class="badge badge-blue">
+                      🔥
+                    </span>
+                  `
+                  :""
+              }
+
+            </div>
+
+          </div>
+
+
+          <div class="opportunity-grid">
+
+            <div class="opportunity-metric">
+
+              <span>
+                Prix actuel
+              </span>
+
+              <strong>
+                ${money(o.currentPrice)}
+              </strong>
+
+            </div>
+
+
+            <div class="opportunity-metric">
+
+              <span>
+                Prix max
+              </span>
+
+              <strong>
+                ${money(o.maxBid)}
+              </strong>
+
+            </div>
+
+
+            <div class="opportunity-metric">
+
+              <span>
+                Marge
+              </span>
+
+              <strong>
+                ${money(o.profit)}
+              </strong>
+
+            </div>
+
+
+            <div class="opportunity-metric">
+
+              <span>
+                ROI
+              </span>
+
+              <strong>
+                ${number(o.roi)} %
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div
+            class="small muted"
+            style="margin-top:10px">
+
+            Marge d'enchère restante :
+            <strong>
+              ${money(room)}
+            </strong>
+
+            • Confiance
+            ${o.confidence||0} %
+
+            •
+            ${distanceOk
+              ?"Dans le rayon"
+              :"Hors rayon"
+            }
+
+          </div>
+
+
+          <div class="actions">
+
+            ${
+              o.url
+                ?`
+                  <a
+                    class="btn btn-light"
+                    href="${escapeHtml(o.url)}"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    🔗 Ouvrir l'annonce
+                  </a>
+                `
+                :""
+            }
+
+            <button
+              class="btn btn-danger"
+              onclick="deleteOpportunity(${o.id})">
+              Supprimer
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+function deleteOpportunity(id){
+
+  if(
+    !confirm(
+      "Supprimer cette opportunité ?"
+    )
+  )
+    return;
+
+
+  opportunities =
+    opportunities.filter(
+      x=>x.id!==id
+    );
+
+
+  localStorage.setItem(
+    "v80Opportunities",
+    JSON.stringify(
+      opportunities
+    )
+  );
+
+
+  renderRadar();
+
+  updateDashboard();
+
+}
+
+
+/* =========================================================
+   FAVORIS
+========================================================= */
+
+function renderFavorites(){
+
+  const container =
+    document.getElementById(
+      "favoritesList"
+    );
+
+
+  if(!favorites.length){
+
+    container.innerHTML=`
+
+      <div class="card empty">
+        Aucun favori pour le moment.
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    favorites.map(f=>`
+
+      <div class="card">
+
+        <h3>
+          ${escapeHtml(
+            f.title||
+            "Sans titre"
+          )}
+        </h3>
+
+        <div class="small muted">
+          ${escapeHtml(
+            f.source||
+            "Autre"
+          )}
+        </div>
+
+        <div class="kv">
+
+          <span>
+            Prix actuel
+          </span>
+
+          <strong>
+            ${money(f.currentPrice)}
+          </strong>
+
+        </div>
+
+        <div class="kv">
+
+          <span>
+            Revente
+          </span>
+
+          <strong>
+            ${money(f.resale)}
+          </strong>
+
+        </div>
+
+        <div class="actions">
+
+          ${
+            f.url
+              ?`
+                <a
+                  class="btn btn-light"
+                  href="${escapeHtml(f.url)}"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  🔗 Ouvrir
+                </a>
+              `
+              :""
+          }
+
+          <button
+            class="btn btn-danger"
+            onclick="deleteFavorite(${f.id})">
+            Supprimer
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function deleteFavorite(id){
+
+  favorites =
+    favorites.filter(
+      x=>x.id!==id
+    );
+
+
+  localStorage.setItem(
+    "v80Favorites",
+    JSON.stringify(
+      favorites
+    )
+  );
+
+
+  renderFavorites();
+
+}
+
+
+/* =========================================================
+   REGLAGES
+========================================================= */
+
+function renderSettings(){
+
+  document.getElementById(
+    "settingBudget"
+  ).value =
+    settings.budget;
+
+
+  document.getElementById(
+    "settingMargin"
+  ).value =
+    settings.margin;
+
+
+  document.getElementById(
+    "settingROI"
+  ).value =
+    settings.roi;
+
+
+  document.getElementById(
+    "settingSafety"
+  ).value =
+    settings.safety;
+
+
+  document.getElementById(
+    "settingRadius"
+  ).value =
+    settings.radius;
+
+
+  document.getElementById(
+    "lockStatus"
+  ).innerHTML =
+
+    lockedMaxBid!==null
+
+      ?`
+        <div class="notice notice-success">
+
+          🔒 Plafond verrouillé à
+
+          <strong>
+            ${money(lockedMaxBid)}
+          </strong>
+
+        </div>
+      `
+
+      :`
+        <div class="notice notice-warning">
+
+          Aucun plafond verrouillé.
+
+        </div>
+      `;
+
+}
+
+
+document
+  .getElementById(
+    "saveSettingsButton"
+  )
+  .addEventListener(
+    "click",
+    ()=>{
+
+      settings={
+
+        budget:
+          val("settingBudget"),
+
+        margin:
+          val("settingMargin"),
+
+        roi:
+          val("settingROI"),
+
+        safety:
+          val("settingSafety"),
+
+        radius:
+          val("settingRadius")
+
+      };
+
+
+      localStorage.setItem(
+        "v80Settings",
+        JSON.stringify(
+          settings
+        )
+      );
+
+
+      updateDashboard();
+
+
+      alert(
+        "Réglages enregistrés."
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   VERROUILLAGE
+========================================================= */
+
+document
+  .getElementById("lockButton")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      if(!lastCalculation){
+
+        alert(
+          "Effectue d'abord un calcul V80."
+        );
+
+        showPage("add");
+
+        return;
+
+      }
+
+
+      const theoretical =
+        lastCalculation
+          .result
+          .theoreticalMaxBid;
+
+
+      if(theoretical<=0){
+
+        alert(
+          "Le plafond calculé est nul."
+        );
+
+        return;
+
+      }
+
+
+      if(
+        !confirm(
+          `Verrouiller définitivement le plafond à ${money(theoretical)} ?`
+        )
+      ){
+
+        return;
+
+      }
+
+
+      lockedMaxBid =
+        theoretical;
+
+
+      localStorage.setItem(
+        "v80LockedMaxBid",
+        String(
+          lockedMaxBid
+        )
+      );
+
+
+      calculateAndDisplay();
+
+      renderSettings();
+
+      updateDashboard();
+
+    }
+  );
+
+
+document
+  .getElementById("unlockButton")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      if(
+        lockedMaxBid===null
+      ){
+
+        alert(
+          "Aucun plafond n'est verrouillé."
+        );
+
+        return;
+
+      }
+
+
+      if(
+        !confirm(
+          "Déverrouiller le plafond maximum ?"
+        )
+      ){
+
+        return;
+
+      }
+
+
+      lockedMaxBid=null;
+
+
+      localStorage.removeItem(
+        "v80LockedMaxBid"
+      );
+
+
+      renderSettings();
+
+      updateDashboard();
+
+
+      if(lastCalculation)
+        calculateAndDisplay();
+
+    }
+  );
+  /* =========================================================
+   IMPORT — DETECTION DES SOURCES
+========================================================= */
+
+function detectSource(url){
+
+  try{
+
+    const hostname =
+      new URL(url)
+        .hostname
+        .toLowerCase();
+
+    if(hostname.includes("interencheres"))
+      return "Interencheres";
+
+    if(hostname.includes("leboncoin"))
+      return "Leboncoin";
+
+    if(hostname.includes("ebay"))
+      return "eBay";
+
+    if(
+      hostname.includes("liquidation") ||
+      hostname.includes("liquid")
+    )
+      return "Liquidation";
+
+    if(
+      hostname.includes("destockage") ||
+      hostname.includes("destock")
+    )
+      return "Déstockage";
+
+    if(
+      hostname.includes("don") ||
+      hostname.includes("geevo")
+    )
+      return "Don";
+
+    return "Autre";
+
+  }catch(e){
+
+    return "Autre";
+
+  }
+
+}
+
+
+/* =========================================================
+   PARSING PRIX
+========================================================= */
+
+function parsePrice(value){
+
+  if(value===null || value===undefined)
+    return null;
+
+
+  let text =
+    String(value)
+      .trim();
+
+
+  if(!text)
+    return null;
+
+
+  text =
+    text
+      .replace(/\u00A0/g," ")
+      .replace(/[€$£]/g,"")
+      .trim();
+
+
+  /*
+    Gestion des formats :
+
+    1 250,50
+    1250,50
+    1.250,50
+    1250.50
+    1250
+  */
+
+  if(
+    text.includes(",") &&
+    text.includes(".")
+  ){
+
+    const lastComma =
+      text.lastIndexOf(",");
+
+    const lastDot =
+      text.lastIndexOf(".");
+
+    if(lastComma>lastDot){
+
+      text =
+        text
+          .replace(/\./g,"")
+          .replace(",", ".");
+
+    }else{
+
+      text =
+        text
+          .replace(/,/g,"");
+
+    }
+
+  }else if(
+    text.includes(",")
+  ){
+
+    text =
+      text.replace(",", ".");
+
+  }
+
+
+  text =
+    text.replace(
+      /[^0-9.]/g,
+      ""
+    );
+
+
+  const numberValue =
+    Number(text);
+
+
+  return Number.isFinite(
+    numberValue
+  )
+    ?numberValue
+    :null;
+
+}
+
+
+/* =========================================================
+   META HTML
+========================================================= */
+
+function getMeta(
+  doc,
+  name,
+  property
+){
+
+  const selectors=[];
+
+
+  if(name)
+    selectors.push(
+      `meta[name="${name}"]`
+    );
+
+
+  if(property)
+    selectors.push(
+      `meta[property="${property}"]`
+    );
+
+
+  for(
+    const selector of selectors
+  ){
+
+    const element =
+      doc.querySelector(
+        selector
+      );
+
+
+    if(
+      element &&
+      element.getAttribute("content")
+    ){
+
+      return cleanText(
+        element.getAttribute(
+          "content"
+        )
+      );
+
+    }
+
+  }
+
+
+  return "";
+
+}
+
+
+/* =========================================================
+   NETTOYAGE TEXTE
+========================================================= */
+
+function cleanText(value){
+
+  return String(
+    value || ""
+  )
+    .replace(/\s+/g," ")
+    .trim();
+
+}
+
+
+/* =========================================================
+   JSON-LD
+========================================================= */
+
+function extractJsonLd(doc){
+
+  const scripts =
+    [
+      ...doc.querySelectorAll(
+        'script[type="application/ld+json"]'
+      )
+    ];
+
+
+  for(
+    const script of scripts
+  ){
+
+    try{
+
+      const json =
+        JSON.parse(
+          script.textContent
+        );
+
+
+      const items =
+        Array.isArray(json)
+          ?json
+          :[
+              json
+            ];
+
+
+      for(
+        const item of items
+      ){
+
+        if(
+          item &&
+          typeof item==="object"
+        ){
+
+          if(
+            item["@type"]==="Product" ||
+            item["@type"]==="Offer" ||
+            item.name ||
+            item.offers
+          ){
+
+            return item;
+
+          }
+
+        }
+
+      }
+
+    }catch(e){
+
+      /*
+        JSON-LD invalide :
+        on continue sans bloquer
+      */
+
+    }
+
+  }
+
+
+  return null;
+
+}
+
+
+/* =========================================================
+   EXTRACTION DONNEES IMPORT
+========================================================= */
+
+function extractImportedData(
+  doc,
+  url,
+  source
+){
+
+  const jsonLd =
+    extractJsonLd(doc);
+
+
+  let title =
+    getMeta(
+      doc,
+      "og:title",
+      "og:title"
+    );
+
+
+  if(!title){
+
+    title =
+      cleanText(
+        doc.title
+      );
+
+  }
+
+
+  let description =
+    getMeta(
+      doc,
+      "description",
+      "og:description"
+    );
+
+
+  let photoUrl =
+    getMeta(
+      doc,
+      null,
+      "og:image"
+    );
+
+
+  let currentPrice = null;
+
+
+  if(jsonLd){
+
+    if(
+      jsonLd.name &&
+      !title
+    ){
+
+      title =
+        cleanText(
+          jsonLd.name
+        );
+
+    }
+
+
+    if(
+      jsonLd.description &&
+      !description
+    ){
+
+      description =
+        cleanText(
+          jsonLd.description
+        );
+
+    }
+
+
+    if(
+      jsonLd.image &&
+      !photoUrl
+    ){
+
+      if(
+        Array.isArray(
+          jsonLd.image
+        )
+      ){
+
+        photoUrl =
+          jsonLd.image[0] || "";
+
+      }else{
+
+        photoUrl =
+          jsonLd.image;
+
+      }
+
+    }
+
+
+    if(
+      jsonLd.offers
+    ){
+
+      const offer =
+        Array.isArray(
+          jsonLd.offers
+        )
+          ?jsonLd.offers[0]
+          :jsonLd.offers;
+
+
+      if(offer){
+
+        currentPrice =
+          parsePrice(
+            offer.price
+          );
+
+      }
+
+    }
+
+
+    if(
+      currentPrice===null &&
+      jsonLd.price
+    ){
+
+      currentPrice =
+        parsePrice(
+          jsonLd.price
+        );
+
+    }
+
+  }
+
+
+  if(
+    currentPrice===null
+  ){
+
+    const priceMeta =
+      getMeta(
+        doc,
+        "product:price:amount",
+        "product:price:amount"
+      );
+
+
+    if(priceMeta){
+
+      currentPrice =
+        parsePrice(
+          priceMeta
+        );
+
+    }
+
+  }
+
+
+  return {
+
+    url,
+
+    source,
+
+    title,
+
+    description,
+
+    currentPrice,
+
+    photoUrl,
+
+    fetched:true,
+
+    serverFetched:false,
+
+    extractedCount:
+      [
+        title,
+        description,
+        currentPrice,
+        photoUrl
+      ]
+      .filter(
+        x=>
+          x!=="" &&
+          x!==null &&
+          x!==undefined
+      )
+      .length
+
+  };
+
+}
+
+
+/* =========================================================
+   IMPORT NAVIGATEUR — SECOURS
+========================================================= */
+
+async function tryFetchListing(
+  url,
+  source
+){
+
+  const response =
+    await fetch(
+      url,
+      {
+        method:"GET",
+        mode:"cors",
+        credentials:"omit"
+      }
+    );
+
+
+  if(!response.ok){
+
+    throw new Error(
+      `HTTP ${response.status}`
+    );
+
+  }
+
+
+  const html =
+    await response.text();
+
+
+  if(
+    !html ||
+    html.length<100
+  ){
+
+    throw new Error(
+      "Page vide ou inaccessible."
+    );
+
+  }
+
+
+  const parser =
+    new DOMParser();
+
+
+  const doc =
+    parser.parseFromString(
+      html,
+      "text/html"
+    );
+
+
+  return extractImportedData(
+    doc,
+    url,
+    source
+  );
+
+}
+
+
+/* =========================================================
+   IMPORT SERVEUR SUPABASE V80.7
+========================================================= */
+
+async function importViaSupabase(
+  url
+){
+
+  const response =
+    await fetch(
+      SUPABASE_FUNCTION_URL,
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+            "application/json",
+
+          "apikey":
+            SUPABASE_PUBLISHABLE_KEY,
+
+          "Authorization":
+            `Bearer ${SUPABASE_PUBLISHABLE_KEY}`
+        },
+
+        body:
+          JSON.stringify({
+            url
+          })
+      }
+    );
+
+
+  let data=null;
+
+
+  try{
+
+    data =
+      await response.json();
+
+  }catch(e){
+
+    throw new Error(
+      `Réponse serveur illisible (${response.status})`
+    );
+
+  }
+
+
+  if(!response.ok){
+
+    throw new Error(
+      data?.error ||
+      `Erreur serveur HTTP ${response.status}`
+    );
+
+  }
+
+
+  if(!data?.ok){
+
+    throw new Error(
+      data?.error ||
+      "Le collecteur serveur n'a pas pu récupérer l'annonce."
+    );
+
+  }
+
+
+  return {
+
+    url:
+      data.url ||
+      url,
+
+    source:
+      data.source ||
+      detectSource(url),
+
+    title:
+      data.title ||
+      "",
+
+    description:
+      data.description ||
+      "",
+
+    currentPrice:
+      data.currentPrice !== null &&
+      data.currentPrice !== undefined
+        ?Number(
+            data.currentPrice
+          )
+        :null,
+
+    photoUrl:
+      data.photoUrl ||
+      "",
+
+    fetched:true,
+
+    serverFetched:true,
+
+    extractedCount:
+      Number(
+        data.extractedCount
+      )||0,
+
+    message:
+      data.message ||
+      ""
+
+  };
+
+}
+
+
+/* =========================================================
+   AFFICHAGE RESULTAT IMPORT
+========================================================= */
+
+function showImportResult(
+  data,
+  blocked=false
+){
+
+  const card =
+    document.getElementById(
+      "importResultCard"
+    );
+
+
+  const content =
+    document.getElementById(
+      "importResult"
+    );
+
+
+  if(!card || !content)
+    return;
+
+
+  card.style.display =
+    "block";
+
+
+  if(blocked){
+
+    content.innerHTML=`
+
+      <div class="notice notice-warning">
+
+        <strong>
+          ⚠️ Récupération automatique bloquée
+        </strong>
+
+        <br><br>
+
+        La plateforme ne permet pas
+        actuellement de récupérer
+        automatiquement les données.
+
+        <br><br>
+
+        V80 conserve le lien et la source.
+        Appuie sur « Remplir le formulaire V80 » :
+        tu complèteras seulement les données manquantes.
+
+      </div>
+
+      <div class="kv">
+
+        <span>Source détectée</span>
+
+        <strong>
+          ${escapeHtml(
+            data.source ||
+            "Autre"
+          )}
+        </strong>
+
+      </div>
+
+      <div class="kv">
+
+        <span>Adresse</span>
+
+        <strong
+          style="word-break:break-all">
+
+          ${escapeHtml(
+            data.url ||
+            ""
+          )}
+
+        </strong>
+
+      </div>
+
+    `;
+
+
+    return;
+
+  }
+
+
+  const serverMessage =
+    data.serverFetched
+      ?`
+        <div class="notice notice-success">
+
+          <strong>
+            ✅ Collecteur serveur V80.7
+          </strong>
+
+          <br>
+
+          Les informations disponibles
+          ont été récupérées côté serveur.
+
+        </div>
+      `
+      :`
+        <div class="notice notice-info">
+
+          ℹ️ Mode de secours navigateur utilisé.
+
+        </div>
+      `;
+
+
+  content.innerHTML=`
+
+    ${serverMessage}
+
+    <div class="kv">
+
+      <span>Source</span>
+
+      <strong>
+        ${escapeHtml(
+          data.source ||
+          "Autre"
+        )}
+      </strong>
+
+    </div>
+
+
+    <div class="kv">
+
+      <span>Titre détecté</span>
+
+      <strong>
+
+        ${
+          data.title
+            ?escapeHtml(
+                data.title
+              )
+            :"Non détecté"
+        }
+
+      </strong>
+
+    </div>
+
+
+    <div class="kv">
+
+      <span>Prix actuel</span>
+
+      <strong>
+
+        ${
+          data.currentPrice!==null
+            ?money(
+                data.currentPrice
+              )
+            :"Non détecté"
+        }
+
+      </strong>
+
+    </div>
+
+
+    <div class="kv">
+
+      <span>Photo</span>
+
+      <strong>
+
+        ${
+          data.photoUrl
+            ?"Détectée"
+            :"Non détectée"
+        }
+
+      </strong>
+
+    </div>
+
+
+    <div class="kv">
+
+      <span>Données détectées</span>
+
+      <strong>
+
+        ${data.extractedCount||0}
+
+      </strong>
+
+    </div>
+
+
+    ${
+      data.description
+        ?`
+          <div class="notice notice-info">
+
+            <strong>
+              Description détectée
+            </strong>
+
+            <br><br>
+
+            ${escapeHtml(
+              data.description
+            )}
+
+          </div>
+        `
+        :""
+    }
+
+
+    <div class="actions">
+
+      <button
+        class="btn btn-primary"
+        id="useImportedDataButton">
+
+        ➜ Utiliser ces données
+
+      </button>
+
+    </div>
+
+  `;
+
+
+  const useButton =
+    document.getElementById(
+      "useImportedDataButton"
+    );
+
+
+  if(useButton){
+
+    useButton.addEventListener(
+      "click",
+      ()=>{
+        fillFormFromImport(
+          data
+        );
+      }
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   IMPORT PRINCIPAL
+========================================================= */
+
+async function importListing(){
+
+  const input =
+    document.getElementById(
+      "importUrl"
+    );
+
+
+  const status =
+    document.getElementById(
+      "importStatus"
+    );
+
+
+  const url =
+    input.value
+      .trim();
+
+
+  if(!url){
+
+    status.textContent =
+      "Colle d'abord le lien de l'annonce.";
+
+    return;
+
+  }
+
+
+  let parsed;
+
+
+  try{
+
+    parsed =
+      new URL(url);
+
+  }catch(e){
+
+    status.textContent =
+      "Le lien n'est pas valide.";
+
+    return;
+
+  }
+
+
+  if(
+    parsed.protocol!=="http:" &&
+    parsed.protocol!=="https:"
+  ){
+
+    status.textContent =
+      "Le lien doit commencer par http:// ou https://";
+
+    return;
+
+  }
+
+
+  const source =
+    detectSource(url);
+
+
+  document
+    .getElementById(
+      "detectedSource"
+    )
+    .textContent =
+      source;
+
+
+  document
+    .getElementById(
+      "importResultCard"
+    )
+    .style.display =
+      "none";
+
+
+  const baseData={
+
+    url,
+
+    source,
+
+    title:"",
+
+    description:"",
+
+    currentPrice:null,
+
+    photoUrl:"",
+
+    fetched:false,
+
+    serverFetched:false
+
+  };
+
+
+  status.textContent =
+    "⏳ Collecteur serveur V80.7 en cours...";
+
+
+  try{
+
+    const data =
+      await importViaSupabase(
+        url
+      );
+
+
+    lastImportedData =
+      data;
+
+
+    status.textContent =
+      "✅ Annonce récupérée par le collecteur serveur V80.7.";
+
+
+    showImportResult(
+      data,
+      false
+    );
+
+
+    return;
+
+  }catch(serverError){
+
+    console.warn(
+      "Collecteur Supabase V80.7 :",
+      serverError
+    );
+
+
+    status.textContent =
+      "⚠️ Collecteur serveur indisponible ou plateforme bloquée. Tentative de secours...";
+
+
+    try{
+
+      const data =
+        await tryFetchListing(
+          url,
+          source
+        );
+
+
+      data.serverFetched =
+        false;
+
+
+      lastImportedData =
+        data;
+
+
+      status.textContent =
+        "✅ Informations récupérées par le mode de secours navigateur.";
+
+
+      showImportResult(
+        data,
+        false
+      );
+
+
+      return;
+
+    }catch(browserError){
+
+      console.warn(
+        "Import navigateur V80.7 :",
+        browserError
+      );
+
+
+      status.textContent =
+        "⚠️ Impossible de récupérer automatiquement cette annonce.";
+
+
+      lastImportedData =
+        {
+          ...baseData,
+          importError:
+            serverError?.message ||
+            "Collecteur indisponible"
+        };
+
+
+      showImportResult(
+        lastImportedData,
+        true
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   REMPLIR LE FORMULAIRE
+========================================================= */
+
+function fillFormFromImport(
+  data
+){
+
+  if(!data)
+    return;
+
+
+  showPage("add");
+
+
+  const setValue =
+    (
+      id,
+      value
+    )=>{
+
+      const element =
+        document.getElementById(
+          id
+        );
+
+
+      if(
+        element &&
+        value!==null &&
+        value!==undefined
+      ){
+
+        element.value =
+          value;
+
+      }
+
+    };
+
+
+  setValue(
+    "title",
+    data.title || ""
+  );
+
+
+  setValue(
+    "source",
+    data.source || "Autre"
+  );
+
+
+  setValue(
+    "url",
+    data.url || ""
+  );
+
+
+  setValue(
+    "description",
+    data.description || ""
+  );
+
+
+  setValue(
+    "currentPrice",
+    data.currentPrice !== null &&
+    data.currentPrice !== undefined
+      ?data.currentPrice
+      :""
+  );
+
+
+  setValue(
+    "photoUrl",
+    data.photoUrl || ""
+  );
+
+
+  /*
+    IMPORTANT :
+
+    Les autres données financières
+    ne sont jamais inventées.
+
+    Elles restent à renseigner
+    par l'utilisateur avant calcul.
+  */
+
+
+  const status =
+    document.getElementById(
+      "importStatus"
+    );
+
+
+  if(status){
+
+    status.textContent =
+      "✅ Données importées. Vérifie-les puis complète les coûts avant de calculer.";
+
+  }
+
+
+  updatePhotoPreview();
+
+}
+
+
+/* =========================================================
+   EFFACER IMPORT
+========================================================= */
+
+function clearImport(){
+
+  const input =
+    document.getElementById(
+      "importUrl"
+    );
+
+
+  if(input)
+    input.value="";
+
+
+  const status =
+    document.getElementById(
+      "importStatus"
+    );
+
+
+  if(status)
+    status.textContent =
+      "";
+
+
+  const result =
+    document.getElementById(
+      "importResultCard"
+    );
+
+
+  if(result)
+    result.style.display =
+      "none";
+
+
+  lastImportedData =
+    null;
+
+}
+
+
+/* =========================================================
+   PREVISUALISATION PHOTO
+========================================================= */
+
+function updatePhotoPreview(){
+
+  const url =
+    document
+      .getElementById("photoUrl")
+      ?.value
+      .trim();
+
+  const preview =
+    document.getElementById("photoPreview");
+
+  if(!preview)
+    return;
+
+  if(!url){
+    preview.removeAttribute("src");
+    preview.style.display="none";
+    return;
+  }
+
+  preview.src=url;
+  preview.style.display="block";
+
+  preview.onerror=()=>{
+    preview.style.display="none";
+  };
+
+}
+
+
+/* =========================================================
+   BOUTONS PRINCIPAUX
+========================================================= */
+
+document
+  .getElementById(
+    "calculateButton"
+  )
+  ?.addEventListener(
+    "click",
+    ()=>{
+      calculateAndDisplay();
+    }
+  );
+
+
+document
+  .getElementById(
+    "saveOpportunityButton"
+  )
+  ?.addEventListener(
+    "click",
+    ()=>{
+      saveOpportunity();
+    }
+  );
+
+
+document
+  .getElementById(
+    "favoriteButton"
+  )
+  ?.addEventListener(
+    "click",
+    ()=>{
+      toggleFavorite();
+    }
+  );
+
+
+document
+  .getElementById(
+    "importButton"
+  )
+  ?.addEventListener(
+    "click",
+    ()=>{
+      importListing();
+    }
+  );
+
+
+document
+  .getElementById(
+    "clearImportButton"
+  )
+  ?.addEventListener(
+    "click",
+    ()=>{
+      clearImport();
+    }
+  );
+
+
+document
+  .getElementById("fillFormButton")
+  ?.addEventListener(
+    "click",
+    ()=>{
+      if(lastImportedData){
+        fillFormFromImport(lastImportedData);
+      }else{
+        const url=document.getElementById("importUrl")?.value.trim() || "";
+        if(url){
+          fillFormFromImport({
+            url,
+            source:detectSource(url),
+            title:"",
+            description:"",
+            currentPrice:null,
+            photoUrl:""
+          });
+        }
+      }
+    }
+  );
+
+
+document
+  .getElementById("goAddButton")
+  ?.addEventListener(
+    "click",
+    ()=>{
+      if(lastImportedData){
+        fillFormFromImport(lastImportedData);
+      }else{
+        showPage("add");
+      }
+    }
+  );
+
+
+document
+  .getElementById(
+    "photoUrl"
+  )
+  ?.addEventListener(
+    "input",
+    ()=>{
+      updatePhotoPreview();
+    }
+  );
+
+
+/* =========================================================
+   FILTRES RADAR
+========================================================= */
+
+[
+  "radarSearch",
+  "radarSource",
+  "radarStatus",
+  "radarSort",
+  "radarPriceMax",
+  "radarProfitMin",
+  "radarRoiMin",
+  "radarDistance"
+]
+.forEach(id=>{
+
+  document
+    .getElementById(id)
+    ?.addEventListener(
+      "input",
+      renderRadar
+    );
+
+
+  document
+    .getElementById(id)
+    ?.addEventListener(
+      "change",
+      renderRadar
+    );
+
+});
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function updateDashboard(){
+
+  const count = opportunities.length;
+
+  const go =
+    opportunities.filter(
+      x=>x.decision==="GO"
+    ).length;
+
+  const hot =
+    opportunities.filter(x=>{
+      return (
+        x.decision==="GO" &&
+        x.currentPrice>0 &&
+        x.currentPrice<=x.maxBid &&
+        x.currentPrice/x.maxBid<=.75
+      );
+    }).length;
+
+  const setText=(id,value)=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=value;
+  };
+
+  setText("homeOpportunities", count);
+  setText("homeGo", go);
+  setText("homeHot", hot);
+
+  setText("homeBudget", money(settings.budget));
+  setText("homeMargin", `${number(settings.margin)} %`);
+  setText("homeROI", `${number(settings.roi)} %`);
+  setText("homeRadius", `${number(settings.radius)} km`);
+
+  const homeMax =
+    document.getElementById("homeMaxBid");
+
+  if(homeMax){
+    homeMax.textContent =
+      lastCalculation
+        ?money(lastCalculation.result.maxBid)
+        :lockedMaxBid!==null
+          ?money(lockedMaxBid)
+          :"—";
+  }
+
+  const lockText =
+    document.getElementById("homeLockText");
+
+  if(lockText){
+    lockText.textContent =
+      lockedMaxBid!==null
+        ?`🔒 Plafond verrouillé à ${money(lockedMaxBid)}`
+        :"Aucun plafond verrouillé";
+  }
+
+}
+
+
+/* =========================================================
+   SERVICE WORKER PWA
+========================================================= */
+
+if(
+  "serviceWorker" in navigator
+){
+
+  window.addEventListener(
+    "load",
+    ()=>{
+      navigator.serviceWorker
+        .register(
+          "./service-worker.js"
+        )
+        .then(
+          registration=>{
+            console.log(
+              "V80 Service Worker actif",
+              registration.scope
+            );
+          }
+        )
+        .catch(
+          error=>{
+            console.warn(
+              "Service Worker non disponible",
+              error
+            );
+          }
+        );
+    }
+  );
+
+}
+
+
+/* =========================================================
+   INITIALISATION
+========================================================= */
+
+function init(){
+
+  renderSettings();
+
+  renderRadar();
+
+  renderFavorites();
+
+  updateDashboard();
+
+  updatePhotoPreview();
+
+  showPage("home");
+
+}
+
+
+init();
+
+</script>
+
+</body>
+</html>
